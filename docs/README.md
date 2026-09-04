@@ -24,6 +24,10 @@ This is the documentation hub for FixMyType. The project is a Windows-first, loc
 | [Privacy](09-privacy-and-data-handling.md) | Local data limits and local-model policy | Active |
 | [Threat model](10-threat-model.md) | Harm cases and mitigations | Active |
 | [Windows compatibility](11-windows-compatibility.md) | Supported and excluded input contexts | Active |
+| [Testing strategy](12-testing-strategy.md) | Automated and manual verification policy | Active |
+| [Safety test cases](13-test-cases-and-safety-invariants.md) | Required regression cases | Active |
+| [Development workflow](14-development-workflow.md) | Test-first to GitHub-push loop | Active |
+| [Code style](15-code-style.md) | Auditable TypeScript and Rust conventions | Active |
 
 ## Documentation principles
 

@@ -7,7 +7,7 @@ This roadmap describes the order in which FixMyType becomes a safe public Window
 | 1 | Public foundation: governance, navigation, licence, funding, and project rules | Complete |
 | 2 | Product contract: users, safety invariants, scope, accessibility, decisions | Complete |
 | 3 | Architecture and threat model: Electron shell, Windows worker, IPC, privacy | Complete |
-| 4 | Quality system: tests, test cases, development workflow, coding standards | Planned |
+| 4 | Quality system: tests, test cases, development workflow, coding standards | Complete |
 | 5 | Delivery planning: phase documents, optimization queue, bug-fix process | Planned |
 | 6 | User documentation: setup, configuration, protection, local repair, FAQ | Planned |
 | 7 | Electron shell: secure tray UI, Settings screen, tests first | Planned |
