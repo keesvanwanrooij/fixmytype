@@ -1,3 +1,3 @@
 # AGENTS.md
 
-Follow [CLAUDE.md](CLAUDE.md). Read [README.md](README.md), [docs/README.md](docs/README.md), and [planning/README.md](planning/README.md) before changing code. For text-changing behavior: fail a test first, implement minimally, run checks, clean up, rerun, commit, and push.
+Follow [CLAUDE.md](CLAUDE.md). Read [README.md](README.md), [docs/README.md](docs/README.md), and [plans/README.md](plans/README.md) before changing code. For text-changing behavior: fail a test first, implement minimally, run checks, clean up, rerun, commit, and push.

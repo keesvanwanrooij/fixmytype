@@ -19,4 +19,16 @@ Keyboard chatter is irregular. A user may need repeated letters in words such as
 - A local model failure leaves the original text untouched.
 - A user can stop protection without needing the app window.
 
-Start at [README.md](../README.md), continue through [docs/README.md](README.md), and follow [planning/README.md](../planning/README.md).
+Start at [README.md](../README.md), continue through [docs/README.md](README.md), and follow [plans/README.md](../plans/README.md).
+
+## Concurrent edits and explicit capture
+
+An AI answer must not own newer typing simply because it began first. Changes are range transactions with conflict checks. A delayed result after document closure, mode Off or an edit within its range is discarded.
+
+Microphone and selected-window capture require visible, revocable sessions. Raw key codes and timestamps can reveal user writing; 'metadata' must not be used as an excuse to log them. Diagnostics use aggregate counters only.
+
+## Scope of Undo
+
+Undo protects committed repair and insertion transactions. It cannot promise to reconstruct arbitrary changes performed by another app. An invalid Undo target becomes a visible conflict. Tests must exercise this path as well as the successful reverse operation.
+
+Navigation: [Project home](../README.md), [documentation](README.md), [delivery plans](../plans/README.md).

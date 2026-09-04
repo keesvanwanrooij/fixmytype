@@ -1,0 +1,39 @@
+# FixMyType delivery plans
+
+This is the canonical delivery status for the approved typing, repair, dictation and companion product. Read [the project home](../README.md), [documentation](../docs/README.md) and [the ten approved additions](../docs/24-product-workflows.md) before implementing a phase.
+
+## Phase overview
+
+| Phase | Status | Outcome |
+|---|---|---|
+| 1 | ✅ Complete | [Project foundation](phases/01-project-foundation.md) |
+| 2 | ⬜ Planned | [Workspace, profiles and shortcuts](phases/02-settings-and-localisation.md) |
+| 3 | ⬜ Planned | [Preserve-first input policy](phases/03-input-policy-library.md) |
+| 4 | ⬜ Planned | [Target capabilities and native lifecycle](phases/04-native-observation-worker.md) |
+| 5 | ⬜ Planned | [Typing protection and personal calibration](phases/05-safe-chatter-protection.md) |
+| 6 | ⬜ Planned | [Local repair and personal tone](phases/06-selected-text-repair.md) |
+| 7 | ⬜ Planned | [Concurrent sentence repair, history and Undo](phases/07-sentence-repair-experiment.md) |
+| 8 | ⬜ Planned | [Dictation, vocabulary and spoken commands](phases/08-dictation-and-commands.md) |
+| 9 | ⬜ Planned | [Narration and chosen-window companion](phases/09-companion-and-narration.md) |
+| 10 | ⬜ Planned | [Guided setup, resource scheduling and CI](phases/10-runtime-setup-and-ci.md) |
+| 11 | ⬜ Planned | [Compatibility, accessibility and measured reliability](phases/11-compatibility-and-reliability.md) |
+| 12 | ⬜ Planned | [Windows package and first-user candidate](phases/12-windows-candidate.md) |
+| 13 | ⬜ Planned | [First-user acceptance and public release gate](phases/13-first-user-acceptance.md) |
+
+Phases 2 and 3 contain existing baseline code, but their expanded scope and corrected verification remain open. A prior 'app works' message confirmed startup only, not scaling, keyboard navigation or external application compatibility.
+
+## Work order
+
+Finish one verified capability at a time, using its ordered packages. Independent preparation can proceed while a physical check is pending; record the dependency instead of silently skipping it. The final candidate must support the [first-user script](../docs/30-first-user-test.md).
+
+Use [phase instructions](phases/README.md) for evidence rules, [bug fixes](bug-fixes/README.md) for regressions and [optimizations](optimizations/README.md) for measurements. The [evidence index](evidence/README.md) lists actual checks.
+
+## Release rule
+
+A public release requires passing automated checks, supported-target and accessibility evidence, install and uninstall results, reviewed dependencies, accurate documentation and a checksummed artifact. Tag the verified commit only. Phase 13 requires actual maintainer acceptance; do not infer that result from tests.
+
+## Shared constraints
+
+All processing stays local. Microphone and chosen-window observation need visible, revocable sessions. The app cannot send messages or execute terminal commands based on document instructions. Formula, code and protected-target guards apply independently of AI mode. Preserve content when target ownership is uncertain.
+
+Work on main with explicit-path staging, tests before failure-prone changes, a cleanup review and a GitHub push per phase. A phase has at least half a day of substantive junior work; checklist length is not a substitute for an observable result.

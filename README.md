@@ -1,91 +1,64 @@
-# FixMyType: local Windows typing help for unreliable keyboards
+# FixMyType
 
-[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-2b6cb0.svg)](LICENSE)
-[![Platform: Windows](https://img.shields.io/badge/platform-Windows-0078D4.svg?logo=windows&logoColor=white)](docs/README.md)
-[![Processing: local](https://img.shields.io/badge/processing-local%20only-13795B.svg)](docs/README.md)
-[![Support FixMyType](https://img.shields.io/badge/Support-FixMyType-EA4AAA.svg?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/keesvanwanrooij)
+Your keyboard should not make writing harder.
 
-FixMyType is a free, open-source Windows app for people whose keyboards create accidental repeats, double letters, or unreliable keystrokes. It quietly filters clear keyboard chatter while you type. Optional local repair can then suggest corrections in Dutch or English, with a visible result and Undo before anything is changed. Your words stay on your computer.
+FixMyType is an open-source Windows typing assistant being built for damaged keyboards and busy writers. The goal is to help you type, repair, dictate and listen while keeping your words on your computer.
 
-**Status:** early development. The public foundation and desktop shell are complete. FixMyType does not filter or repair input yet, so do not rely on it for critical work.
+Current status: the desktop Settings shell and initial Rust policy library run. The expanded writing workspace, native protection, local AI, speech and companion are in development. See [delivery status](plans/README.md) for verified progress.
 
-## Start here
+## One writing companion, your choice of help
 
-| If you want to... | Read |
-|---|---|
-| Understand the problem and product promise | [Documentation hub](docs/README.md) |
-| See every planned release phase | [delivery overview](planning/README.md) |
-| Follow or review the current work | [Planning hub](planning/README.md) |
-| Contribute safely | [Contributing guide](CONTRIBUTING.md) and [security policy](SECURITY.md) |
-| Give an AI assistant safe project context | [CLAUDE.md](CLAUDE.md) and [llms.txt](llms.txt) |
-| Support the project | [Support FixMyType](https://github.com/sponsors/keesvanwanrooij) |
+You choose deterministic typing protection at levels 1 through 5. AI stays separate, with Off, Suggest and Automatic modes. Personal profiles distinguish browser prompts, prose, code and spreadsheets. Your own tone comes from an editable local style card and vocabulary.
 
-## Why FixMyType exists
+The intended workflow lets you keep typing while older sentences are repaired. Dictation puts a transcript into local history and a validated selected destination. Narration reads your text aloud. An optional companion describes a chosen window and helps prepare replies. These capabilities must pass their individual tests before they are advertised as available.
 
-A damaged keyboard can make ordinary typing exhausting. A single press may become two letters, a word may turn into noise, and correcting each mistake steals attention from the message itself. Replacing a keyboard is not always immediately possible or sufficient. FixMyType is being built to make the computer adapt to the person, rather than demanding perfect input from unreliable hardware.
+The app preserves uncertain input. Unsupported external text fields receive a draft or suggestion. Passwords, elevated applications, secure desktop and formulas are excluded from automatic prose changes. You control recording, observation and retained history.
 
-The project starts with the least intrusive help: detect clear accidental repeats locally, leave intentional double letters alone, and make protection easy to pause. Text repair is a separate, explicitly enabled tool. It never becomes a reason to send private writing to a cloud service.
+## Start the source build
 
-## What the app will do
+You need Node.js for the desktop and Rust for native components.
 
-- Filter clear keyboard chatter on Windows, without a cloud connection.
-- Offer a quick pause control, tray status, and Undo.
-- Provide a calm settings screen in **Nederlands** or **English**.
-- Keep app language separate from repair language: `Automatic`, `Dutch`, or `English`.
-- Suggest local sentence repair only when you enable it and can reverse it.
-- Keep the local core free, open source, ad-free, and without accounts.
-
-## What it will not do
-
-- Record passwords, work around the Windows secure desktop, or use a kernel keyboard driver.
-- Promise that every repeated letter is an error.
-- Silently rewrite text, block an application without a clear opt-out, or sell a paid tier.
-- Send your typed text to a remote AI service.
-
-## Install and run from source
-
-FixMyType is still in development. The current source build opens a local Settings window and a tray menu. It does not yet filter or repair input. An end-user installer will be added only after Windows packaging is verified.
-
-```powershell
+~~~powershell
 git clone https://github.com/keesvanwanrooij/fixmytype.git
 cd fixmytype/apps/desktop
 npm install
 npm test
 npm start
-```
+~~~
 
-The test command verifies the typed Settings and external-link safety foundations. `npm start` builds the desktop app and opens its Settings window. Follow the [delivery overview](planning/README.md) for planned capabilities and [docs/16-installation.md](docs/16-installation.md) for release-installation guidance.
+The last command builds Electron and opens the current app. Run cargo test --workspace from the repository root to check the Rust library. Follow [installation](docs/16-installation.md) for prerequisites and packaging status. A source build is not yet an end-user installer.
 
-## A careful approach to AI
+## Find your way
 
-An AI rewrite can be useful for damaged text, but it is never the first line of defence. Chatter protection must work deterministically and locally. Optional repair runs only against a local model you control, begins in a reviewable mode, and always preserves an Undo path. Full safety decisions will live in the [documentation hub](docs/README.md).
+| You want to | Start here |
+|---|---|
+| Understand the product and safety rules | [Documentation](docs/README.md) |
+| See the thirteen delivery phases | [Plans](plans/README.md) |
+| Read the ten approved additions | [Workflows](docs/24-product-workflows.md) |
+| Test a candidate | [First-user script](docs/30-first-user-test.md) |
+| Contribute code or tests | [Contributing](CONTRIBUTING.md) |
+| Give an assistant project context | [CLAUDE.md](CLAUDE.md) and [llms.txt](llms.txt) |
+| Report a vulnerability | [Security policy](SECURITY.md) |
+
+## Built for a difficult keyboard
+
+This project began with a keyboard that turned single presses into extra letters. The same problem made prompts, social posts and ordinary documents frustrating to write. FixMyType aims to reduce that work while leaving you in control of the result.
+
+The local core stays free, without advertising, an account requirement or a paid tier. Code and documentation use [Apache-2.0](LICENSE); the [trademark policy](TRADEMARKS.md) describes rights to the project name. Every public compatibility claim must point to recorded evidence.
+
+## Repository
+
+~~~text
+apps/desktop/     Electron main, React interface and local services
+crates/input-core/ Pure Rust event policy and tests
+docs/             Thirty product and engineering references
+plans/            Phases, evidence, bug fixes and measured optimizations
+scripts/          Repository checks
+.github/          Community and automation configuration
+~~~
 
 ## Support FixMyType
 
-FixMyType is built openly for people who need it. There will be no ads, account requirement, or paid feature tier in the local core. If it saves you time, reduces frustration, or helps someone you know keep typing, you can help keep the project free.
+If this project helps you write with less frustration, a donation supports continued testing, fixes and accessibility work. You can also contribute a reproducible bug, a translation improvement or a Windows compatibility check through [the contribution guide](CONTRIBUTING.md).
 
-**[Support FixMyType on GitHub Sponsors](https://github.com/sponsors/keesvanwanrooij)**
-
-You can also improve the project by testing Windows setups, reporting a reproducible bug, translating interface text, or contributing code. Start with [CONTRIBUTING.md](CONTRIBUTING.md).
-
-## Project map
-
-```text
-README.md                 Public home and navigation
-CLAUDE.md                 Rules for human and AI contributors
-docs/                     Product, safety, architecture, and user documentation
-planning/                 Roadmap, phase plans, optimization, and bug-fix queues
-.github/                  Community files, funding, issue forms, automation
-apps/                     Future Electron app and native Windows input worker
-tests/                    Future automated and Windows compatibility tests
-```
-
-Every README must link back to this page, [docs/README.md](docs/README.md), and [planning/README.md](planning/README.md). This keeps the public project navigable for people and machine readers alike.
-
-## License and name
-
-The code and documentation are available under [Apache License 2.0](LICENSE). Apache-2.0 grants broad reuse rights and an express patent licence; it does not grant rights to the FixMyType name or future logo. See [NOTICE](NOTICE) and [TRADEMARKS.md](TRADEMARKS.md).
-
-## Navigation contract
-
-This README is the canonical starting point. The documentation hub owns explanatory material, the roadmap owns planned work, and the decision log will own unresolved product choices. If a link is broken or a document is hard to find, please [open an issue](https://github.com/keesvanwanrooij/fixmytype/issues/new/choose).
+[![Support FixMyType](https://img.shields.io/badge/Support_FixMyType-GitHub_Sponsors-EA4AAA?style=for-the-badge)](https://github.com/sponsors/keesvanwanrooij)

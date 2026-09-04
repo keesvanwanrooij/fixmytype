@@ -1,52 +1,46 @@
 # FixMyType documentation
 
-This is the documentation hub for FixMyType. The project is a Windows-first, local-first typing aid for unreliable keyboards. Read the root [README](../README.md) for the public promise, then use this page to find the detailed product and engineering record.
+English reference documents describe the approved product and its engineering contracts. UI copy is available in Dutch and English. Read [the project home](../README.md) and [delivery status](../plans/README.md) to distinguish implemented capabilities from plans.
 
-## Documentation map
+## Reference map
 
-| Topic | Purpose | Status |
-|---|---|---|
-| [Planning overview](../planning/README.md) | Shared guardrails and all delivery phases | Active |
-| [Delivery overview](../planning/README.md) | The sequence from foundation to public release | Active |
-| [Planning hub](../planning/README.md) | Where phase, optimization, and bug-fix plans live | Active |
-| [Contributing](../CONTRIBUTING.md) | How to make a safe, reviewable contribution | Active |
-| [Security policy](../SECURITY.md) | How to report a vulnerability privately | Active |
-| [Support](../SUPPORT.md) | Donations, feedback, and project boundaries | Active |
-| [AI contributor guide](../CLAUDE.md) | Repository reading order and test-first workflow | Active |
-| [Product vision](01-product-vision.md) | Product promise and success measure | Active |
-| [Safety invariants](02-user-problem-and-safety.md) | Text-loss and privacy boundaries | Active |
-| [Scope and non-goals](03-scope-and-non-goals.md) | What the first release includes and excludes | Active |
-| [Decision log](04-decision-log.md) | Binding product and technical decisions | Active |
-| [Accessibility principles](05-accessibility-principles.md) | Usability requirements for an accessibility tool | Active |
-| [Architecture](06-architecture.md) | Electron and native-worker boundaries | Active |
-| [Input pipeline](07-input-pipeline.md) | Safe event and repair flow | Active |
-| [Electron security](08-electron-security.md) | Renderer and IPC hardening requirements | Active |
-| [Privacy](09-privacy-and-data-handling.md) | Local data limits and local-model policy | Active |
-| [Threat model](10-threat-model.md) | Harm cases and mitigations | Active |
-| [Windows compatibility](11-windows-compatibility.md) | Supported and excluded input contexts | Active |
-| [Testing strategy](12-testing-strategy.md) | Automated and manual verification policy | Active |
-| [Safety test cases](13-test-cases-and-safety-invariants.md) | Required regression cases | Active |
-| [Development workflow](14-development-workflow.md) | Test-first to GitHub-push loop | Active |
-| [Code style](15-code-style.md) | Auditable TypeScript and Rust conventions | Active |
-| [Installation](16-installation.md) | Verified-release installation information | Active |
-| [Configuration](17-configuration.md) | Settings behavior and safe defaults | Active |
-| [Chatter protection](18-chatter-protection.md) | Deterministic local protection | Active |
-| [Local AI repair](19-local-ai-repair.md) | Optional reviewable local repair | Active |
-| [Troubleshooting](20-troubleshooting.md) | Safe first responses to failures | Active |
-| [FAQ](21-faq.md) | Common product questions | Active |
-| [Donations](22-donations-and-sustainability.md) | Voluntary project support | Active |
-| [Input-core API](23-input-core-api.md) | Content-free policy contract for the future worker | Active |
+| Document | What you learn |
+|---|---|
+| [01-product-vision.md](01-product-vision.md) | Product vision |
+| [02-user-problem-and-safety.md](02-user-problem-and-safety.md) | User problem and safety invariants |
+| [03-scope-and-non-goals.md](03-scope-and-non-goals.md) | Scope and delivery boundaries |
+| [04-decision-log.md](04-decision-log.md) | Decision log |
+| [05-accessibility-principles.md](05-accessibility-principles.md) | Accessibility principles |
+| [06-architecture.md](06-architecture.md) | Architecture |
+| [07-input-pipeline.md](07-input-pipeline.md) | Input and repair pipelines |
+| [08-electron-security.md](08-electron-security.md) | Electron security |
+| [09-privacy-and-data-handling.md](09-privacy-and-data-handling.md) | Privacy and data handling |
+| [10-threat-model.md](10-threat-model.md) | Threat model |
+| [11-windows-compatibility.md](11-windows-compatibility.md) | Windows compatibility |
+| [12-testing-strategy.md](12-testing-strategy.md) | Testing strategy |
+| [13-test-cases-and-safety-invariants.md](13-test-cases-and-safety-invariants.md) | Test cases and safety invariants |
+| [14-development-workflow.md](14-development-workflow.md) | Development workflow |
+| [15-code-style.md](15-code-style.md) | Code style |
+| [16-installation.md](16-installation.md) | Install and start |
+| [17-configuration.md](17-configuration.md) | Configuration |
+| [18-chatter-protection.md](18-chatter-protection.md) | Chatter protection |
+| [19-local-ai-repair.md](19-local-ai-repair.md) | Local AI repair |
+| [20-troubleshooting.md](20-troubleshooting.md) | Troubleshooting |
+| [21-faq.md](21-faq.md) | FAQ |
+| [22-donations-and-sustainability.md](22-donations-and-sustainability.md) | Donations and sustainability |
+| [23-input-core-api.md](23-input-core-api.md) | Input-core API |
+| [24-product-workflows.md](24-product-workflows.md) | Approved workflows and ten additions |
+| [25-revision-and-undo.md](25-revision-and-undo.md) | Revision tracking and Undo |
+| [26-dictation-and-commands.md](26-dictation-and-commands.md) | Dictation and spoken commands |
+| [27-narration-and-companion.md](27-narration-and-companion.md) | Narration and companion |
+| [28-profiles-style-and-vocabulary.md](28-profiles-style-and-vocabulary.md) | Profiles, style and vocabulary |
+| [29-runtime-setup-and-scheduling.md](29-runtime-setup-and-scheduling.md) | Local runtime setup and scheduling |
+| [30-first-user-test.md](30-first-user-test.md) | First-user acceptance |
 
-## Documentation principles
+## Reading paths
 
-- Documentation is written in English so the public project can be understood internationally.
-- Product UI is available in Dutch and English.
-- A document says what is confirmed, planned, or undecided. It never presents a roadmap item as shipped.
-- Every new README links to the [root README](../README.md), this hub, and the [roadmap](../planning/README.md).
-- Safety, privacy, and text-loss risks are explained before implementation claims are made.
+A new contributor starts with product vision, scope, architecture and the active phase. Text-changing work also requires the revision protocol and safety tests. Speech work requires the audio lifecycle and local runtime contracts. Companion work requires the capture and permissions contract.
 
-## Reference set status
+All ten accepted ideas are mapped in [approved workflows](24-product-workflows.md). [First-user acceptance](30-first-user-test.md) describes what must be demonstrated before delivery is called accepted.
 
-The documents above describe the product contract and planned delivery work. They do not mean every planned capability exists in the app. Check [the delivery overview](../planning/README.md) before relying on an implementation claim.
-
-Return to the [root README](../README.md) or open the [roadmap](../planning/README.md) to see what comes next.
+Every README links to the project home, this index and plans/README.md. Broken links and stale feature claims are defects.

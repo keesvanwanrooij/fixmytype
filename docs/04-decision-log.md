@@ -16,4 +16,16 @@ This log records product and technical decisions that constrain implementation. 
 
 No contributor may reverse a decision that changes privacy, scope, or text safety without an explicit maintainer decision.
 
-Navigation: [README.md](../README.md), [docs/README.md](README.md), [planning/README.md](../planning/README.md).
+Navigation: [README.md](../README.md), [docs/README.md](README.md), [plans/README.md](../plans/README.md).
+
+## Approved expansion on 2026-09-05
+
+The maintainer approved all ten ideas in [the workflow register](24-product-workflows.md) and gave GO for implementation. The English work directory is now plans/. Work proceeds in phases on main with tests, cleanup and GitHub commits.
+
+AI mode is Off, Suggest or Automatic. Both typing sensitivity and repair intensity have levels 1 through 5. The user wants older-sentence correction during continued typing, which requires tracked ranges and target-specific capabilities.
+
+Dictation uses a configurable toggle shortcut, adds a local transcript history and inserts into a validated captured selection. Narration and a chosen-window companion are included. Persistent history, microphone and screen capture have visible user controls.
+
+Personalization starts with approved prompt guidance and vocabulary rather than silent collection or automatic fine-tuning. The companion can prepare text but cannot send messages or execute commands. These decisions supersede the earlier voice non-goal and blanket history exclusion.
+
+Navigation: [Project home](../README.md), [documentation](README.md), [delivery plans](../plans/README.md).

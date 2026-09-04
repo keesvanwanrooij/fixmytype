@@ -14,4 +14,4 @@ cargo clippy --workspace --all-targets -- -D warnings
 cargo test --workspace
 ```
 
-Read the [root README](../../README.md), [documentation hub](../../docs/README.md), [planning index](../../planning/README.md), and [phase 3 plan](../../planning/phases/03-input-policy-library.md) before changing this crate.
+Read the [root README](../../README.md), [documentation hub](../../docs/README.md), [planning index](../../plans/README.md), and [phase 3 plan](../../plans/phases/03-input-policy-library.md) before changing this crate.

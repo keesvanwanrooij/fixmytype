@@ -16,4 +16,4 @@ The donation link is voluntary. It does not unlock functionality, collect typing
 - Review a documentation link or safety claim.
 - Contribute a narrowly scoped, tested fix under [CONTRIBUTING.md](CONTRIBUTING.md).
 
-For a project overview, return to [README.md](README.md); for documentation, use [docs/README.md](docs/README.md); for planned work, read [planning/README.md](planning/README.md).
+For a project overview, return to [README.md](README.md); for documentation, use [docs/README.md](docs/README.md); for planned work, read [plans/README.md](plans/README.md).

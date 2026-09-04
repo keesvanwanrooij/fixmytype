@@ -1,17 +1,23 @@
 # Configuration
 
-## Current Settings screen
+The app's Settings screen owns interface language, repair language and all shortcut configuration. Dutch and English are separate from the language being repaired. Changing the interface must not rewrite user text or change the repair language.
 
-The desktop app stores a small Settings record in the current Windows profile. It contains only the interface language, repair language, and protection preference. It rejects missing, malformed, or unexpected fields. It never contains typed text, clipboard content, repair content, diagnostics, or an account identifier.
+## Typing and AI
 
-Choose English or Nederlands for the app interface. Choose Automatic, English, or Nederlands for repair language. These choices are separate. Changing the app language does not change repair language.
+Protection has an enabled state and sensitivity 1 through 5. Calibration can propose per-key adjustments. AI mode is Off, Suggest or Automatic. Changing to Off cancels queued repair jobs; it must not silently change protection or dictation.
 
-The protection switch and tray action save a preference for the future keyboard-protection service. They do not filter keystrokes yet. Text repair remains unavailable until its planned phases add visible review and Undo.
+A context profile chooses prose, prompt, code or spreadsheet rules. Profile matching does not by itself prove that an external control supports editing. Protected syntax remains excluded even when a user raises sensitivity.
 
-If a saved Settings record is malformed, FixMyType uses safe runtime defaults and explains this in the Settings screen. It does not overwrite the malformed record automatically. If browser storage is unavailable, current choices remain available until you close the window.
+## Personalization
 
-## Planned Settings
+The style card holds approved instructions and examples. Vocabulary stores terms that should retain their spelling. Both are editable and removable. The companion's personality controls delivery, not permission to take actions.
 
-Later phases will add supported-app exclusions, sensitivity, shortcuts, local-model availability, and an Undo history. Each setting will state whether it is ready to use or planned.
+## Shortcuts and appearance
 
-See [README.md](../README.md), [docs hub](README.md), and [roadmap](../planning/README.md).
+Shortcut changes validate conflicts and report Windows registration failure. The previous working set remains active if replacement fails. The companion can be hidden, and reduced motion is respected. The footer retains Support FixMyType.
+
+## Storage
+
+Keep preferences in a versioned schema with explicit migrations. Preserve valid v1 language choices when introducing new fields. A malformed record stays available for deliberate reset. Text history is a separate store with its own consent and retention controls.
+
+Navigation: [Project home](../README.md), [documentation](README.md), [delivery plans](../plans/README.md).

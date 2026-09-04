@@ -39,4 +39,14 @@ cargo clippy --workspace --all-targets -- -D warnings
 cargo test --workspace
 ```
 
-Read the [root README](../README.md), [documentation hub](README.md), [planning index](../planning/README.md), [input pipeline](07-input-pipeline.md), and [phase 3 plan](../planning/phases/03-input-policy-library.md) before changing this contract.
+Read the [root README](../README.md), [documentation hub](README.md), [planning index](../plans/README.md), [input pipeline](07-input-pipeline.md), and [phase 3 plan](../plans/phases/03-input-policy-library.md) before changing this contract.
+
+## Audit scheduled after the scope update
+
+The initial implementation masks unknown modifier bits. That can turn unknown metadata into 'no modifiers', which violates preserve-first behaviour. Phase 3 must add a failing regression test before correcting this path.
+
+Numeric key metadata can reveal text when accumulated. The crate receives individual records for classification and must not add event logging. A field-accessor test alone does not prove a privacy property; review the type and its consumers.
+
+Equal timestamps, zero windows, held keys and clock reset require explicit tests. A 40 ms fixture is a test parameter, not a production calibration. Test generation must have a recorded seed and useful invariant rather than only matching the return enum.
+
+Navigation: [Project home](../README.md), [documentation](README.md), [delivery plans](../plans/README.md).
