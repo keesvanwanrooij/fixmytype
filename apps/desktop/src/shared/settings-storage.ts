@@ -10,7 +10,7 @@ const isInterfaceLanguage = (value: unknown): value is InterfaceLanguage => valu
 const isRepairLanguage = (value: unknown): value is RepairLanguage => value === "auto" || isInterfaceLanguage(value);
 const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === "object" && value !== null && !Array.isArray(value);
 
-const isSettings = (value: unknown): value is Settings => {
+export const isSettings = (value: unknown): value is Settings => {
   if (!isRecord(value)) {
     return false;
   }
@@ -52,6 +52,10 @@ export const loadSettings = (storage: SettingsStorage): SettingsLoadResult => {
 };
 
 export const saveSettings = (storage: SettingsStorage, settings: Settings): SettingsStorageIssue | undefined => {
+  if (!isSettings(settings)) {
+    return "invalid";
+  }
+
   try {
     storage.setItem(settingsStorageKey, JSON.stringify({ settings, version: 1 }));
     return undefined;

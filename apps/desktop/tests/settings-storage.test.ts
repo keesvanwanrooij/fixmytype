@@ -1,5 +1,5 @@
 import { createSettings } from "../src/shared/settings.js";
-import { loadSettings } from "../src/shared/settings-storage.js";
+import { loadSettings, saveSettings } from "../src/shared/settings-storage.js";
 import { describe, expect, it } from "vitest";
 
 describe("settings storage", () => {
@@ -36,5 +36,21 @@ describe("settings storage", () => {
     };
 
     expect(loadSettings(storage)).toEqual({ issue: "unavailable", settings: createSettings() });
+  });
+
+  it("does not overwrite local storage with an incomplete settings object", () => {
+    let writes = 0;
+    const storage = {
+      getItem: () => null,
+      setItem: () => {
+        writes += 1;
+      }
+    };
+
+    // Runtime data can bypass TypeScript, so persistence must validate again.
+    const incomplete = { interfaceLanguage: "nl", repairLanguage: "auto" } as ReturnType<typeof createSettings>;
+
+    expect(saveSettings(storage, incomplete)).toBe("invalid");
+    expect(writes).toBe(0);
   });
 });
