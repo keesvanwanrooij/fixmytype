@@ -7,7 +7,7 @@
 
 FixMyType is a free, open-source Windows app for people whose keyboards create accidental repeats, double letters, or unreliable keystrokes. It quietly filters clear keyboard chatter while you type. Optional local repair can then suggest corrections in Dutch or English, with a visible result and Undo before anything is changed. Your words stay on your computer.
 
-**Status:** early development. The first public foundation is being built. Do not rely on it for critical work yet.
+**Status:** early development. Phase 1, the public repository foundation, is complete. The app itself is not built yet, so do not rely on FixMyType for critical work.
 
 ## Start here
 
