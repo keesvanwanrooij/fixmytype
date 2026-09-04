@@ -37,7 +37,7 @@ The project exists to give people with damaged or unreliable keyboards immediate
 ## Tasks
 
 - [x] **Phase 1 — Public foundation.** Created `LICENSE`, `NOTICE`, `TRADEMARKS.md`, `CODE_OF_CONDUCT.md`, `CONTRIBUTING.md`, `SECURITY.md`, `SUPPORT.md`, `.github/FUNDING.yml`, issue templates, pull-request template, `CHANGELOG.md`, `VERSION`, `.gitignore`, and `docs/README.md`; navigation contracts and public GitHub routes were verified on 2026-09-04.
-- [ ] **Phase 2 — Product contract.** Create `docs/01-product-vision.md`, `docs/02-user-problem-and-safety.md`, `docs/03-scope-and-non-goals.md`, `docs/04-decision-log.md`, and `docs/05-accessibility-principles.md`, including the separate interface- and repair-language contract.
+- [x] **Phase 2 — Product contract.** Created `docs/01-product-vision.md`, `docs/02-user-problem-and-safety.md`, `docs/03-scope-and-non-goals.md`, `docs/04-decision-log.md`, and `docs/05-accessibility-principles.md`, including the separate interface- and repair-language contract.
 - [ ] **Phase 3 — Architecture and threats.** Create `docs/06-architecture.md`, `docs/07-input-pipeline.md`, `docs/08-electron-security.md`, `docs/09-privacy-and-data-handling.md`, `docs/10-threat-model.md`, and `docs/11-windows-compatibility.md`.
 - [ ] **Phase 4 — Quality system.** Create `docs/12-testing-strategy.md`, `docs/13-test-cases-and-safety-invariants.md`, `docs/14-development-workflow.md`, `docs/15-code-style.md`, `CLAUDE.md`, and `AGENTS.md`.
 - [ ] **Phase 5 — Delivery planning.** Create `planning/README.md`, `planning/ROADMAP.md`, `planning/phases/01-foundation.md` through `planning/phases/10-public-release.md`, `planning/optimizations/README.md`, and `planning/bug-fixes/README.md`.

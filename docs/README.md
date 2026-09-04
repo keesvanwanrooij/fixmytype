@@ -13,6 +13,11 @@ This is the documentation hub for FixMyType. The project is a Windows-first, loc
 | [Security policy](../SECURITY.md) | How to report a vulnerability privately | Active |
 | [Support](../SUPPORT.md) | Donations, feedback, and project boundaries | Active |
 | [AI contributor guide](../CLAUDE.md) | Repository reading order and test-first workflow | Active |
+| [Product vision](01-product-vision.md) | Product promise and success measure | Active |
+| [Safety invariants](02-user-problem-and-safety.md) | Text-loss and privacy boundaries | Active |
+| [Scope and non-goals](03-scope-and-non-goals.md) | What the first release includes and excludes | Active |
+| [Decision log](04-decision-log.md) | Binding product and technical decisions | Active |
+| [Accessibility principles](05-accessibility-principles.md) | Usability requirements for an accessibility tool | Active |
 
 ## Documentation principles
 
