@@ -2,7 +2,7 @@
 
 ## Status
 
-⬜ Planned
+🟡 In progress
 
 ## Outcome
 
@@ -51,31 +51,31 @@ This phase does not install a Windows hook, suppress input, change Electron UI, 
 
 ### Package 1: crate and public vocabulary
 
-- [ ] Create `Cargo.toml` workspace entries and `crates/input-core/Cargo.toml` with no Windows or network dependency.
-- [ ] Create `src/lib.rs`, `src/event.rs`, and `src/policy.rs` with a minimal public API and crate-level documentation.
-- [ ] Define metadata fields: physical key identity, event timestamp, key state, modifier state, and injected-event flag.
-- [ ] Write a compile-time or unit test proving the event type has no text or clipboard field.
+- [x] Create `Cargo.toml` workspace entries and `crates/input-core/Cargo.toml` with no Windows or network dependency.
+- [x] Create `src/lib.rs`, `src/event.rs`, and `src/policy.rs` with a minimal public API and crate-level documentation.
+- [x] Define metadata fields: physical key identity, event timestamp, key state, modifier state, and injected-event flag.
+- [x] Write a unit test for the fixed public metadata contract. Private fields and the reviewed API contain no text or clipboard field.
 
 ### Package 2: policy rules, tested first
 
-- [ ] Write a failing test that a first press is preserved.
-- [ ] Write a failing test that an immediate same-key repeat without modifiers is classified as suspicious only at the documented boundary.
-- [ ] Write failing boundary tests for equal-to, just-before, and just-after the configured interval.
-- [ ] Write failing tests that different keys, key-up events, modifiers, and injected events are preserved.
-- [ ] Implement the smallest pure classifier that makes those tests pass.
+- [x] Write a failing test that a first press is preserved.
+- [x] Write a failing test that an immediate same-key repeat without modifiers is classified as suspicious only at the documented boundary.
+- [x] Write failing boundary tests for equal-to, just-before, and just-after the configured interval.
+- [x] Write failing tests that different keys, key-up events, modifiers, and injected events are preserved.
+- [x] Implement the smallest pure classifier that makes those tests pass.
 
 ### Package 3: misuse resistance
 
-- [ ] Add property tests that arbitrary metadata never panics and always returns one defined result.
-- [ ] Add tests that changing a non-relevant field cannot turn a preserved event into a suspicious repeat.
-- [ ] Add explicit invalid-timestamp handling that preserves input.
-- [ ] Keep the policy configuration immutable per classifier instance and document the unit of time.
+- [x] Add property tests that arbitrary metadata never panics and always returns one defined result.
+- [x] Add tests that modifier and injected metadata always preserve an event, including when they appear in the prior record.
+- [x] Add explicit invalid-timestamp handling that preserves input.
+- [x] Keep the policy configuration immutable per classifier instance and document the unit of time.
 
 ### Package 4: handoff evidence
 
-- [ ] Add `docs/` API notes describing input and output fields in plain language.
-- [ ] Run formatting, Clippy, unit tests, and property tests before and after cleanup.
-- [ ] Record the exact test names and commit in `Implementation record`.
+- [x] Add `docs/` API notes describing input and output fields in plain language.
+- [x] Run formatting, Clippy, unit tests, and property tests before and after cleanup.
+- [x] Record the exact test names and commit in `Implementation record`.
 - [ ] Update the phase status only when every acceptance item has evidence.
 
 ## Required tests
@@ -94,7 +94,7 @@ cargo clippy --workspace --all-targets -- -D warnings
 cargo test --workspace
 ```
 
-Expected: every command exits successfully. Test output names the normal, boundary, modifier, injected-event, invalid-data, and generated-data cases.
+Expected: every command exits successfully. Test output names the normal, boundary, modifier, injected-event, invalid-data, and generated-data cases. On 2026-09-04, the final check ran from this Windows checkout and passed all eight integration and property tests.
 
 ## Windows checks
 
@@ -112,4 +112,6 @@ Stop if the proposed API needs typed content or a Windows dependency. Revert the
 
 ## Implementation record
 
-No implementation has started. Before coding, record the failing-test evidence and any material choice that changes the metadata contract.
+- 2026-09-04: `cargo test --workspace` failed before implementation because `src/lib.rs` did not exist. The test file was already present and specified the preserve-first contract.
+- 2026-09-04: Added the pure `fixmytype-input-core` crate, its content-free API documentation, eight tests, and a Proptest property test. The test names are `preserves_the_first_key_down`, `marks_an_unmodified_same_key_repeat_inside_the_window_as_suspicious`, `documents_the_repeat_window_boundaries`, `preserves_different_keys_key_up_modifier_and_injected_events`, `preserves_events_with_an_invalid_timestamp_order`, `preserves_when_the_previous_event_has_modifier_or_injected_metadata`, `only_exposes_the_fixed_content_free_metadata_contract`, and `arbitrary_metadata_never_panics_and_returns_a_known_recommendation`. `cargo fmt --check`, `cargo clippy --workspace --all-targets -- -D warnings`, and `cargo test --workspace` passed after cleanup.
+- 2026-09-04: The code commit is pending a clean-checkout Windows verification. No Windows hook, input suppression, text capture, or product-wide timing default was added.

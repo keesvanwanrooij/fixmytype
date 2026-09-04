@@ -35,6 +35,7 @@ This is the documentation hub for FixMyType. The project is a Windows-first, loc
 | [Troubleshooting](20-troubleshooting.md) | Safe first responses to failures | Active |
 | [FAQ](21-faq.md) | Common product questions | Active |
 | [Donations](22-donations-and-sustainability.md) | Voluntary project support | Active |
+| [Input-core API](23-input-core-api.md) | Content-free policy contract for the future worker | Active |
 
 ## Documentation principles
 
