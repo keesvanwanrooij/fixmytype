@@ -1,0 +1,28 @@
+# Dependencies and builds
+node_modules/
+dist/
+out/
+release/
+coverage/
+*.tsbuildinfo
+
+# Rust
+target/
+
+# Local settings, secrets, and logs
+.env
+.env.*
+!.env.example
+*.local.*
+*.log
+
+# Windows and editors
+Thumbs.db
+Desktop.ini
+.vs/
+.vscode/
+!.vscode/extensions.json
+
+# Temporary files
+tmp/
+.cache/

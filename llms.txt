@@ -1,0 +1,24 @@
+# FixMyType
+
+> A free, open-source, local Windows typing aid for unreliable keyboards.
+
+## Canonical entry points
+
+- [Public overview](README.md)
+- [Documentation hub](docs/README.md)
+- [10-phase roadmap](planning/ROADMAP.md)
+- [Contributor and AI workflow](CLAUDE.md)
+- [Contributing guide](CONTRIBUTING.md)
+- [Security policy](SECURITY.md)
+
+## Project commitments
+
+- Windows-first; Dutch and English interface.
+- Local-first; no cloud text processing, accounts, ads, subscriptions, or paid local-core tier.
+- Keyboard chatter filtering is deterministic and separate from optional local AI repair.
+- Text repair is explicit, reviewable, and undoable.
+- Never claim roadmap work is already implemented.
+
+## Navigation rule
+
+Use `README.md` as the canonical project overview, `docs/README.md` for explanatory documentation, and `planning/ROADMAP.md` for delivery status. Read `CLAUDE.md` before proposing or making repository changes.
