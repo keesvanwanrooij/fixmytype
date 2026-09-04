@@ -2,10 +2,14 @@ import { app, BrowserWindow, ipcMain, Menu, nativeImage, shell, Tray } from "ele
 import path from "node:path";
 
 import { isAllowedExternalUrl, supportUrl } from "./external-url.js";
+import { nextProtectionEnabled, protectionActionLabel } from "./protection-state.js";
+import type { InterfaceLanguage, Settings } from "../shared/settings.js";
 
 let mainWindow: BrowserWindow | undefined;
 let tray: Tray | undefined;
 let isQuitting = false;
+let interfaceLanguage: InterfaceLanguage = "en";
+let protectionEnabled = true;
 
 const trayIcon = () => nativeImage.createFromDataURL(`data:image/svg+xml,${encodeURIComponent(`
   <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
@@ -54,12 +58,18 @@ const openSettings = (): void => {
   mainWindow.focus();
 };
 
-const createTray = (): Tray => {
-  const nextTray = new Tray(trayIcon());
-  nextTray.setToolTip("FixMyType settings");
-  nextTray.setContextMenu(Menu.buildFromTemplate([
+const refreshTrayMenu = (): void => {
+  if (!tray) {
+    return;
+  }
+
+  tray.setContextMenu(Menu.buildFromTemplate([
     { label: "Open settings", click: openSettings },
     { label: "Hide settings", click: () => mainWindow?.hide() },
+    {
+      label: protectionActionLabel(protectionEnabled, interfaceLanguage),
+      click: () => updateProtectionEnabled(nextProtectionEnabled(protectionEnabled))
+    },
     { type: "separator" },
     {
       label: "Quit FixMyType",
@@ -69,9 +79,31 @@ const createTray = (): Tray => {
       }
     }
   ]));
-  nextTray.on("click", openSettings);
-  return nextTray;
 };
+
+const updateProtectionEnabled = (enabled: boolean): void => {
+  protectionEnabled = enabled;
+  refreshTrayMenu();
+  mainWindow?.webContents.send("protection:changed", protectionEnabled);
+};
+
+const createTray = (): void => {
+  tray = new Tray(trayIcon());
+  tray.setToolTip("FixMyType settings");
+  tray.on("click", openSettings);
+  refreshTrayMenu();
+};
+
+const isSettingsSync = (value: unknown): value is Settings => (
+  typeof value === "object"
+  && value !== null
+  && "interfaceLanguage" in value
+  && "repairLanguage" in value
+  && "protectionEnabled" in value
+  && (value.interfaceLanguage === "en" || value.interfaceLanguage === "nl")
+  && (value.repairLanguage === "auto" || value.repairLanguage === "en" || value.repairLanguage === "nl")
+  && typeof value.protectionEnabled === "boolean"
+);
 
 app.on("web-contents-created", (_event, contents) => {
   contents.on("will-navigate", (event) => event.preventDefault());
@@ -79,7 +111,9 @@ app.on("web-contents-created", (_event, contents) => {
 });
 
 app.whenReady().then(() => {
-  tray ??= createTray();
+  if (!tray) {
+    createTray();
+  }
   openSettings();
 });
 
@@ -93,4 +127,13 @@ ipcMain.handle("support:open", (event): Promise<void> => {
   }
 
   return shell.openExternal(supportUrl);
+});
+
+ipcMain.handle("settings:sync", (event, settings: unknown): void => {
+  if (event.sender !== mainWindow?.webContents || !isSettingsSync(settings)) {
+    throw new Error("The settings update was rejected.");
+  }
+
+  interfaceLanguage = settings.interfaceLanguage;
+  updateProtectionEnabled(settings.protectionEnabled);
 });

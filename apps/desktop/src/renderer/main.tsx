@@ -1,42 +1,153 @@
 import { createRoot } from "react-dom/client";
-import { useState } from "react";
-import { createSettings, setInterfaceLanguage, setRepairLanguage } from "../shared/settings.js";
+import { useEffect, useState } from "react";
+import { copyFor } from "./copy.js";
+import "./styles.css";
+import {
+  setInterfaceLanguage,
+  setProtectionEnabled,
+  setRepairLanguage,
+  type InterfaceLanguage,
+  type RepairLanguage,
+  type Settings
+} from "../shared/settings.js";
+import { loadSettings, saveSettings, type SettingsStorageIssue } from "../shared/settings-storage.js";
+
+type Section = "general" | "language" | "about";
+
+type SettingsView = {
+  issue: SettingsStorageIssue | undefined;
+  settings: Settings;
+};
+
+const storedSettings = (): SettingsView => loadSettings(window.localStorage);
 
 const App = () => {
-  const [settings, setSettings] = useState(createSettings);
+  const [view, setView] = useState<SettingsView>(storedSettings);
+  const [section, setSection] = useState<Section>("general");
+  const { issue, settings } = view;
+  const copy = copyFor(settings.interfaceLanguage);
+
+  const updateSettings = (nextSettings: Settings): void => {
+    const nextIssue = issue === "invalid" ? "invalid" : saveSettings(window.localStorage, nextSettings);
+    setView({ issue: nextIssue, settings: nextSettings });
+  };
+
+  useEffect(() => {
+    document.documentElement.lang = settings.interfaceLanguage;
+    void window.fixMyType.syncSettings(settings);
+  }, [settings]);
+
+  useEffect(() => window.fixMyType.onProtectionChanged((enabled) => {
+    const nextSettings = setProtectionEnabled(settings, enabled);
+    const nextIssue = issue === "invalid" ? "invalid" : saveSettings(window.localStorage, nextSettings);
+    setView({ issue: nextIssue, settings: nextSettings });
+  }), [issue, settings]);
+
+  const issueMessage = issue === "invalid" ? copy.savedDataInvalid : issue === "unavailable" ? copy.savedDataUnavailable : undefined;
 
   return (
-    <main>
-      <h1>FixMyType</h1>
-      <p>Local settings</p>
+    <div className="app-shell">
+      <aside className="sidebar">
+        <div className="brand">
+          <span className="brand-mark" aria-hidden="true">F</span>
+          <div>
+            <strong>{copy.appName}</strong>
+            <span>{copy.localSettings}</span>
+          </div>
+        </div>
 
-      <label>
-        App language
-        <select
-          value={settings.interfaceLanguage}
-          onChange={(event) => setSettings(setInterfaceLanguage(settings, event.target.value as "en" | "nl"))}
-        >
-          <option value="en">English</option>
-          <option value="nl">Nederlands</option>
-        </select>
-      </label>
+        <nav aria-label={copy.settings}>
+          {([
+            ["general", copy.general],
+            ["language", copy.language],
+            ["about", copy.about]
+          ] as const).map(([name, label]) => (
+            <button
+              className="navigation-item"
+              type="button"
+              key={name}
+              aria-current={section === name ? "page" : undefined}
+              onClick={() => setSection(name)}
+            >
+              {label}
+            </button>
+          ))}
+        </nav>
+      </aside>
 
-      <label>
-        Repair language
-        <select
-          value={settings.repairLanguage}
-          onChange={(event) => setSettings(setRepairLanguage(settings, event.target.value as "auto" | "en" | "nl"))}
-        >
-          <option value="auto">Automatic</option>
-          <option value="en">English</option>
-          <option value="nl">Nederlands</option>
-        </select>
-      </label>
+      <main className="settings-content">
+        <header>
+          <p className="eyebrow">{copy.localSettings}</p>
+          <h1>{section === "general" ? copy.general : section === "language" ? copy.language : copy.about}</h1>
+        </header>
 
-      <footer>
-        <button onClick={() => void window.fixMyType.support()}>Support FixMyType</button>
-      </footer>
-    </main>
+        {issueMessage && <p className="notice" role="alert">{issueMessage}</p>}
+
+        {section === "general" && (
+          <section className="settings-card" aria-labelledby="protection-heading">
+            <div>
+              <h2 id="protection-heading">{copy.protection}</h2>
+              <p>{copy.protectionBody}</p>
+            </div>
+            <button
+              className="switch"
+              type="button"
+              role="switch"
+              aria-checked={settings.protectionEnabled}
+              onClick={() => updateSettings(setProtectionEnabled(settings, !settings.protectionEnabled))}
+            >
+              <span>{settings.protectionEnabled ? copy.protectionOn : copy.protectionOff}</span>
+              <span className="switch-track" aria-hidden="true"><span /></span>
+            </button>
+          </section>
+        )}
+
+        {section === "language" && (
+          <section className="settings-card language-card" aria-labelledby="language-heading">
+            <div>
+              <h2 id="language-heading">{copy.language}</h2>
+              <p>{copy.languageBody}</p>
+            </div>
+
+            <label>
+              <span>{copy.appLanguage}</span>
+              <select
+                value={settings.interfaceLanguage}
+                onChange={(event) => updateSettings(setInterfaceLanguage(settings, event.target.value as InterfaceLanguage))}
+              >
+                <option value="en">English</option>
+                <option value="nl">Nederlands</option>
+              </select>
+            </label>
+
+            <label>
+              <span>{copy.repairLanguage}</span>
+              <select
+                value={settings.repairLanguage}
+                onChange={(event) => updateSettings(setRepairLanguage(settings, event.target.value as RepairLanguage))}
+              >
+                <option value="auto">{copy.automatic}</option>
+                <option value="en">English</option>
+                <option value="nl">Nederlands</option>
+              </select>
+            </label>
+          </section>
+        )}
+
+        {section === "about" && (
+          <section className="settings-card" aria-labelledby="about-heading">
+            <div>
+              <h2 id="about-heading">{copy.appName}</h2>
+              <p>{copy.aboutBody}</p>
+            </div>
+          </section>
+        )}
+
+        <footer className="support-footer">
+          <button type="button" onClick={() => void window.fixMyType.support()}>{copy.support}</button>
+        </footer>
+      </main>
+    </div>
   );
 };
 

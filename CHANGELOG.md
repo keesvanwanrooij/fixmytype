@@ -4,6 +4,12 @@ All notable user-visible changes to FixMyType will be documented here. This proj
 
 ## [Unreleased]
 
+### Added
+
+- A local Settings screen in Dutch and English with separate repair-language selection.
+- A persisted protection preference that stays clear about the planned input filter.
+- A tray pause or resume control for that preference and a bottom Support FixMyType button.
+
 ### Changed
 
 - Contributor workflow now requires material phase questions with clear options and consequences, and a verified GitHub push as build-loop step 8.
