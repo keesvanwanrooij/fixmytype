@@ -15,6 +15,7 @@ export type Copy = {
   protectionOff: string;
   protectionOn: string;
   repairLanguage: string;
+  resetSettings: string;
   savedDataInvalid: string;
   savedDataUnavailable: string;
   settings: string;
@@ -36,6 +37,7 @@ const english: Copy = {
   protectionOff: "Paused",
   protectionOn: "Enabled",
   repairLanguage: "Repair language",
+  resetSettings: "Reset local settings",
   savedDataInvalid: "Saved settings could not be read. Safe defaults are in use. The saved data was not changed.",
   savedDataUnavailable: "Settings could not be saved on this Windows profile. Your current choices remain open in this window.",
   settings: "Settings",
@@ -57,6 +59,7 @@ const dutch: Copy = {
   protectionOff: "Gepauzeerd",
   protectionOn: "Ingeschakeld",
   repairLanguage: "Hersteltaal",
+  resetSettings: "Lokale instellingen opnieuw instellen",
   savedDataInvalid: "Opgeslagen instellingen konden niet worden gelezen. Veilige standaardinstellingen zijn actief. De opgeslagen gegevens zijn niet gewijzigd.",
   savedDataUnavailable: "Instellingen konden niet in dit Windows-profiel worden bewaard. Je huidige keuzes blijven in dit venster open.",
   settings: "Instellingen",

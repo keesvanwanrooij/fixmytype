@@ -11,7 +11,7 @@ import {
   type Settings
 } from "../shared/settings.js";
 import { loadSettings } from "../shared/settings-storage.js";
-import { updateSettingsView, type SettingsView } from "../shared/settings-view.js";
+import { resetSettingsView, updateSettingsView, type SettingsView } from "../shared/settings-view.js";
 
 type Section = "general" | "language" | "about";
 
@@ -75,7 +75,16 @@ const App = () => {
           <h1>{section === "general" ? copy.general : section === "language" ? copy.language : copy.about}</h1>
         </header>
 
-        {issueMessage && <p className="notice" role="alert">{issueMessage}</p>}
+        {issueMessage && (
+          <div className="notice" role="alert">
+            <p>{issueMessage}</p>
+            {issue === "invalid" && (
+              <button type="button" onClick={() => setView(resetSettingsView(window.localStorage))}>
+                {copy.resetSettings}
+              </button>
+            )}
+          </div>
+        )}
 
         {section === "general" && (
           <section className="settings-card" aria-labelledby="protection-heading">

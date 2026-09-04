@@ -214,6 +214,17 @@ select {
   line-height: 1.5;
 }
 
+.notice button {
+  margin-top: 0.75rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid #8f4a12;
+  border-radius: 0.4rem;
+  color: #5c3511;
+  background: transparent;
+  font-weight: 700;
+  cursor: pointer;
+}
+
 .support-footer {
   margin-top: 2rem;
 }

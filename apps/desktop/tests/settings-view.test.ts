@@ -1,5 +1,5 @@
 import { createSettings, setInterfaceLanguage } from "../src/shared/settings.js";
-import { updateSettingsView } from "../src/shared/settings-view.js";
+import { resetSettingsView, updateSettingsView } from "../src/shared/settings-view.js";
 import { describe, expect, it } from "vitest";
 
 describe("settings view", () => {
@@ -33,5 +33,19 @@ describe("settings view", () => {
 
     expect(updateSettingsView(view, setInterfaceLanguage(view.settings, "nl"), storage).issue).toBeUndefined();
     expect(writes).toHaveLength(1);
+  });
+
+  it("returns to safe defaults after an explicit reset", () => {
+    const removed: string[] = [];
+    const storage = {
+      getItem: () => "{not-json",
+      setItem: () => undefined,
+      removeItem: (key: string) => {
+        removed.push(key);
+      }
+    };
+
+    expect(resetSettingsView(storage)).toEqual({ issue: undefined, settings: createSettings() });
+    expect(removed).toEqual(["fixmytype:settings:v1"]);
   });
 });
