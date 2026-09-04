@@ -64,6 +64,20 @@ Do not ask routine implementation questions. If a safe default is already docume
 - Mark planned work as planned. Never present it as already shipped.
 - Keep links, commands, version numbers, and claims verifiable. If not verified, say so.
 
+## Writing for people
+
+Write calm, direct copy that sounds like a thoughtful person, not generated promotion. Documentation stays English unless the maintainer requests Dutch. Dutch UI and documentation use `je` form. English copy addresses the reader as `you`.
+
+- Write short, complete sentences. Every list item has a subject and a verb.
+- Use `I` for what the maintainer or project does. Use `we` only for a small, clearly defined group.
+- Never use an em dash. Use a comma, full stop, colon, or ordinary hyphen instead.
+- Explain jargon the first time it appears. Do not stack three examples when two explain the point.
+- Do not use bold text as emphasis inside running prose.
+- Do not use rhetorical questions that the following sentence answers.
+- Avoid AI-shaped constructions such as “not only X but also Y”, “it is important to note”, “in today’s world”, “in the current landscape”, “let’s dive in”, or “whether you are X or Y”.
+- Remove inflated words when the sentence still works without them. Avoid: robust, seamless, unlock, leverage, transform, powerful, crucial, essential, valuable, comprehensive, versatile, and innovative.
+- Never use these terms anywhere, including in a denial: noise, hype, in today’s world, transform, state-of-the-art, seamless, innovative, get rich quick, guaranteed returns, logic over emotion, or exclude emotions.
+
 ## Scope discipline
 
 Windows only for the current roadmap. The settings screen includes separate interface language and repair language choices. A donation control is a small, explicit link to GitHub Sponsors; it never gates features, interrupts typing, or implies an upgrade.
