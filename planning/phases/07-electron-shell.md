@@ -2,7 +2,7 @@
 
 ## Status
 
-In progress
+Complete
 
 ## Goal
 
@@ -17,9 +17,9 @@ Create a secure, local Electron and React shell that can be built, started, and 
 - [x] Add a minimal React Settings renderer.
 - [x] Add a sandboxed Electron `BrowserWindow` in `src/main/main.ts`.
 - [x] Add a narrow preload bridge in `src/preload/preload.ts`.
-- [ ] Add a tray icon, context menu, and show/hide behavior.
-- [ ] Add renderer CSP and block unexpected navigation.
-- [ ] Run lint, typecheck, tests, build, and a live Windows start check.
+- [x] Add a tray icon, context menu, and show/hide behavior.
+- [x] Add renderer CSP and block unexpected navigation.
+- [x] Run lint, typecheck, tests, build, and a live Windows start check.
 
 ## Acceptance criteria
 

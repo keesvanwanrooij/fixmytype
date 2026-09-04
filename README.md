@@ -7,14 +7,14 @@
 
 FixMyType is a free, open-source Windows app for people whose keyboards create accidental repeats, double letters, or unreliable keystrokes. It quietly filters clear keyboard chatter while you type. Optional local repair can then suggest corrections in Dutch or English, with a visible result and Undo before anything is changed. Your words stay on your computer.
 
-**Status:** early development. Phase 1, the public repository foundation, is complete. The app itself is not built yet, so do not rely on FixMyType for critical work.
+**Status:** early development. The public foundation and desktop shell are complete. FixMyType does not filter or repair input yet, so do not rely on it for critical work.
 
 ## Start here
 
 | If you want to... | Read |
 |---|---|
 | Understand the problem and product promise | [Documentation hub](docs/README.md) |
-| See every planned release phase | [10-phase roadmap](planning/README.md) |
+| See every planned release phase | [delivery overview](planning/README.md) |
 | Follow or review the current work | [Planning hub](planning/README.md) |
 | Contribute safely | [Contributing guide](CONTRIBUTING.md) and [security policy](SECURITY.md) |
 | Give an AI assistant safe project context | [CLAUDE.md](CLAUDE.md) and [llms.txt](llms.txt) |
@@ -44,16 +44,17 @@ The project starts with the least intrusive help: detect clear accidental repeat
 
 ## Install and run from source
 
-FixMyType is still in development. You can install the current desktop workspace and run its tests, but the Electron app window and tray process are not available yet. Do not expect an end-user installer or an `npm start` command until Phase 7 is complete.
+FixMyType is still in development. The current source build opens a local Settings window and a tray menu. It does not yet filter or repair input. An end-user installer will be added only after Windows packaging is verified.
 
 ```powershell
 git clone https://github.com/keesvanwanrooij/fixmytype.git
 cd fixmytype/apps/desktop
 npm install
 npm test
+npm start
 ```
 
-The test command verifies the current typed Settings foundation. Follow the [roadmap](planning/README.md) for the Electron launch milestone and [docs/16-installation.md](docs/16-installation.md) for verified-release installation guidance.
+The test command verifies the typed Settings and external-link safety foundations. `npm start` builds the desktop app and opens its Settings window. Follow the [delivery overview](planning/README.md) for planned capabilities and [docs/16-installation.md](docs/16-installation.md) for release-installation guidance.
 
 ## A careful approach to AI
 

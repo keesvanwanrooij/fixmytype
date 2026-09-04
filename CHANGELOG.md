@@ -15,4 +15,4 @@ All notable user-visible changes to FixMyType will be documented here. This proj
 - Public Apache-2.0 repository foundation with trademark clarification.
 - Donation, security, conduct, contribution, and issue-reporting routes.
 - Root, documentation, planning, and AI navigation for people and machine readers.
-- A locked ten-phase roadmap and test-first collaboration rules.
+- Initial delivery planning and test-first collaboration rules.
