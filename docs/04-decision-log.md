@@ -11,6 +11,8 @@ This log records product and technical decisions that constrain implementation. 
 | 2026-09-04 | Dutch and English interface; repair language is separate | UI locale never forces repair locale. |
 | 2026-09-04 | Repair is opt-in and undoable | Automatic rewriting cannot be silently enabled. |
 | 2026-09-04 | Quick iterations use `main`; substantial phases may use a branch | Small fixes ship quickly while larger work stays reviewable. |
+| 2026-09-04 | Electron renderer has no native input or filesystem privilege | The main process and Rust worker retain narrow, testable responsibilities. |
+| 2026-09-04 | No kernel driver or protected-input support | Safety and reversibility take priority over broad interception. |
 
 No contributor may reverse a decision that changes privacy, scope, or text safety without an explicit maintainer decision.
 

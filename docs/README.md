@@ -6,7 +6,7 @@ This is the documentation hub for FixMyType. The project is a Windows-first, loc
 
 | Topic | Purpose | Status |
 |---|---|---|
-| [Project foundation plan](../planning/00-foundation/00-repository-foundation-plan.md) | Locked scope, architecture decisions, and acceptance criteria | Active |
+| [Planning overview](../planning/README.md) | Shared guardrails and all delivery phases | Active |
 | [10-phase roadmap](../planning/ROADMAP.md) | The sequence from foundation to public release | Active |
 | [Planning hub](../planning/README.md) | Where phase, optimization, and bug-fix plans live | Active |
 | [Contributing](../CONTRIBUTING.md) | How to make a safe, reviewable contribution | Active |

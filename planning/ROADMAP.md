@@ -10,10 +10,19 @@ This roadmap describes the order in which FixMyType becomes a safe public Window
 | 4 | Quality system: tests, test cases, development workflow, coding standards | Complete |
 | 5 | Delivery planning: phase documents, optimization queue, bug-fix process | Complete |
 | 6 | User documentation: setup, configuration, protection, local repair, FAQ | Complete |
-| 7 | Electron shell: secure tray UI, Settings screen, tests first | Planned |
-| 8 | Input prototype: observation-mode native worker, deterministic policy tests | Planned |
-| 9 | Safe protection and repair: opt-in controls, undo, local model integration | Planned |
-| 10 | Release readiness: CI, packaging, Windows verification, changelog, tags | Planned |
+| 7 | Desktop shell: React, Electron main process, secure preload, local window | In progress |
+| 8 | Settings and localisation: tray controls, Dutch/English, stored local preferences | Planned |
+| 9 | Input policy library: deterministic timing rules and property tests | Planned |
+| 10 | Native observation worker: Windows event observation with content-free diagnostics | Planned |
+| 11 | Safe chatter protection: suppression, injected-event guard, pause and exclusions | Planned |
+| 12 | Selected-text repair: local Ollama availability, preview, apply and Undo | Planned |
+| 13 | Sentence-repair experiment: explicit opt-in, app allowlist and rollback | Planned |
+| 14 | Compatibility and accessibility: Windows matrix, keyboard, screen reader, scale | Planned |
+| 15 | Reliability and diagnostics: recovery, local logs, performance measurements | Planned |
+| 16 | CI and supply-chain checks: tests, lint, audit, licence and secret gates | Planned |
+| 17 | Windows packaging: installer, signing path, updates and rollback | Planned |
+| 18 | Release candidate: closed beta, issue triage, regression and documentation pass | Planned |
+| 19 | Public release: release checklist, tag, installer checksums and support handoff | Planned |
 
 ## Phase 1: public foundation
 

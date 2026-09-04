@@ -42,6 +42,19 @@ The project starts with the least intrusive help: detect clear accidental repeat
 - Silently rewrite text, block an application without a clear opt-out, or sell a paid tier.
 - Send your typed text to a remote AI service.
 
+## Install and run from source
+
+FixMyType is still in development. You can install the current desktop workspace and run its tests, but the Electron app window and tray process are not available yet. Do not expect an end-user installer or an `npm start` command until Phase 7 is complete.
+
+```powershell
+git clone https://github.com/keesvanwanrooij/fixmytype.git
+cd fixmytype/apps/desktop
+npm install
+npm test
+```
+
+The test command verifies the current typed Settings foundation. Follow the [roadmap](planning/ROADMAP.md) for the Electron launch milestone and [docs/16-installation.md](docs/16-installation.md) for verified-release installation guidance.
+
 ## A careful approach to AI
 
 An AI rewrite can be useful for damaged text, but it is never the first line of defence. Chatter protection must work deterministically and locally. Optional repair runs only against a local model you control, begins in a reviewable mode, and always preserves an Undo path. Full safety decisions will live in the [documentation hub](docs/README.md).

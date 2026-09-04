@@ -7,10 +7,38 @@ This directory turns the public promise in the [root README](../README.md) into 
 | Need | Location |
 |---|---|
 | The full sequence | [10-phase roadmap](ROADMAP.md) |
-| The current foundation contract | [Phase 0 foundation plan](00-foundation/00-repository-foundation-plan.md) |
+| Shared scope and safety constraints | [Shared guardrails](#shared-guardrails) |
 | Work planned for one release phase | `phases/` |
 | Measured performance or reliability work | `optimizations/` |
 | Reproducible defects and their fixes | `bug-fixes/` |
+
+## Full delivery overview
+
+| Phase | Outcome | Read first |
+|---|---|---|
+| 1 | Public foundation | `phases/01-public-foundation.md` |
+| 2 | Product contract | `phases/02-product-contract.md` |
+| 3 | Architecture and threats | `phases/03-architecture-and-threats.md` |
+| 4 | Quality system | `phases/04-quality-system.md` |
+| 5 | Delivery planning | `phases/05-delivery-planning.md` |
+| 6 | User documentation | `phases/06-user-documentation.md` |
+| 7 | Desktop shell | `phases/07-electron-shell.md` |
+| 8 | Settings and localisation | `phases/08-settings-and-localisation.md` |
+| 9 | Input policy library | `phases/09-input-policy-library.md` |
+| 10 | Native observation worker | `phases/10-native-observation-worker.md` |
+| 11 | Safe chatter protection | `phases/11-safe-chatter-protection.md` |
+| 12 | Selected-text repair | `phases/12-selected-text-repair.md` |
+| 13 | Sentence-repair experiment | `phases/13-sentence-repair-experiment.md` |
+| 14 | Compatibility and accessibility | `phases/14-compatibility-and-accessibility.md` |
+| 15 | Reliability and diagnostics | `phases/15-reliability-and-diagnostics.md` |
+| 16 | CI and supply chain | `phases/16-ci-and-supply-chain.md` |
+| 17 | Windows packaging | `phases/17-windows-packaging.md` |
+| 18 | Release candidate | `phases/18-release-candidate.md` |
+| 19 | Public release | `phases/19-public-release.md` |
+
+## Shared guardrails
+
+FixMyType is Windows-first, local-first, free, open source, and account-free. Electron owns the Settings UI. A Rust worker owns native input. The renderer never receives hook or filesystem privilege. No kernel driver, cloud processing, password-field handling, secure-desktop handling, telemetry, advertising, or paid tier is in scope. Preserve uncertain input. Make repairs explicit and undoable. Contact local Ollama only through loopback when the user enables it.
 
 ## Planning rules
 

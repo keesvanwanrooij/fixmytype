@@ -20,6 +20,19 @@ No new material question was required. The maintainer already chose Windows-only
 - `docs/04-decision-log.md`
 - `docs/05-accessibility-principles.md`
 
+## Tasks completed
+
+- [x] Define the user problem.
+- [x] Define text-safety invariants.
+- [x] Define product promise.
+- [x] Define non-goals.
+- [x] Record Windows scope.
+- [x] Record local-first scope.
+- [x] Record language scope.
+- [x] Record repair boundaries.
+- [x] Record accessibility rules.
+- [x] Index every decision document.
+
 ## Verification
 
 - Every document is linked from `docs/README.md`.

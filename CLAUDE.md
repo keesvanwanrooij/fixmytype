@@ -13,7 +13,7 @@ The public promise is in [README.md](README.md), explanatory material lives in [
 1. Read [README.md](README.md).
 2. Read [docs/README.md](docs/README.md).
 3. Read [planning/ROADMAP.md](planning/ROADMAP.md), then the active phase plan.
-4. Read [planning/00-foundation/00-repository-foundation-plan.md](planning/00-foundation/00-repository-foundation-plan.md) until later phase plans replace it.
+4. Read [planning/README.md](planning/README.md), then the phase file you are changing.
 5. Read the relevant safety, architecture, or test document.
 6. Read the code and tests you would change.
 
