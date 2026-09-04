@@ -28,6 +28,13 @@ This is the documentation hub for FixMyType. The project is a Windows-first, loc
 | [Safety test cases](13-test-cases-and-safety-invariants.md) | Required regression cases | Active |
 | [Development workflow](14-development-workflow.md) | Test-first to GitHub-push loop | Active |
 | [Code style](15-code-style.md) | Auditable TypeScript and Rust conventions | Active |
+| [Installation](16-installation.md) | Verified-release installation information | Active |
+| [Configuration](17-configuration.md) | Settings behavior and safe defaults | Active |
+| [Chatter protection](18-chatter-protection.md) | Deterministic local protection | Active |
+| [Local AI repair](19-local-ai-repair.md) | Optional reviewable local repair | Active |
+| [Troubleshooting](20-troubleshooting.md) | Safe first responses to failures | Active |
+| [FAQ](21-faq.md) | Common product questions | Active |
+| [Donations](22-donations-and-sustainability.md) | Voluntary project support | Active |
 
 ## Documentation principles
 
