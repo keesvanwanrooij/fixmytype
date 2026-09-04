@@ -1,5 +1,13 @@
 # Phase 17: Windows packaging
 
+## Goal
+
+Produce a repeatable Windows installer and a documented signing and rollback path.
+
+## Read first
+
+Phase 16, `SECURITY.md`, and the current version and changelog.
+
 ## Tasks
 
 - [ ] Choose installer technology.
@@ -16,3 +24,7 @@
 ## Acceptance criteria
 
 A clean Windows machine can install, start, update, and remove the app.
+
+## Stop condition
+
+Do not call an unsigned developer package a public release installer.

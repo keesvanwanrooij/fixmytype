@@ -4,6 +4,10 @@
 
 Offer explicit, local, previewable repair for a selected text range.
 
+## Read first
+
+`docs/09-privacy-and-data-handling.md`, `docs/19-local-ai-repair.md`, and phase 11.
+
 ## Tasks
 
 - [ ] Define the selection boundary and supported controls.
@@ -20,3 +24,7 @@ Offer explicit, local, previewable repair for a selected text range.
 ## Stop condition
 
 No automatic replacement ships in this phase.
+
+## Files and evidence
+
+Modify the Electron main process, preload contract, Settings UI, repair tests, privacy documentation, and compatibility matrix. Capture a test proving unavailable Ollama preserves original text.

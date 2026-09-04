@@ -4,6 +4,10 @@
 
 Turn proven observation into opt-in, reversible suppression without losing intentional input.
 
+## Read first
+
+Phases 9 and 10, plus every invariant in `docs/02-user-problem-and-safety.md`.
+
 ## Tasks
 
 - [ ] Read phases 9 and 10 plus safety invariants.
@@ -20,3 +24,7 @@ Turn proven observation into opt-in, reversible suppression without losing inten
 ## Stop condition
 
 Do not enable suppression by default until every regression test and manual check passes.
+
+## Files and evidence
+
+Modify the worker, settings UI, policy tests, Windows matrix, and changelog. Record the exact timing default and all excluded contexts.

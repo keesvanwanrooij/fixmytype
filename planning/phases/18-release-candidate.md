@@ -1,5 +1,13 @@
 # Phase 18: release candidate
 
+## Goal
+
+Run a controlled beta with clear safety reporting before public distribution.
+
+## Read first
+
+Phases 14–17, security policy, and release checklist.
+
 ## Tasks
 
 - [ ] Recruit closed beta testers.
@@ -16,3 +24,7 @@
 ## Acceptance criteria
 
 No open critical text-loss, privacy, or startup defect remains.
+
+## Evidence
+
+Keep beta feedback anonymised and record each disposition in a bug-fix file.

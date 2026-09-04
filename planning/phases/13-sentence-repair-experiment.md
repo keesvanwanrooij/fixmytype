@@ -4,6 +4,10 @@
 
 Test explicit post-sentence suggestions without promising cross-application automation.
 
+## Read first
+
+Phase 12 and the decision log. This is an experiment, not a release promise.
+
 ## Tasks
 
 - [ ] List supported applications before code.
@@ -20,3 +24,7 @@ Test explicit post-sentence suggestions without promising cross-application auto
 ## Stop condition
 
 Remove the experiment if Undo cannot restore exact text.
+
+## Files and evidence
+
+Keep experiment settings, allowlist, tests, latency measurements, and compatibility limits in separate files so the feature can be removed cleanly.

@@ -4,6 +4,10 @@
 
 Verify the app with real Windows users, controls, languages, and assistive settings.
 
+## Read first
+
+`docs/05-accessibility-principles.md`, `docs/11-windows-compatibility.md`, and phases 8–13.
+
 ## Tasks
 
 - [ ] Define the Windows test matrix.
@@ -20,3 +24,7 @@ Verify the app with real Windows users, controls, languages, and assistive setti
 ## Stop condition
 
 Do not describe an untested application as compatible.
+
+## Evidence
+
+Record Windows version, app version, keyboard layout, assistive setting, result, and exclusion decision for every matrix row.
