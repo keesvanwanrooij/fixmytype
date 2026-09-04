@@ -4,6 +4,10 @@ All notable user-visible changes to FixMyType will be documented here. This proj
 
 ## [Unreleased]
 
+### Changed
+
+- Contributor workflow now requires material phase questions with clear options and consequences, and a verified GitHub push as build-loop step 8.
+
 ## [0.1.0] - 2026-09-04
 
 ### Added

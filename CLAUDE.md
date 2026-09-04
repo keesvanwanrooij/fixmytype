@@ -39,8 +39,21 @@ For every feature, bug fix, or behavior that can fail:
 5. Clean up duplication, unclear names, dead paths, and mixed responsibilities.
 6. Run the tests again after cleanup.
 7. Update the roadmap, changelog, and reference docs if behavior or scope changed.
+8. Review `git diff`, commit the verified change with a clear Conventional Commit message, and push it to GitHub before reporting the work complete.
 
 A test that passes before the behavior exists does not prove the behavior. Do not write broad code first and add tests afterward merely to make them green.
+
+## Starting a phase
+
+At the beginning of every phase, ask only the clarifying questions that materially change what will be built. Each question must explain, in plain language:
+
+1. The decision being made.
+2. Why it matters now.
+3. Two to four distinct options.
+4. The practical consequence of each option: what changes, what it costs, and what is given up.
+5. A recommended option and the reason for that advice.
+
+Do not ask routine implementation questions. If a safe default is already documented, use it and state that choice in the phase plan.
 
 ## Documentation and navigation
 
@@ -59,7 +72,8 @@ Do not add accounts, telemetry, cloud processing, advertising, subscriptions, cl
 
 ## Git and release hygiene
 
-- Use small, clear commits with English Conventional Commit messages.
+- Use small, clear commits with English Conventional Commit messages, then push verified work to GitHub as build-loop step 8.
+- Use `main` for quick, self-contained iterations such as a documentation correction, a small tested fix, or a narrow follow-up. Create one branch per substantial phase when the work needs review isolation, spans multiple coherent commits, or may run alongside other work.
 - Never commit secrets, local settings, user text, recordings, or clipboard content.
 - Never force-push, rewrite published history, or use a destructive reset without explicit instruction.
 - Inspect `git diff` before a commit and run the phase verification before reporting completion.

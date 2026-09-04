@@ -17,7 +17,9 @@ This directory turns the public promise in the [root README](../README.md) into 
 - One phase has one written objective, explicit non-goals, automated test gates, and manual Windows checks.
 - Any behavior that can silently damage text begins with a failing test before implementation.
 - A phase is not complete because code exists. It is complete only when its acceptance criteria and relevant verification have passed.
+- Begin each substantial phase by documenting only material clarifying choices, their options and consequences, and the recommended decision.
 - The roadmap records shipped status. `CHANGELOG.md` records user-visible changes. Neither is updated speculatively.
+- Small, self-contained iterations may proceed directly on `main`; substantial phase work uses one branch when isolation or parallel work helps.
 - Each new README must link to [README.md](../README.md), [docs/README.md](../docs/README.md), and [ROADMAP.md](ROADMAP.md).
 
 See the [root README](../README.md) for why the project exists and the [documentation hub](../docs/README.md) for its safety commitments.
