@@ -2,7 +2,7 @@
 
 ## Status
 
-🟡 In progress
+✅ Complete
 
 ## Outcome
 
@@ -76,7 +76,7 @@ This phase does not install a Windows hook, suppress input, change Electron UI, 
 - [x] Add `docs/` API notes describing input and output fields in plain language.
 - [x] Run formatting, Clippy, unit tests, and property tests before and after cleanup.
 - [x] Record the exact test names and commit in `Implementation record`.
-- [ ] Update the phase status only when every acceptance item has evidence.
+- [x] Update the phase status only when every acceptance item has evidence.
 
 ## Required tests
 
@@ -114,4 +114,4 @@ Stop if the proposed API needs typed content or a Windows dependency. Revert the
 
 - 2026-09-04: `cargo test --workspace` failed before implementation because `src/lib.rs` did not exist. The test file was already present and specified the preserve-first contract.
 - 2026-09-04: Added the pure `fixmytype-input-core` crate, its content-free API documentation, eight tests, and a Proptest property test. The test names are `preserves_the_first_key_down`, `marks_an_unmodified_same_key_repeat_inside_the_window_as_suspicious`, `documents_the_repeat_window_boundaries`, `preserves_different_keys_key_up_modifier_and_injected_events`, `preserves_events_with_an_invalid_timestamp_order`, `preserves_when_the_previous_event_has_modifier_or_injected_metadata`, `only_exposes_the_fixed_content_free_metadata_contract`, and `arbitrary_metadata_never_panics_and_returns_a_known_recommendation`. `cargo fmt --check`, `cargo clippy --workspace --all-targets -- -D warnings`, and `cargo test --workspace` passed after cleanup.
-- 2026-09-04: The code commit is pending a clean-checkout Windows verification. No Windows hook, input suppression, text capture, or product-wide timing default was added.
+- 2026-09-04: Commit `4c39473` adds the crate. A clean temporary Git worktree at that commit passed format checking, Clippy with warnings denied, and all eight Rust tests on Windows before it was removed. No Windows hook, input suppression, text capture, or product-wide timing default was added.
