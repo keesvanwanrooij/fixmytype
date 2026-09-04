@@ -1,2 +1,3 @@
 import js from "@eslint/js";
-export default [js.configs.recommended, { ignores: ["dist", "node_modules"] }];
+import tseslint from "typescript-eslint";
+export default [js.configs.recommended, ...tseslint.configs.recommended, { ignores: ["dist", "node_modules"] }];
