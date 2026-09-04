@@ -40,7 +40,7 @@ This directory turns the public promise in the [root README](../README.md) into 
 
 | Complete | In progress | Planned |
 |---|---|---|
-| Phases 1–7 | None | Phases 8–19 |
+| Phases 1–7 | Phase 8 | Phases 9–19 |
 
 The phase file is the operational checklist. A phase is complete only when every relevant task and acceptance criterion has evidence. The current app is not ready for end-user use.
 
