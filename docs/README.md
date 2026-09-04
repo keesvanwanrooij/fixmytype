@@ -18,6 +18,12 @@ This is the documentation hub for FixMyType. The project is a Windows-first, loc
 | [Scope and non-goals](03-scope-and-non-goals.md) | What the first release includes and excludes | Active |
 | [Decision log](04-decision-log.md) | Binding product and technical decisions | Active |
 | [Accessibility principles](05-accessibility-principles.md) | Usability requirements for an accessibility tool | Active |
+| [Architecture](06-architecture.md) | Electron and native-worker boundaries | Active |
+| [Input pipeline](07-input-pipeline.md) | Safe event and repair flow | Active |
+| [Electron security](08-electron-security.md) | Renderer and IPC hardening requirements | Active |
+| [Privacy](09-privacy-and-data-handling.md) | Local data limits and local-model policy | Active |
+| [Threat model](10-threat-model.md) | Harm cases and mitigations | Active |
+| [Windows compatibility](11-windows-compatibility.md) | Supported and excluded input contexts | Active |
 
 ## Documentation principles
 
