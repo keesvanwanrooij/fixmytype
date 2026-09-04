@@ -1,5 +1,5 @@
 import { createSettings } from "../src/shared/settings.js";
-import { loadSettings, saveSettings } from "../src/shared/settings-storage.js";
+import { loadSettings, resetSettings, saveSettings, settingsStorageKey } from "../src/shared/settings-storage.js";
 import { describe, expect, it } from "vitest";
 
 describe("settings storage", () => {
@@ -52,5 +52,19 @@ describe("settings storage", () => {
 
     expect(saveSettings(storage, incomplete)).toBe("invalid");
     expect(writes).toBe(0);
+  });
+
+  it("removes only the known settings record when the user explicitly resets it", () => {
+    const removed: string[] = [];
+    const storage = {
+      getItem: () => "{not-json",
+      setItem: () => undefined,
+      removeItem: (key: string) => {
+        removed.push(key);
+      }
+    };
+
+    expect(resetSettings(storage)).toBeUndefined();
+    expect(removed).toEqual([settingsStorageKey]);
   });
 });

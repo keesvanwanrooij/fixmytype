@@ -3,6 +3,7 @@ import { createSettings, type InterfaceLanguage, type RepairLanguage, type Setti
 export const settingsStorageKey = "fixmytype:settings:v1";
 
 export type SettingsStorage = Pick<Storage, "getItem" | "setItem">;
+export type ResettableSettingsStorage = SettingsStorage & Pick<Storage, "removeItem">;
 export type SettingsStorageIssue = "invalid" | "unavailable";
 export type SettingsLoadResult = { issue: SettingsStorageIssue | undefined; settings: Settings };
 
@@ -58,6 +59,15 @@ export const saveSettings = (storage: SettingsStorage, settings: Settings): Sett
 
   try {
     storage.setItem(settingsStorageKey, JSON.stringify({ settings, version: 1 }));
+    return undefined;
+  } catch {
+    return "unavailable";
+  }
+};
+
+export const resetSettings = (storage: ResettableSettingsStorage): SettingsStorageIssue | undefined => {
+  try {
+    storage.removeItem(settingsStorageKey);
     return undefined;
   } catch {
     return "unavailable";
