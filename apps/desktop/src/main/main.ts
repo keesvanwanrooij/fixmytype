@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain, Menu, nativeImage, shell, Tray } from "ele
 import path from "node:path";
 
 import { isAllowedExternalUrl, supportUrl } from "./external-url.js";
+import { resolvePreloadPath } from "./preload-path.js";
 import { nextProtectionEnabled, protectionActionLabel } from "./protection-state.js";
 import type { InterfaceLanguage, Settings } from "../shared/settings.js";
 
@@ -30,7 +31,7 @@ const createWindow = (): BrowserWindow => {
       contextIsolation: true,
       sandbox: true,
       nodeIntegration: false,
-      preload: path.join(import.meta.dirname, "../preload/preload.js")
+      preload: resolvePreloadPath(import.meta.dirname)
     }
   });
 

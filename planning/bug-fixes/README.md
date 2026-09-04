@@ -9,3 +9,4 @@ Each record must include safe reproduction steps, expected and actual behavior, 
 | Record | Status | Summary |
 |---|---|---|
 | [001-electron-relative-renderer-assets.md](001-electron-relative-renderer-assets.md) | Fixed | Electron opened a blank Settings window because the renderer bundle used absolute file paths. |
+| [002-sandboxed-preload-commonjs.md](002-sandboxed-preload-commonjs.md) | Fixed | Electron rejected the ES-module preload, leaving the Settings screen without its desktop bridge. |
