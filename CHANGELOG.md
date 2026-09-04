@@ -4,6 +4,10 @@ All notable user-visible changes to FixMyType will be documented here. This proj
 
 ## [Unreleased]
 
+### Fixed
+
+- The Electron source build now loads its bundled Settings screen from relative asset paths.
+
 ### Added
 
 - A local Settings screen in Dutch and English with separate repair-language selection.
