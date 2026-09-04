@@ -14,7 +14,7 @@ FixMyType is a free, open-source Windows app for people whose keyboards create a
 | If you want to... | Read |
 |---|---|
 | Understand the problem and product promise | [Documentation hub](docs/README.md) |
-| See every planned release phase | [10-phase roadmap](planning/ROADMAP.md) |
+| See every planned release phase | [10-phase roadmap](planning/README.md) |
 | Follow or review the current work | [Planning hub](planning/README.md) |
 | Contribute safely | [Contributing guide](CONTRIBUTING.md) and [security policy](SECURITY.md) |
 | Give an AI assistant safe project context | [CLAUDE.md](CLAUDE.md) and [llms.txt](llms.txt) |
@@ -53,7 +53,7 @@ npm install
 npm test
 ```
 
-The test command verifies the current typed Settings foundation. Follow the [roadmap](planning/ROADMAP.md) for the Electron launch milestone and [docs/16-installation.md](docs/16-installation.md) for verified-release installation guidance.
+The test command verifies the current typed Settings foundation. Follow the [roadmap](planning/README.md) for the Electron launch milestone and [docs/16-installation.md](docs/16-installation.md) for verified-release installation guidance.
 
 ## A careful approach to AI
 
@@ -79,7 +79,7 @@ apps/                     Future Electron app and native Windows input worker
 tests/                    Future automated and Windows compatibility tests
 ```
 
-Every README must link back to this page, [docs/README.md](docs/README.md), and [planning/ROADMAP.md](planning/ROADMAP.md). This keeps the public project navigable for people and machine readers alike.
+Every README must link back to this page, [docs/README.md](docs/README.md), and [planning/README.md](planning/README.md). This keeps the public project navigable for people and machine readers alike.
 
 ## License and name
 

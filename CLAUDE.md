@@ -6,13 +6,13 @@ This file sets the working rules for every human or AI contributor to FixMyType.
 
 FixMyType is a Windows-first, local-first typing aid. The local core stays free, open source, ad-free, and without accounts or a paid tier. Chatter protection is separate from optional local text repair. Privacy, reversibility, and reliable input come before convenience.
 
-The public promise is in [README.md](README.md), explanatory material lives in [docs/README.md](docs/README.md), and work order belongs to [planning/ROADMAP.md](planning/ROADMAP.md). Do not duplicate those documents here.
+The public promise is in [README.md](README.md), explanatory material lives in [docs/README.md](docs/README.md), and work order belongs to [planning/README.md](planning/README.md). Do not duplicate those documents here.
 
 ## Read before changing anything
 
 1. Read [README.md](README.md).
 2. Read [docs/README.md](docs/README.md).
-3. Read [planning/ROADMAP.md](planning/ROADMAP.md), then the active phase plan.
+3. Read [planning/README.md](planning/README.md), then the active phase plan.
 4. Read [planning/README.md](planning/README.md), then the phase file you are changing.
 5. Read the relevant safety, architecture, or test document.
 6. Read the code and tests you would change.
@@ -59,8 +59,8 @@ Do not ask routine implementation questions. If a safe default is already docume
 
 - Documentation is English; the application interface is Dutch and English.
 - Do not use model recommendations, difficulty ratings, or comparable AI-targeted metadata in FixMyType files.
-- Every README links to [README.md](README.md), [docs/README.md](docs/README.md), and [planning/ROADMAP.md](planning/ROADMAP.md), using correct relative paths.
-- The root README is the canonical public entry point. `docs/README.md` is the documentation index. `planning/ROADMAP.md` owns delivery status.
+- Every README links to [README.md](README.md), [docs/README.md](docs/README.md), and [planning/README.md](planning/README.md), using correct relative paths.
+- The root README is the canonical public entry point. `docs/README.md` is the documentation index. `planning/README.md` owns delivery status.
 - Mark planned work as planned. Never present it as already shipped.
 - Keep links, commands, version numbers, and claims verifiable. If not verified, say so.
 

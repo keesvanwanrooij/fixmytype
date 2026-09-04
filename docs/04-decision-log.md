@@ -16,4 +16,4 @@ This log records product and technical decisions that constrain implementation. 
 
 No contributor may reverse a decision that changes privacy, scope, or text safety without an explicit maintainer decision.
 
-Navigation: [README.md](../README.md), [docs/README.md](README.md), [planning/ROADMAP.md](../planning/ROADMAP.md).
+Navigation: [README.md](../README.md), [docs/README.md](README.md), [planning/README.md](../planning/README.md).

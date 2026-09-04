@@ -4,4 +4,4 @@ Pure policy logic uses deterministic unit and property tests. Electron configura
 
 Every input-changing behavior begins with a failing regression test. Tests must cover intentional repeats, modifiers, injected events, disabled state, timing boundaries, model failure, and content-free diagnostics.
 
-Read [README.md](../README.md), [docs hub](README.md), and [roadmap](../planning/ROADMAP.md).
+Read [README.md](../README.md), [docs hub](README.md), and [roadmap](../planning/README.md).

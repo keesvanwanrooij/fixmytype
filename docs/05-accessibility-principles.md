@@ -16,4 +16,4 @@ FixMyType is itself an accessibility tool, so its interface must reduce effort r
 
 Every user-visible phase includes keyboard-only navigation, Windows high-contrast review, 200% text scaling review, screen-reader labels for controls, and a Dutch/English wording review.
 
-Return to [README.md](../README.md), [docs/README.md](README.md), or [planning/ROADMAP.md](../planning/ROADMAP.md).
+Return to [README.md](../README.md), [docs/README.md](README.md), or [planning/README.md](../planning/README.md).

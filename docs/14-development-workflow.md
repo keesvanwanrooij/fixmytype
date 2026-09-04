@@ -4,4 +4,4 @@ Start a substantial phase by recording material choices, options, consequences, 
 
 Quick self-contained work uses `main`. Larger phase work may use one branch when isolation or parallel work is useful. No phase is complete until its stated commands and Windows checks have evidence.
 
-Navigation: [README.md](../README.md), [docs hub](README.md), [roadmap](../planning/ROADMAP.md).
+Navigation: [README.md](../README.md), [docs hub](README.md), [roadmap](../planning/README.md).

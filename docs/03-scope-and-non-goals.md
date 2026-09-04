@@ -21,4 +21,4 @@
 
 An addition needs an issue or phase decision if it changes privacy, input safety, permissions, dependencies, public claims, or long-term maintenance. Small corrections may stay on `main` under the repository workflow.
 
-Use [README.md](../README.md), [docs/README.md](README.md), and [planning/ROADMAP.md](../planning/ROADMAP.md) to navigate.
+Use [README.md](../README.md), [docs/README.md](README.md), and [planning/README.md](../planning/README.md) to navigate.

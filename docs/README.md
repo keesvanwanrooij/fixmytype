@@ -7,7 +7,7 @@ This is the documentation hub for FixMyType. The project is a Windows-first, loc
 | Topic | Purpose | Status |
 |---|---|---|
 | [Planning overview](../planning/README.md) | Shared guardrails and all delivery phases | Active |
-| [10-phase roadmap](../planning/ROADMAP.md) | The sequence from foundation to public release | Active |
+| [10-phase roadmap](../planning/README.md) | The sequence from foundation to public release | Active |
 | [Planning hub](../planning/README.md) | Where phase, optimization, and bug-fix plans live | Active |
 | [Contributing](../CONTRIBUTING.md) | How to make a safe, reviewable contribution | Active |
 | [Security policy](../SECURITY.md) | How to report a vulnerability privately | Active |
@@ -41,11 +41,11 @@ This is the documentation hub for FixMyType. The project is a Windows-first, loc
 - Documentation is written in English so the public project can be understood internationally.
 - Product UI is available in Dutch and English.
 - A document says what is confirmed, planned, or undecided. It never presents a roadmap item as shipped.
-- Every new README links to the [root README](../README.md), this hub, and the [roadmap](../planning/ROADMAP.md).
+- Every new README links to the [root README](../README.md), this hub, and the [roadmap](../planning/README.md).
 - Safety, privacy, and text-loss risks are explained before implementation claims are made.
 
 ## Planned reference set
 
 The next documentation phases will add product scope, accessibility principles, architecture, input safety, Electron hardening, privacy handling, threat modelling, Windows compatibility, test strategy, setup, configuration, troubleshooting, FAQ, and donation sustainability. They will appear here only after they exist and are reviewed.
 
-Return to the [root README](../README.md) or open the [roadmap](../planning/ROADMAP.md) to see what comes next.
+Return to the [root README](../README.md) or open the [roadmap](../planning/README.md) to see what comes next.

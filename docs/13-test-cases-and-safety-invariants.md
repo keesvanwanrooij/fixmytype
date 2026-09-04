@@ -11,4 +11,4 @@
 | Undo | Restore the exact prior text once. |
 | Dutch and English UI | Correct translated control and accessible label. |
 
-See [README.md](../README.md), [docs hub](README.md), and [roadmap](../planning/ROADMAP.md).
+See [README.md](../README.md), [docs hub](README.md), and [roadmap](../planning/README.md).

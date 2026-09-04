@@ -6,7 +6,7 @@
 
 - [Public overview](README.md)
 - [Documentation hub](docs/README.md)
-- [10-phase roadmap](planning/ROADMAP.md)
+- [Planning and delivery status](planning/README.md)
 - [Contributor and AI workflow](CLAUDE.md)
 - [Contributing guide](CONTRIBUTING.md)
 - [Security policy](SECURITY.md)
@@ -21,4 +21,4 @@
 
 ## Navigation rule
 
-Use `README.md` as the canonical project overview, `docs/README.md` for explanatory documentation, and `planning/ROADMAP.md` for delivery status. Read `CLAUDE.md` before proposing or making repository changes.
+Use `README.md` as the canonical project overview, `docs/README.md` for explanatory documentation, and `planning/README.md` for delivery status. Read `CLAUDE.md` before proposing or making repository changes.

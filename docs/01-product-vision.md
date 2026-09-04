@@ -17,4 +17,4 @@ No new material choice is open. The maintainer already chose Windows-only suppor
 
 A user can type an ordinary message with fewer accidental repeats, immediately pause protection if it feels wrong, and understand what happened without reading technical documentation.
 
-Read [README.md](../README.md), [docs/README.md](README.md), and [planning/ROADMAP.md](../planning/ROADMAP.md) for context.
+Read [README.md](../README.md), [docs/README.md](README.md), and [planning/README.md](../planning/README.md) for context.

@@ -9,4 +9,4 @@
 
 Selected-text repair is separate: user requests it, Electron reads the explicit selection through an approved mechanism, calls local Ollama, presents a reviewable replacement, and preserves Undo.
 
-See [README.md](../README.md), [docs hub](README.md), and [roadmap](../planning/ROADMAP.md).
+See [README.md](../README.md), [docs hub](README.md), and [roadmap](../planning/README.md).

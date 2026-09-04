@@ -6,4 +6,4 @@
 
 **Will every app work?** No claim is made until manually verified. Exclusions are available for uncertain contexts.
 
-See [README.md](../README.md), [docs hub](README.md), and [roadmap](../planning/ROADMAP.md).
+See [README.md](../README.md), [docs hub](README.md), and [roadmap](../planning/README.md).

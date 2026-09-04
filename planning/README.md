@@ -6,7 +6,7 @@ This directory turns the public promise in the [root README](../README.md) into 
 
 | Need | Location |
 |---|---|
-| The full sequence | [10-phase roadmap](ROADMAP.md) |
+| The full sequence | [full delivery overview](#full-delivery-overview) |
 | Shared scope and safety constraints | [Shared guardrails](#shared-guardrails) |
 | Work planned for one release phase | `phases/` |
 | Measured performance or reliability work | `optimizations/` |
@@ -36,6 +36,18 @@ This directory turns the public promise in the [root README](../README.md) into 
 | 18 | Release candidate | `phases/18-release-candidate.md` |
 | 19 | Public release | `phases/19-public-release.md` |
 
+## Delivery status
+
+| Complete | In progress | Planned |
+|---|---|---|
+| Phases 1–6 | Phase 7 | Phases 8–19 |
+
+The phase file is the operational checklist. A phase is complete only when every relevant task and acceptance criterion has evidence. The current app is not ready for end-user use.
+
+## Release rule
+
+No phase receives a release tag just because its document exists. A public release requires green automated checks, Windows compatibility evidence, a security review, an installer and checksums, current documentation, a clean repository, and an annotated tag.
+
 ## Shared guardrails
 
 FixMyType is Windows-first, local-first, free, open source, and account-free. Electron owns the Settings UI. A Rust worker owns native input. The renderer never receives hook or filesystem privilege. No kernel driver, cloud processing, password-field handling, secure-desktop handling, telemetry, advertising, or paid tier is in scope. Preserve uncertain input. Make repairs explicit and undoable. Contact local Ollama only through loopback when the user enables it.
@@ -48,6 +60,6 @@ FixMyType is Windows-first, local-first, free, open source, and account-free. El
 - Begin each substantial phase by documenting only material clarifying choices, their options and consequences, and the recommended decision.
 - The roadmap records shipped status. `CHANGELOG.md` records user-visible changes. Neither is updated speculatively.
 - Small, self-contained iterations may proceed directly on `main`; substantial phase work uses one branch when isolation or parallel work helps.
-- Each new README must link to [README.md](../README.md), [docs/README.md](../docs/README.md), and [ROADMAP.md](ROADMAP.md).
+- Each new README must link to [README.md](../README.md), [docs/README.md](../docs/README.md), and this planning index.
 
 See the [root README](../README.md) for why the project exists and the [documentation hub](../docs/README.md) for its safety commitments.

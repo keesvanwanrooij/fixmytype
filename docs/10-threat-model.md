@@ -6,4 +6,4 @@ Mitigations: preserve uncertain input; never enter password or secure-desktop co
 
 This is not a claim that all threats are solved. New native capabilities require review against this document.
 
-See [README.md](../README.md), [docs hub](README.md), and [roadmap](../planning/ROADMAP.md).
+See [README.md](../README.md), [docs hub](README.md), and [roadmap](../planning/README.md).

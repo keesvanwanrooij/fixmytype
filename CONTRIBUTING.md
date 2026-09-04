@@ -2,7 +2,7 @@
 
 Thank you for helping make typing less exhausting. FixMyType touches a sensitive part of a computer: text input. A small mistake can delete or alter someone’s words, so contributions must be narrow, tested, and easy to review.
 
-Start at the [root README](README.md), read the [documentation hub](docs/README.md), and check the active work in the [roadmap](planning/ROADMAP.md).
+Start at the [root README](README.md), read the [documentation hub](docs/README.md), and check the active work in the [roadmap](planning/README.md).
 
 ## Before you begin
 

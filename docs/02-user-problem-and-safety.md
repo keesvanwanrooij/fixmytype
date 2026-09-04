@@ -19,4 +19,4 @@ Keyboard chatter is irregular. A user may need repeated letters in words such as
 - A local model failure leaves the original text untouched.
 - A user can stop protection without needing the app window.
 
-Start at [README.md](../README.md), continue through [docs/README.md](README.md), and follow [planning/ROADMAP.md](../planning/ROADMAP.md).
+Start at [README.md](../README.md), continue through [docs/README.md](README.md), and follow [planning/README.md](../planning/README.md).

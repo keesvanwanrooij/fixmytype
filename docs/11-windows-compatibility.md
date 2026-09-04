@@ -4,4 +4,4 @@ The target is supported Windows 10 and 11 desktop environments using common Dutc
 
 Unsupported or uncertain contexts are safer when excluded. The worker must not claim support for protected input or elevated-app input. Per-app exclusions are first-class settings, not a workaround.
 
-Return to [README.md](../README.md), [docs hub](README.md), or [roadmap](../planning/ROADMAP.md).
+Return to [README.md](../README.md), [docs hub](README.md), or [roadmap](../planning/README.md).

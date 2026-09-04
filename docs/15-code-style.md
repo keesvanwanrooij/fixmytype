@@ -4,4 +4,4 @@ Use TypeScript with strict types in Electron and Rust with `clippy -D warnings` 
 
 Run formatting, linting, type checks, and tests before a commit. A cleanup pass removes duplicate logic and makes safety conditions easy to audit.
 
-See [README.md](../README.md), [docs hub](README.md), and [roadmap](../planning/ROADMAP.md).
+See [README.md](../README.md), [docs hub](README.md), and [roadmap](../planning/README.md).

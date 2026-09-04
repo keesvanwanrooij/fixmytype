@@ -4,4 +4,4 @@ FixMyType has three local processes: an Electron main process for lifecycle and 
 
 The main process starts the worker, validates every IPC message, stores local settings, and is the only process permitted to open the fixed GitHub Sponsors URL. The worker owns timing and event-origin decisions. Optional Ollama requests originate in the main process only and target loopback.
 
-Navigation: [README.md](../README.md), [docs hub](README.md), [roadmap](../planning/ROADMAP.md).
+Navigation: [README.md](../README.md), [docs hub](README.md), [roadmap](../planning/README.md).
