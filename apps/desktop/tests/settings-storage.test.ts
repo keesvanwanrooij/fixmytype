@@ -54,6 +54,21 @@ describe("settings storage", () => {
     expect(writes).toBe(0);
   });
 
+  it("rejects an unexpected field so local storage cannot acquire typed content", () => {
+    let writes = 0;
+    const storage = {
+      getItem: () => null,
+      setItem: () => {
+        writes += 1;
+      }
+    };
+    const withTypedContent = { ...createSettings(), typedContent: "private draft" } as ReturnType<typeof createSettings>;
+
+    // The persisted schema is an allowlist, not a list of required fields plus arbitrary extras.
+    expect(saveSettings(storage, withTypedContent)).toBe("invalid");
+    expect(writes).toBe(0);
+  });
+
   it("removes only the known settings record when the user explicitly resets it", () => {
     const removed: string[] = [];
     const storage = {

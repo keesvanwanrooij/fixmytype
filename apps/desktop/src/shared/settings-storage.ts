@@ -10,9 +10,15 @@ export type SettingsLoadResult = { issue: SettingsStorageIssue | undefined; sett
 const isInterfaceLanguage = (value: unknown): value is InterfaceLanguage => value === "en" || value === "nl";
 const isRepairLanguage = (value: unknown): value is RepairLanguage => value === "auto" || isInterfaceLanguage(value);
 const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === "object" && value !== null && !Array.isArray(value);
+const settingsKeys = ["interfaceLanguage", "protectionEnabled", "repairLanguage"];
+
+const hasOnlySettingsKeys = (value: Record<string, unknown>): boolean => {
+  const keys = Object.keys(value).sort();
+  return keys.length === settingsKeys.length && keys.every((key, index) => key === settingsKeys[index]);
+};
 
 export const isSettings = (value: unknown): value is Settings => {
-  if (!isRecord(value)) {
+  if (!isRecord(value) || !hasOnlySettingsKeys(value)) {
     return false;
   }
 

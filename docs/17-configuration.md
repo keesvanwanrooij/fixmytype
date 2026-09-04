@@ -2,7 +2,7 @@
 
 ## Current Settings screen
 
-The desktop app stores a small Settings record in the current Windows profile. It contains the interface language, repair language, and protection preference. It never contains typed text, clipboard content, repair content, diagnostics, or an account identifier.
+The desktop app stores a small Settings record in the current Windows profile. It contains only the interface language, repair language, and protection preference. It rejects missing, malformed, or unexpected fields. It never contains typed text, clipboard content, repair content, diagnostics, or an account identifier.
 
 Choose English or Nederlands for the app interface. Choose Automatic, English, or Nederlands for repair language. These choices are separate. Changing the app language does not change repair language.
 

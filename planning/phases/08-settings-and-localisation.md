@@ -69,7 +69,7 @@ Store only the small, validated Settings object in the renderer's local profile 
 
 ## Required tests
 
-- A complete version-1 Settings record loads without changing any value.
+- A complete version-1 Settings record loads without changing any value, and records with missing or unexpected fields are rejected.
 - Malformed and unavailable local storage use safe runtime defaults with distinct user-facing messages.
 - Interface language and repair language remain separate.
 - The protection preference changes between enabled and paused in both Settings and the tray state.
