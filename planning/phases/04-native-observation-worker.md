@@ -1,8 +1,8 @@
-# Phase 10: native observation worker
+# Phase 4: native observation worker
 
 ## Status
 
-Planned
+⬜ Planned
 
 ## Outcome
 
@@ -18,27 +18,27 @@ This phase proves that FixMyType can observe the required signal without interfe
 - [Input pipeline](../../docs/07-input-pipeline.md)
 - [Electron security](../../docs/08-electron-security.md)
 - [Windows compatibility](../../docs/11-windows-compatibility.md)
-- Phase 9, [Input policy library](09-input-policy-library.md)
+- Phase 3, [Input policy library](03-input-policy-library.md)
 
 ## Scope
 
-Create `apps/input-worker/`, a versioned local IPC schema, worker lifecycle handling, content-free health state, and Windows observation evidence. The worker may call the phase-9 classifier for measurement but may not act on its recommendation.
+Create `apps/input-worker/`, a versioned local IPC schema, worker lifecycle handling, content-free health state, and Windows observation evidence. The worker may call the phase-3 classifier for measurement but may not act on its recommendation.
 
 ## Non-goals
 
-No key suppression, no kernel driver, no elevated-app handling, no password-field support, no secure-desktop support, no event log containing characters, and no renderer access to hook handles. Phase 11 owns active protection.
+No key suppression, no kernel driver, no elevated-app handling, no password-field support, no secure-desktop support, no event log containing characters, and no renderer access to hook handles. Phase 5 owns active protection.
 
 ## Dependencies and handoff
 
 | Depends on | Why it must exist first |
 |---|---|
-| Phase 9 | It provides a tested metadata contract and policy vocabulary. |
-| Phase 7 | It provides the Electron main-process and preload boundary. |
+| Phase 3 | It provides a tested metadata contract and policy vocabulary. |
+| Phase 1 | It provides the Electron main-process and preload boundary. |
 
 | Unblocks | What this phase makes possible |
 |---|---|
-| Phase 11 | It provides evidence that passive observation is stable before suppression is considered. |
-| Phase 15 | It establishes the worker lifecycle and content-free health signals. |
+| Phase 5 | It provides evidence that passive observation is stable before suppression is considered. |
+| Phase 9 | It establishes the worker lifecycle and content-free health signals. |
 
 ## Decision required at phase start
 
@@ -58,7 +58,7 @@ Recommendation: run an observation-only spike and select only the API with repro
 
 - [ ] Create an observation spike outside production code with no event mutation path.
 - [ ] Test Notepad and one Chromium browser with a normal account, without elevated applications.
-- [ ] Record whether the candidate API supplies only the phase-9 metadata fields.
+- [ ] Record whether the candidate API supplies only the phase-3 metadata fields.
 - [ ] Record CPU use while idle and during continuous typing without storing typed characters.
 
 ### Package 2: worker and IPC contract
@@ -70,7 +70,7 @@ Recommendation: run an observation-only spike and select only the API with repro
 
 ### Package 3: passive event path
 
-- [ ] Map Windows metadata into the phase-9 event type without adding characters or application text.
+- [ ] Map Windows metadata into the phase-3 event type without adding characters or application text.
 - [ ] Ignore injected events and record only a count in a content-free health result if diagnostics later need it.
 - [ ] Ensure every callback returns without preventing, replacing, or delaying the Windows event.
 - [ ] Add an explicit unsupported-context result for secure desktop, elevated applications, and unknown contexts.
@@ -112,11 +112,11 @@ Expected: all checks pass. Live evidence shows the worker starts and stops clean
 
 - A passive hook can still affect typing through latency or a wrong return path. Compare typed output with the worker stopped and running.
 - Logging a virtual key with a window title or application name creates unnecessary personal data. Keep diagnostics content-free.
-- An observation result is not permission to enable filtering. Phase 11 needs separate tests and maintainer approval.
+- An observation result is not permission to enable filtering. Phase 5 needs separate tests and maintainer approval.
 
 ## Stop condition and rollback
 
-Stop if passive observation changes, delays, or destabilizes input in any test context. Disable worker startup from Electron and retain only content-free failure evidence. Do not continue to phase 11.
+Stop if passive observation changes, delays, or destabilizes input in any test context. Disable worker startup from Electron and retain only content-free failure evidence. Do not continue to phase 5.
 
 ## Implementation record
 

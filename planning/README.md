@@ -14,33 +14,27 @@ This directory turns the public promise in the [root README](../README.md) into 
 
 ## Full delivery overview
 
-| Phase | Outcome | Read first |
-|---|---|---|
-| 1 | Public foundation | `phases/01-public-foundation.md` |
-| 2 | Product contract | `phases/02-product-contract.md` |
-| 3 | Architecture and threats | `phases/03-architecture-and-threats.md` |
-| 4 | Quality system | `phases/04-quality-system.md` |
-| 5 | Delivery planning | `phases/05-delivery-planning.md` |
-| 6 | User documentation | `phases/06-user-documentation.md` |
-| 7 | Desktop shell | `phases/07-electron-shell.md` |
-| 8 | Settings and localisation | `phases/08-settings-and-localisation.md` |
-| 9 | Input policy library | `phases/09-input-policy-library.md` |
-| 10 | Native observation worker | `phases/10-native-observation-worker.md` |
-| 11 | Safe chatter protection | `phases/11-safe-chatter-protection.md` |
-| 12 | Selected-text repair | `phases/12-selected-text-repair.md` |
-| 13 | Sentence-repair experiment | `phases/13-sentence-repair-experiment.md` |
-| 14 | Compatibility and accessibility | `phases/14-compatibility-and-accessibility.md` |
-| 15 | Reliability and diagnostics | `phases/15-reliability-and-diagnostics.md` |
-| 16 | CI and supply chain | `phases/16-ci-and-supply-chain.md` |
-| 17 | Windows packaging | `phases/17-windows-packaging.md` |
-| 18 | Release candidate | `phases/18-release-candidate.md` |
-| 19 | Public release | `phases/19-public-release.md` |
+| Phase | Status | Outcome | Read first |
+|---|---|---|---|
+| 1 | ✅ Complete | Project foundation | [01-project-foundation.md](phases/01-project-foundation.md) |
+| 2 | 🟡 In progress | Settings and localisation | [02-settings-and-localisation.md](phases/02-settings-and-localisation.md) |
+| 3 | ⬜ Planned | Input policy library | [03-input-policy-library.md](phases/03-input-policy-library.md) |
+| 4 | ⬜ Planned | Native observation worker | [04-native-observation-worker.md](phases/04-native-observation-worker.md) |
+| 5 | ⬜ Planned | Safe chatter protection | [05-safe-chatter-protection.md](phases/05-safe-chatter-protection.md) |
+| 6 | ⬜ Planned | Selected-text repair | [06-selected-text-repair.md](phases/06-selected-text-repair.md) |
+| 7 | ⬜ Planned | Sentence-repair experiment | [07-sentence-repair-experiment.md](phases/07-sentence-repair-experiment.md) |
+| 8 | ⬜ Planned | Compatibility and accessibility | [08-compatibility-and-accessibility.md](phases/08-compatibility-and-accessibility.md) |
+| 9 | ⬜ Planned | Reliability and diagnostics | [09-reliability-and-diagnostics.md](phases/09-reliability-and-diagnostics.md) |
+| 10 | ⬜ Planned | CI and supply chain | [10-ci-and-supply-chain.md](phases/10-ci-and-supply-chain.md) |
+| 11 | ⬜ Planned | Windows packaging | [11-windows-packaging.md](phases/11-windows-packaging.md) |
+| 12 | ⬜ Planned | Release candidate | [12-release-candidate.md](phases/12-release-candidate.md) |
+| 13 | ⬜ Planned | Public release | [13-public-release.md](phases/13-public-release.md) |
 
 ## Delivery status
 
-| Complete | In progress | Planned |
+| ✅ Complete | 🟡 In progress | ⬜ Planned |
 |---|---|---|
-| Phases 1–7 | Phase 8 | Phases 9–19 |
+| Phase 1 | Phase 2 | Phases 3 to 13 |
 
 The phase file is the operational checklist. A phase is complete only when every relevant task and acceptance criterion has evidence. The current app is not ready for end-user use.
 
@@ -54,7 +48,8 @@ FixMyType is Windows-first, local-first, free, open source, and account-free. El
 
 ## Planning rules
 
-- One phase has one written objective, explicit non-goals, automated test gates, and manual Windows checks.
+- One phase is a coherent junior-engineer assignment of at least half a day. It has one written objective, explicit non-goals, ordered work packages, automated test gates, and manual Windows checks.
+- Phase 1 combines completed project setup. Do not split setup work back into artificial delivery phases.
 - Any behavior that can silently damage text begins with a failing test before implementation.
 - A phase is not complete because code exists. It is complete only when its acceptance criteria and relevant verification have passed.
 - Begin each substantial phase by documenting only material clarifying choices, their options and consequences, and the recommended decision.

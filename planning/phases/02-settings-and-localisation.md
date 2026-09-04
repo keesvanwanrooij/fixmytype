@@ -1,8 +1,8 @@
-# Phase 8: Settings and localisation
+# Phase 2: Settings and localisation
 
 ## Status
 
-In progress
+🟡 In progress
 
 ## Outcome
 
@@ -25,22 +25,22 @@ This phase changes only local Settings state, local profile storage, renderer co
 
 ## Non-goals
 
-This phase does not filter keystrokes, observe Windows input, contact Ollama, store text, add a repair switch, or claim an end-user installer. Phases 9 through 13 own those capabilities.
+This phase does not filter keystrokes, observe Windows input, contact Ollama, store text, add a repair switch, or claim an end-user installer. Phases 3 through 7 own those capabilities.
 
 ## Dependencies and handoff
 
 | Depends on | Why it must exist first |
 |---|---|
-| Phase 7 | It provides the sandboxed Electron shell, narrow preload bridge, CSP, and tray menu. |
+| Phase 1 | It provides the sandboxed Electron shell, narrow preload bridge, CSP, and tray menu. |
 
 | Unblocks | What this phase makes possible |
 |---|---|
-| Phase 9 | The policy library can rely on a separate protection preference contract. |
-| Phase 14 | The Settings screen can receive keyboard, scaling, contrast, and locale evidence. |
+| Phase 3 | The policy library can rely on a separate protection preference contract. |
+| Phase 8 | The Settings screen can receive keyboard, scaling, contrast, and locale evidence. |
 
 ## Decisions already made
 
-Store only the small, validated Settings object in the renderer's local profile storage. It contains language and protection-preference values, never typed text, clipboard data, repair content, diagnostics, or identifiers. If saved data is malformed, the app keeps the original data untouched, uses safe runtime defaults, and tells the user what happened. The tray changes the stored protection preference. It does not claim to filter keystrokes before phase 11 provides that capability.
+Store only the small, validated Settings object in the renderer's local profile storage. It contains language and protection-preference values, never typed text, clipboard data, repair content, diagnostics, or identifiers. If saved data is malformed, the app keeps the original data untouched, uses safe runtime defaults, and tells the user what happened. The tray changes the stored protection preference. It does not claim to filter keystrokes before phase 5 provides that capability.
 
 ## Work packages
 
@@ -86,7 +86,7 @@ npm run build
 npm start
 ```
 
-Expected automated result: lint, typecheck, build, and all 12 tests pass. Recorded evidence: commits `2a551fc` and `7ebb70b`; the app starts with Electron main, renderer, GPU, and utility processes.
+Expected automated result: lint, typecheck, build, and all 20 tests pass. Recorded evidence: commits `2a551fc`, `7ebb70b`, and `fc25403`. The last commit fixes the sandboxed preload and has a live renderer check that confirms the Settings markup and desktop bridge are present.
 
 ## Windows checks
 
@@ -99,7 +99,7 @@ Expected automated result: lint, typecheck, build, and all 12 tests pass. Record
 ## Traps
 
 - A local Settings record can be malformed. The app must explain its safe defaults without silently replacing the original bytes.
-- A tray label can imply live filtering before phase 11. It must continue to describe a preference until worker acknowledgement exists.
+- A tray label can imply live filtering before phase 5. It must continue to describe a preference until worker acknowledgement exists.
 - Changing interface language must never alter repair language.
 
 ## Stop condition and rollback
@@ -108,6 +108,6 @@ Do not persist settings that fail schema validation or silently reset a user cho
 
 ## Implementation record
 
-- 2026-09-04: Settings schema, storage adapter, English and Dutch copy, layout, tray preference synchronisation, and 12 tests landed in `7ebb70b`.
-- 2026-09-04: `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`, and `npm audit --omit=dev --audit-level=high` passed. The app was started and its Electron process tree was observed.
+- 2026-09-04: Settings schema, storage adapter, English and Dutch copy, layout, tray preference synchronisation, and the original 12 tests landed in `7ebb70b`.
+- 2026-09-04: The blank Settings window was reproduced through Electron debugging. `fc25403` replaces the rejected ES-module preload with a sandbox-compatible CommonJS preload. Lint, typecheck, build, and all 20 tests pass. A live renderer check confirmed the bridge object and complete Settings markup.
 - Remaining: the maintainer must perform the listed keyboard, locale, and 200 percent Windows scaling checks before the phase can be marked complete.

@@ -1,8 +1,8 @@
-# Phase 11: safe chatter protection
+# Phase 5: safe chatter protection
 
 ## Status
 
-Planned
+⬜ Planned
 
 ## Outcome
 
@@ -18,29 +18,29 @@ The app begins to reduce clear accidental repeats from an unreliable keyboard wi
 - [Input pipeline](../../docs/07-input-pipeline.md)
 - [Windows compatibility](../../docs/11-windows-compatibility.md)
 - [Safety test cases](../../docs/13-test-cases-and-safety-invariants.md)
-- Phase 9, [Input policy library](09-input-policy-library.md)
-- Phase 10, [Native observation worker](10-native-observation-worker.md)
+- Phase 3, [Input policy library](03-input-policy-library.md)
+- Phase 4, [Native observation worker](04-native-observation-worker.md)
 
 ## Scope
 
-Connect the worker's tested observation path to the phase-9 policy only in documented supported contexts. Add a real protection-state control in the Settings screen and tray. Record the selected timing configuration, exclusions, and Windows results.
+Connect the worker's tested observation path to the phase-3 policy only in documented supported contexts. Add a real protection-state control in the Settings screen and tray. Record the selected timing configuration, exclusions, and Windows results.
 
 ## Non-goals
 
-This phase does not repair words or sentences, contact local Ollama, process passwords, support elevated applications, support secure desktop, or infer user intent from text. Phases 12 and 13 own repair.
+This phase does not repair words or sentences, contact local Ollama, process passwords, support elevated applications, support secure desktop, or infer user intent from text. Phases 6 and 7 own repair.
 
 ## Dependencies and handoff
 
 | Depends on | Why it must exist first |
 |---|---|
-| Phase 9 | It provides the pure policy and boundary tests. |
-| Phase 10 | It proves passive Windows observation is safe. |
-| Phase 8 | It provides a visible preference and tray control to connect to real behaviour. |
+| Phase 3 | It provides the pure policy and boundary tests. |
+| Phase 4 | It proves passive Windows observation is safe. |
+| Phase 2 | It provides a visible preference and tray control to connect to real behaviour. |
 
 | Unblocks | What this phase makes possible |
 |---|---|
-| Phase 12 | Repair can be presented separately from the working deterministic layer. |
-| Phase 14 | Compatibility work can test a real protection path. |
+| Phase 6 | Repair can be presented separately from the working deterministic layer. |
+| Phase 8 | Compatibility work can test a real protection path. |
 
 ## Decision required at phase start
 

@@ -1,8 +1,8 @@
-# Phase 19: public release
+# Phase 13: public release
 
 ## Status
 
-Planned
+⬜ Planned
 
 ## Outcome
 
@@ -18,7 +18,7 @@ People can find, install, verify, use, remove, and support the app without being
 - [Installation](../../docs/16-installation.md)
 - [Windows compatibility](../../docs/11-windows-compatibility.md)
 - [Donations and sustainability](../../docs/22-donations-and-sustainability.md)
-- Phase 18, [Release candidate](18-release-candidate.md)
+- Phase 12, [Release candidate](12-release-candidate.md)
 
 ## Scope
 
@@ -32,7 +32,7 @@ No feature development, no compatibility expansion, no unreviewed dependency upd
 
 | Depends on | Why it must exist first |
 |---|---|
-| Phases 1 to 18 | Every release gate and candidate result must be complete and recorded. |
+| Phases 1 to 12 | Every release gate and candidate result must be complete and recorded. |
 
 | Unblocks | What this phase makes possible |
 |---|---|
@@ -77,7 +77,7 @@ Confirm release version, release title, supported-context wording, signing state
 - Full CI and dependency audit pass from the tagged commit.
 - Installer checksum verifies on a clean Windows environment.
 - Public install, first start, supported path, exit, uninstall, and support links are checked from published assets.
-- All public compatibility statements map to phase-14 or phase-18 evidence.
+- All public compatibility statements map to phase-8 or phase-12 evidence.
 
 ## Acceptance evidence
 

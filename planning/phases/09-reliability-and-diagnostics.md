@@ -1,8 +1,8 @@
-# Phase 15: reliability and diagnostics
+# Phase 9: reliability and diagnostics
 
 ## Status
 
-Planned
+⬜ Planned
 
 ## Outcome
 
@@ -17,7 +17,7 @@ When an accessibility tool fails, users need a clear safe state and a useful exp
 - [Privacy and data handling](../../docs/09-privacy-and-data-handling.md)
 - [Threat model](../../docs/10-threat-model.md)
 - [Troubleshooting](../../docs/20-troubleshooting.md)
-- Phase 14, [Compatibility and accessibility](14-compatibility-and-accessibility.md)
+- Phase 8, [Compatibility and accessibility](08-compatibility-and-accessibility.md)
 
 ## Scope
 
@@ -31,13 +31,13 @@ No telemetry, crash-upload service, remote log upload, account, typed-text histo
 
 | Depends on | Why it must exist first |
 |---|---|
-| Phases 10 to 13 | They provide worker and repair failure paths to exercise. |
-| Phase 14 | It provides real compatibility findings and supported context boundaries. |
+| Phases 4 to 7 | They provide worker and repair failure paths to exercise. |
+| Phase 8 | It provides real compatibility findings and supported context boundaries. |
 
 | Unblocks | What this phase makes possible |
 |---|---|
-| Phase 18 | Beta testers receive clear recovery guidance and content-free reports. |
-| Phase 19 | Public support instructions can state what evidence a report includes. |
+| Phase 12 | Beta testers receive clear recovery guidance and content-free reports. |
+| Phase 13 | Public support instructions can state what evidence a report includes. |
 
 ## Decisions already made
 

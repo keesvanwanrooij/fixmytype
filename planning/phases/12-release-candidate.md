@@ -1,8 +1,8 @@
-# Phase 18: release candidate
+# Phase 12: release candidate
 
 ## Status
 
-Planned
+⬜ Planned
 
 ## Outcome
 
@@ -17,7 +17,7 @@ Real Windows use finds compatibility and text-safety problems that synthetic tes
 - [Security policy](../../SECURITY.md)
 - [Troubleshooting](../../docs/20-troubleshooting.md)
 - [FAQ](../../docs/21-faq.md)
-- Phases 14 through 17 and their evidence
+- Phases 8 through 11 and their evidence
 
 ## Scope
 
@@ -25,17 +25,17 @@ Create a candidate checklist, safe tester script, anonymised feedback route, bug
 
 ## Non-goals
 
-No public marketing claim, broad download link, feature addition, automatic data collection, or release tag. Phase 19 owns publication.
+No public marketing claim, broad download link, feature addition, automatic data collection, or release tag. Phase 13 owns publication.
 
 ## Dependencies and handoff
 
 | Depends on | Why it must exist first |
 |---|---|
-| Phases 14 to 17 | They provide accessibility, reliability, CI, and installer evidence. |
+| Phases 8 to 11 | They provide accessibility, reliability, CI, and installer evidence. |
 
 | Unblocks | What this phase makes possible |
 |---|---|
-| Phase 19 | A known candidate build and resolved critical issue list. |
+| Phase 13 | A known candidate build and resolved critical issue list. |
 
 ## Decisions already made
 

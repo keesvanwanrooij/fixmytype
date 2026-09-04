@@ -1,8 +1,8 @@
-# Phase 16: CI and supply chain
+# Phase 10: CI and supply chain
 
 ## Status
 
-Planned
+⬜ Planned
 
 ## Outcome
 
@@ -25,18 +25,18 @@ Create pinned GitHub workflows, Windows runner checks, Node and Rust toolchain p
 
 ## Non-goals
 
-No automatic public release, no automatic dependency merge without review, no cloud telemetry, and no secret or installer signing value stored in the repository. Phase 17 owns installer creation.
+No automatic public release, no automatic dependency merge without review, no cloud telemetry, and no secret or installer signing value stored in the repository. Phase 11 owns installer creation.
 
 ## Dependencies and handoff
 
 | Depends on | Why it must exist first |
 |---|---|
-| Phases 7 to 15 | They define the commands, platform paths, privacy tests, and matrix evidence to automate. |
+| Phases 1 to 9 | They define the commands, platform paths, privacy tests, and matrix evidence to automate. |
 
 | Unblocks | What this phase makes possible |
 |---|---|
-| Phase 17 | Packaging runs from a known checked source state. |
-| Phase 18 | Beta candidates have repeatable proof before testers receive them. |
+| Phase 11 | Packaging runs from a known checked source state. |
+| Phase 12 | Beta candidates have repeatable proof before testers receive them. |
 
 ## Decisions required at phase start
 
@@ -85,7 +85,7 @@ The workflow run URL, commit SHA, job names, tool versions, artifact list, and s
 
 ## Windows checks
 
-The GitHub Windows runner is evidence for build repeatability, not user compatibility. Keep the phase-14 matrix as the source for physical Windows behaviour.
+The GitHub Windows runner is evidence for build repeatability, not user compatibility. Keep the phase-8 matrix as the source for physical Windows behaviour.
 
 ## Traps
 

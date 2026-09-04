@@ -1,8 +1,8 @@
-# Phase 12: selected-text repair
+# Phase 6: selected-text repair
 
 ## Status
 
-Planned
+⬜ Planned
 
 ## Outcome
 
@@ -18,7 +18,7 @@ People with damaged keyboards can ask for help after they finish a selected frag
 - [Threat model](../../docs/10-threat-model.md)
 - [Local AI repair](../../docs/19-local-ai-repair.md)
 - [Configuration](../../docs/17-configuration.md)
-- Phase 11, [Safe chatter protection](11-safe-chatter-protection.md)
+- Phase 5, [Safe chatter protection](05-safe-chatter-protection.md)
 
 ## Scope
 
@@ -26,19 +26,19 @@ Add a local-only Ollama availability check, a versioned loopback request contrac
 
 ## Non-goals
 
-No automatic sentence replacement, background analysis, cloud fallback, history of typed text, telemetry, account, cross-device sync, or use in unsupported applications. Phase 13 owns a separate post-sentence experiment.
+No automatic sentence replacement, background analysis, cloud fallback, history of typed text, telemetry, account, cross-device sync, or use in unsupported applications. Phase 7 owns a separate post-sentence experiment.
 
 ## Dependencies and handoff
 
 | Depends on | Why it must exist first |
 |---|---|
-| Phase 8 | It provides separate UI and repair language choices. |
-| Phase 11 | It establishes the separate deterministic protection layer and visible state language. |
+| Phase 2 | It provides separate UI and repair language choices. |
+| Phase 5 | It establishes the separate deterministic protection layer and visible state language. |
 
 | Unblocks | What this phase makes possible |
 |---|---|
-| Phase 13 | A reversible selected-text path and local request contract. |
-| Phase 15 | Local failure and timeout handling for the repair path. |
+| Phase 7 | A reversible selected-text path and local request contract. |
+| Phase 9 | Local failure and timeout handling for the repair path. |
 
 ## Decisions already made
 

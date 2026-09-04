@@ -1,8 +1,8 @@
-# Phase 9: input policy library
+# Phase 3: input policy library
 
 ## Status
 
-Planned
+⬜ Planned
 
 ## Outcome
 
@@ -18,7 +18,7 @@ The future filter starts with a deterministic rule that can be inspected and tes
 - [Input pipeline](../../docs/07-input-pipeline.md)
 - [Threat model](../../docs/10-threat-model.md)
 - [Testing strategy](../../docs/12-testing-strategy.md)
-- Phase 8, [Settings and localisation](08-settings-and-localisation.md)
+- Phase 2, [Settings and localisation](02-settings-and-localisation.md)
 
 ## Scope
 
@@ -26,27 +26,26 @@ Create `crates/input-core/` with typed event metadata, a pure classifier, unit t
 
 ## Non-goals
 
-This phase does not install a Windows hook, suppress input, change Electron UI, persist events, tune a live timing value, identify text fields, or send diagnostics. Phases 10 and 11 own observation and any later suppression.
+This phase does not install a Windows hook, suppress input, change Electron UI, persist events, tune a live timing value, identify text fields, or send diagnostics. Phases 4 and 5 own observation and any later suppression.
 
 ## Dependencies and handoff
 
 | Depends on | Why it must exist first |
 |---|---|
-| Phase 2 | It defines preserve-uncertain-input and protected-context rules. |
-| Phase 3 | It defines the renderer and worker trust boundary. |
-| Phase 8 | It defines the stored protection preference without claiming active protection. |
+| Phase 1 | It defines preserve-uncertain-input, protected-context, renderer, and worker trust rules. |
+| Phase 2 | It defines the stored protection preference without claiming active protection. |
 
 | Unblocks | What this phase makes possible |
 |---|---|
-| Phase 10 | The observation worker can emit typed metadata to one tested policy API. |
-| Phase 11 | Suppression work has a deterministic test suite to protect. |
+| Phase 4 | The observation worker can emit typed metadata to one tested policy API. |
+| Phase 5 | Suppression work has a deterministic test suite to protect. |
 
 ## Decisions already made
 
 - The input core receives metadata only. Character content, clipboard data, window titles, process names, and application text are excluded.
 - The default decision is `preserve`. `suspicious repeat` is a recommendation, not permission to delete input.
 - Injected events and events with modifiers are preserved unless a future documented decision says otherwise.
-- The timing default is not selected here. Phase 11 may propose one only after phase-10 evidence exists.
+- The timing default is not selected here. Phase 5 may propose one only after phase-4 evidence exists.
 
 ## Work packages
 

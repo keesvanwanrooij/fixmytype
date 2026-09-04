@@ -28,16 +28,18 @@ Do not start a later phase because its plan exists. The active phase must meet i
 | Traps and stop condition | Likely mistakes, evidence that blocks release, and rollback action. |
 | Implementation record | Facts discovered while building, commits, and remaining work. |
 
-## Status words
+## Status markers
 
-- `Planned`: The scope is written but implementation has not started.
-- `In progress`: A commit exists or work has started. Unticked checks remain visible.
-- `Blocked`: Work needs a maintainer choice, a Windows machine, or an external result.
-- `Complete`: Every required acceptance item has recorded evidence.
+- `⬜ Planned`: The scope is written but implementation has not started.
+- `🟡 In progress`: A commit exists or work has started. Unticked checks remain visible.
+- `⛔ Blocked`: Work needs a maintainer choice, a Windows machine, or an external result.
+- `✅ Complete`: Every required acceptance item has recorded evidence.
 
 Existing complete phases preserve their historical record. New and revised active or planned phases follow this standard in full.
 
 ## Work-package rule
+
+Every future phase must give a junior engineer at least half a day of meaningful, safe work. A plan must name the source files or folders, order its tasks, state the observable proof, and say when to stop. A short checklist is not a phase plan.
 
 A phase starts as one file. Split it into `NN-topic/README.md` plus numbered package files when one of these is true:
 

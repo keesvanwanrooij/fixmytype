@@ -1,8 +1,8 @@
-# Phase 13: sentence-repair experiment
+# Phase 7: sentence-repair experiment
 
 ## Status
 
-Planned
+⬜ Planned
 
 ## Outcome
 
@@ -17,7 +17,7 @@ Some users may want help after a sentence boundary, but the project tests this c
 - [Decision log](../../docs/04-decision-log.md)
 - [Local AI repair](../../docs/19-local-ai-repair.md)
 - [Windows compatibility](../../docs/11-windows-compatibility.md)
-- Phase 12, [Selected-text repair](12-selected-text-repair.md)
+- Phase 6, [Selected-text repair](06-selected-text-repair.md)
 
 ## Scope
 
@@ -31,13 +31,13 @@ No default activation, no all-application automation, no hidden replacement, no 
 
 | Depends on | Why it must exist first |
 |---|---|
-| Phase 12 | It provides a local request path, preview, Apply, and exact Undo rule. |
-| Phase 14 | It will independently assess accessible and compatible behaviour. |
+| Phase 6 | It provides a local request path, preview, Apply, and exact Undo rule. |
+| Phase 8 | It will independently assess accessible and compatible behaviour. |
 
 | Unblocks | What this phase makes possible |
 |---|---|
-| Phase 15 | Measured local latency and failure behaviour for repair. |
-| Phase 18 | A narrow beta test only if the experiment survives its stop condition. |
+| Phase 9 | Measured local latency and failure behaviour for repair. |
+| Phase 12 | A narrow beta test only if the experiment survives its stop condition. |
 
 ## Decision required at phase start
 

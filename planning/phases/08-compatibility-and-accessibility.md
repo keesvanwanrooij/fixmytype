@@ -1,8 +1,8 @@
-# Phase 14: compatibility and accessibility
+# Phase 8: compatibility and accessibility
 
 ## Status
 
-Planned
+⬜ Planned
 
 ## Outcome
 
@@ -17,8 +17,8 @@ An accessibility tool must work with the keyboard, display settings, language ch
 - [Accessibility principles](../../docs/05-accessibility-principles.md)
 - [Windows compatibility](../../docs/11-windows-compatibility.md)
 - [Testing strategy](../../docs/12-testing-strategy.md)
-- Phase 8, [Settings and localisation](08-settings-and-localisation.md)
-- Phases 11 through 13 when those capabilities exist
+- Phase 2, [Settings and localisation](02-settings-and-localisation.md)
+- Phases 5 through 7 when those capabilities exist
 
 ## Scope
 
@@ -32,13 +32,13 @@ This phase does not add new filtering or repair behaviour to make a matrix row p
 
 | Depends on | Why it must exist first |
 |---|---|
-| Phase 8 | It provides the Settings and locale surface to test. |
-| Phases 11 to 13 | They provide the actual protection and repair paths, if accepted. |
+| Phase 2 | It provides the Settings and locale surface to test. |
+| Phases 5 to 7 | They provide the actual protection and repair paths, if accepted. |
 
 | Unblocks | What this phase makes possible |
 |---|---|
-| Phase 18 | Release-candidate testing begins from a known compatibility baseline. |
-| Phase 19 | Public support claims can cite verified contexts. |
+| Phase 12 | Release-candidate testing begins from a known compatibility baseline. |
+| Phase 13 | Public support claims can cite verified contexts. |
 
 ## Decisions already made
 

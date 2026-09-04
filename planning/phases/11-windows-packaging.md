@@ -1,8 +1,8 @@
-# Phase 17: Windows packaging
+# Phase 11: Windows packaging
 
 ## Status
 
-Planned
+⬜ Planned
 
 ## Outcome
 
@@ -17,7 +17,7 @@ People should not need development tools to try the app, and they should be able
 - [Installation](../../docs/16-installation.md)
 - [Security policy](../../SECURITY.md)
 - [Release rule](../README.md#release-rule)
-- Phase 16, [CI and supply chain](16-ci-and-supply-chain.md)
+- Phase 10, [CI and supply chain](10-ci-and-supply-chain.md)
 
 ## Scope
 
@@ -31,13 +31,13 @@ No claim of signed public distribution before a real signing certificate and ver
 
 | Depends on | Why it must exist first |
 |---|---|
-| Phase 16 | It provides a repeatable verified source and supply-chain gates. |
-| Phase 14 | It provides the Windows contexts that the package must preserve. |
+| Phase 10 | It provides a repeatable verified source and supply-chain gates. |
+| Phase 8 | It provides the Windows contexts that the package must preserve. |
 
 | Unblocks | What this phase makes possible |
 |---|---|
-| Phase 18 | Testers can receive a reproducible candidate package. |
-| Phase 19 | The public release has an installable artifact and checksums. |
+| Phase 12 | Testers can receive a reproducible candidate package. |
+| Phase 13 | The public release has an installable artifact and checksums. |
 
 ## Decision required at phase start
 
@@ -82,7 +82,7 @@ Choose installer tooling, signing state, and upgrade identifier with the maintai
 
 ## Acceptance evidence
 
-Record installer filename, SHA-256, source commit, Windows build, signing state, clean-install result, upgrade result, uninstall result, rollback result, and known warning. The package is not public until phase 19.
+Record installer filename, SHA-256, source commit, Windows build, signing state, clean-install result, upgrade result, uninstall result, rollback result, and known warning. The package is not public until phase 13.
 
 ## Windows checks
 
