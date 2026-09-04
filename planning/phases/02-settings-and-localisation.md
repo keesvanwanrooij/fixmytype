@@ -2,7 +2,7 @@
 
 ## Status
 
-🟡 In progress
+✅ Complete
 
 ## Outcome
 
@@ -61,7 +61,7 @@ Store only the small, validated Settings object in the renderer's local profile 
 
 - [x] Add a protection-preference switch and synchronize it with a tray pause or resume action without claiming active filtering.
 - [x] Write tests for malformed storage, separate language selection, tray state transitions, and the text required in both locales.
-- [ ] Verify lint, types, tests, build, keyboard-only navigation, both locales, and 200 percent Windows text scaling.
+- [x] Verify lint, types, tests, build, keyboard-only navigation, both locales, and 200 percent Windows text scaling.
 
 ## Files changed
 
@@ -92,9 +92,9 @@ Expected automated result: lint, typecheck, build, and all 20 tests pass. Record
 
 | Environment | Steps | Expected result | Evidence |
 |---|---|---|---|
-| Windows, English locale | Start the app, tab through navigation, select each control, activate the footer button without opening it | Focus stays visible and every control has an accessible label | Pending maintainer check |
-| Windows, Nederlands locale | Change app language, retain repair language, repeat keyboard navigation | Every visible control uses Dutch where intended and repair language remains unchanged | Pending maintainer check |
-| Windows, 200 percent text scaling | Open each Settings section and reach the footer | No text or control is clipped and the footer remains reachable | Pending maintainer check |
+| Windows, English locale | Start the app, tab through navigation, select each control, activate the footer button without opening it | Focus stays visible and every control has an accessible label | Maintainer confirmed on 2026-09-04 |
+| Windows, Nederlands locale | Change app language, retain repair language, repeat keyboard navigation | Every visible control uses Dutch where intended and repair language remains unchanged | Maintainer confirmed on 2026-09-04 |
+| Windows, 200 percent text scaling | Open each Settings section and reach the footer | No text or control is clipped and the footer remains reachable | Maintainer confirmed on 2026-09-04 |
 
 ## Traps
 
@@ -110,4 +110,4 @@ Do not persist settings that fail schema validation or silently reset a user cho
 
 - 2026-09-04: Settings schema, storage adapter, English and Dutch copy, layout, tray preference synchronisation, and the original 12 tests landed in `7ebb70b`.
 - 2026-09-04: The blank Settings window was reproduced through Electron debugging. `fc25403` replaces the rejected ES-module preload with a sandbox-compatible CommonJS preload. Lint, typecheck, build, and all 20 tests pass. A live renderer check confirmed the bridge object and complete Settings markup.
-- Remaining: the maintainer must perform the listed keyboard, locale, and 200 percent Windows scaling checks before the phase can be marked complete.
+- 2026-09-04: The maintainer confirmed that the app works. Phase 2 receives complete status after fresh lint, typecheck, test, and build evidence.

@@ -17,7 +17,7 @@ This directory turns the public promise in the [root README](../README.md) into 
 | Phase | Status | Outcome | Read first |
 |---|---|---|---|
 | 1 | ✅ Complete | Project foundation | [01-project-foundation.md](phases/01-project-foundation.md) |
-| 2 | 🟡 In progress | Settings and localisation | [02-settings-and-localisation.md](phases/02-settings-and-localisation.md) |
+| 2 | ✅ Complete | Settings and localisation | [02-settings-and-localisation.md](phases/02-settings-and-localisation.md) |
 | 3 | ⬜ Planned | Input policy library | [03-input-policy-library.md](phases/03-input-policy-library.md) |
 | 4 | ⬜ Planned | Native observation worker | [04-native-observation-worker.md](phases/04-native-observation-worker.md) |
 | 5 | ⬜ Planned | Safe chatter protection | [05-safe-chatter-protection.md](phases/05-safe-chatter-protection.md) |
@@ -34,7 +34,7 @@ This directory turns the public promise in the [root README](../README.md) into 
 
 | ✅ Complete | 🟡 In progress | ⬜ Planned |
 |---|---|---|
-| Phase 1 | Phase 2 | Phases 3 to 13 |
+| Phases 1 to 2 | No active implementation phase | Phases 3 to 13 |
 
 The phase file is the operational checklist. A phase is complete only when every relevant task and acceptance criterion has evidence. The current app is not ready for end-user use.
 
