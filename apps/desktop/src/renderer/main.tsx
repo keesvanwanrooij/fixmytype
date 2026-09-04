@@ -10,14 +10,10 @@ import {
   type RepairLanguage,
   type Settings
 } from "../shared/settings.js";
-import { loadSettings, saveSettings, type SettingsStorageIssue } from "../shared/settings-storage.js";
+import { loadSettings } from "../shared/settings-storage.js";
+import { updateSettingsView, type SettingsView } from "../shared/settings-view.js";
 
 type Section = "general" | "language" | "about";
-
-type SettingsView = {
-  issue: SettingsStorageIssue | undefined;
-  settings: Settings;
-};
 
 const storedSettings = (): SettingsView => loadSettings(window.localStorage);
 
@@ -28,8 +24,7 @@ const App = () => {
   const copy = copyFor(settings.interfaceLanguage);
 
   const updateSettings = (nextSettings: Settings): void => {
-    const nextIssue = issue === "invalid" ? "invalid" : saveSettings(window.localStorage, nextSettings);
-    setView({ issue: nextIssue, settings: nextSettings });
+    setView(updateSettingsView(view, nextSettings, window.localStorage));
   };
 
   useEffect(() => {
@@ -39,9 +34,8 @@ const App = () => {
 
   useEffect(() => window.fixMyType.onProtectionChanged((enabled) => {
     const nextSettings = setProtectionEnabled(settings, enabled);
-    const nextIssue = issue === "invalid" ? "invalid" : saveSettings(window.localStorage, nextSettings);
-    setView({ issue: nextIssue, settings: nextSettings });
-  }), [issue, settings]);
+    setView(updateSettingsView(view, nextSettings, window.localStorage));
+  }), [settings, view]);
 
   const issueMessage = issue === "invalid" ? copy.savedDataInvalid : issue === "unavailable" ? copy.savedDataUnavailable : undefined;
 
