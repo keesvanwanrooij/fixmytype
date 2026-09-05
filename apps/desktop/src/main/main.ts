@@ -1,10 +1,30 @@
-import { app, BrowserWindow, ipcMain, Menu, nativeImage, shell, Tray } from "electron";
+import {
+  app,
+  BrowserWindow,
+  globalShortcut,
+  ipcMain,
+  Menu,
+  nativeImage,
+  shell,
+  Tray,
+} from "electron";
 import path from "node:path";
 
 import { isAllowedExternalUrl, supportUrl } from "./external-url.js";
 import { resolvePreloadPath } from "./preload-path.js";
-import { nextProtectionEnabled, protectionActionLabel } from "./protection-state.js";
-import type { InterfaceLanguage, Settings } from "../shared/settings.js";
+import {
+  nextProtectionEnabled,
+  protectionActionLabel,
+} from "./protection-state.js";
+import type { InterfaceLanguage } from "../shared/settings.js";
+
+import { isPreferences } from "../shared/preferences.js";
+import { isSettings } from "../shared/settings-storage.js";
+import { replaceShortcuts } from "./shortcuts.js";
+
+const ownsInstance = app.requestSingleInstanceLock();
+if (!ownsInstance) app.quit();
+let bindings: Record<string, string> = {};
 
 let mainWindow: BrowserWindow | undefined;
 let tray: Tray | undefined;
@@ -12,17 +32,22 @@ let isQuitting = false;
 let interfaceLanguage: InterfaceLanguage = "en";
 let protectionEnabled = true;
 
-const trayIcon = () => nativeImage.createFromDataURL(`data:image/svg+xml,${encodeURIComponent(`
+const trayIcon = () =>
+  nativeImage.createFromDataURL(
+    `data:image/svg+xml,${encodeURIComponent(`
   <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
     <rect width="32" height="32" rx="7" fill="#1f5d50"/>
     <path d="M10 9h12v4H14v3h7v4h-7v7h-4z" fill="white"/>
   </svg>
-`)}`);
+`)}`,
+  );
 
 const createWindow = (): BrowserWindow => {
   const window = new BrowserWindow({
-    width: 900,
-    height: 680,
+    width: 1180,
+    height: 840,
+    backgroundColor: "#101719",
+    autoHideMenuBar: true,
     minWidth: 720,
     minHeight: 540,
     show: false,
@@ -31,11 +56,13 @@ const createWindow = (): BrowserWindow => {
       contextIsolation: true,
       sandbox: true,
       nodeIntegration: false,
-      preload: resolvePreloadPath(import.meta.dirname)
-    }
+      preload: resolvePreloadPath(import.meta.dirname),
+    },
   });
 
-  void window.loadFile(path.join(import.meta.dirname, "../renderer/index.html"));
+  void window.loadFile(
+    path.join(import.meta.dirname, "../renderer/index.html"),
+  );
   window.once("ready-to-show", () => window.show());
   window.on("close", (event) => {
     if (!isQuitting) {
@@ -64,22 +91,25 @@ const refreshTrayMenu = (): void => {
     return;
   }
 
-  tray.setContextMenu(Menu.buildFromTemplate([
-    { label: "Open settings", click: openSettings },
-    { label: "Hide settings", click: () => mainWindow?.hide() },
-    {
-      label: protectionActionLabel(protectionEnabled, interfaceLanguage),
-      click: () => updateProtectionEnabled(nextProtectionEnabled(protectionEnabled))
-    },
-    { type: "separator" },
-    {
-      label: "Quit FixMyType",
-      click: () => {
-        isQuitting = true;
-        app.quit();
-      }
-    }
-  ]));
+  tray.setContextMenu(
+    Menu.buildFromTemplate([
+      { label: "Open settings", click: openSettings },
+      { label: "Hide settings", click: () => mainWindow?.hide() },
+      {
+        label: protectionActionLabel(protectionEnabled, interfaceLanguage),
+        click: () =>
+          updateProtectionEnabled(nextProtectionEnabled(protectionEnabled)),
+      },
+      { type: "separator" },
+      {
+        label: "Quit FixMyType",
+        click: () => {
+          isQuitting = true;
+          app.quit();
+        },
+      },
+    ]),
+  );
 };
 
 const updateProtectionEnabled = (enabled: boolean): void => {
@@ -95,23 +125,15 @@ const createTray = (): void => {
   refreshTrayMenu();
 };
 
-const isSettingsSync = (value: unknown): value is Settings => (
-  typeof value === "object"
-  && value !== null
-  && "interfaceLanguage" in value
-  && "repairLanguage" in value
-  && "protectionEnabled" in value
-  && (value.interfaceLanguage === "en" || value.interfaceLanguage === "nl")
-  && (value.repairLanguage === "auto" || value.repairLanguage === "en" || value.repairLanguage === "nl")
-  && typeof value.protectionEnabled === "boolean"
-);
-
 app.on("web-contents-created", (_event, contents) => {
   contents.on("will-navigate", (event) => event.preventDefault());
   contents.setWindowOpenHandler(() => ({ action: "deny" }));
 });
 
+app.on("second-instance", () => openSettings());
+
 app.whenReady().then(() => {
+  if (!ownsInstance) return;
   if (!tray) {
     createTray();
   }
@@ -120,10 +142,14 @@ app.whenReady().then(() => {
 
 app.on("before-quit", () => {
   isQuitting = true;
+  globalShortcut.unregisterAll();
 });
 
 ipcMain.handle("support:open", (event): Promise<void> => {
-  if (event.sender !== mainWindow?.webContents || !isAllowedExternalUrl(supportUrl)) {
+  if (
+    event.sender !== mainWindow?.webContents ||
+    !isAllowedExternalUrl(supportUrl)
+  ) {
     throw new Error("The support link request was rejected.");
   }
 
@@ -131,10 +157,38 @@ ipcMain.handle("support:open", (event): Promise<void> => {
 });
 
 ipcMain.handle("settings:sync", (event, settings: unknown): void => {
-  if (event.sender !== mainWindow?.webContents || !isSettingsSync(settings)) {
+  if (event.sender !== mainWindow?.webContents || !isSettings(settings)) {
     throw new Error("The settings update was rejected.");
   }
 
   interfaceLanguage = settings.interfaceLanguage;
   updateProtectionEnabled(settings.protectionEnabled);
+});
+
+ipcMain.handle("preferences:sync", (event, value: unknown): boolean => {
+  if (
+    event.senderFrame !== mainWindow?.webContents.mainFrame ||
+    !isPreferences(value)
+  )
+    throw new Error("Invalid preferences");
+  interfaceLanguage = value.interfaceLanguage;
+  if (protectionEnabled !== value.protectionEnabled)
+    updateProtectionEnabled(value.protectionEnabled);
+  refreshTrayMenu();
+  if (JSON.stringify(bindings) === JSON.stringify(value.shortcuts)) return true;
+  const ok = replaceShortcuts(
+    globalShortcut,
+    bindings,
+    value.shortcuts,
+    (action) => {
+      if (action === "pause") {
+        updateProtectionEnabled(!protectionEnabled);
+        return;
+      }
+      if (action === "show") openSettings();
+      mainWindow?.webContents.send("action", action);
+    },
+  );
+  if (ok) bindings = { ...value.shortcuts };
+  return ok;
 });

@@ -7,7 +7,7 @@ This is the canonical delivery status for the approved typing, repair, dictation
 | Phase | Status | Outcome |
 |---|---|---|
 | 1 | ✅ Complete | [Project foundation](phases/01-project-foundation.md) |
-| 2 | ⬜ Planned | [Workspace, profiles and shortcuts](phases/02-settings-and-localisation.md) |
+| 2 | 🔄 In progress | [Workspace, profiles and shortcuts](phases/02-settings-and-localisation.md) |
 | 3 | ⬜ Planned | [Preserve-first input policy](phases/03-input-policy-library.md) |
 | 4 | ⬜ Planned | [Target capabilities and native lifecycle](phases/04-native-observation-worker.md) |
 | 5 | ⬜ Planned | [Typing protection and personal calibration](phases/05-safe-chatter-protection.md) |
@@ -25,6 +25,10 @@ Phases 2 and 3 contain existing baseline code, but their expanded scope and corr
 ## Work order
 
 Finish one verified capability at a time, using its ordered packages. Independent preparation can proceed while a physical check is pending; record the dependency instead of silently skipping it. The final candidate must support the [first-user script](../docs/30-first-user-test.md).
+
+### Current execution focus
+
+The maintainer requested a usable correction and dictation workflow before access expires. Deliver the app-owned editor portions of phases 6, 7 and 8 next. They do not need the external Windows adapter from phases 4 and 5. Use explicit copying for external applications until target ownership is proven. Keep native integration and physical acceptance open rather than marking those phases complete.
 
 Use [phase instructions](phases/README.md) for evidence rules, [bug fixes](bug-fixes/README.md) for regressions and [optimizations](optimizations/README.md) for measurements. The [evidence index](evidence/README.md) lists actual checks.
 

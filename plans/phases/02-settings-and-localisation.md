@@ -2,7 +2,7 @@
 
 ## Status
 
-⬜ Planned
+🔄 In progress. The workspace and preferences are implemented. Physical Windows scaling and the complete tray lifecycle remain pending.
 
 ## Outcome
 
@@ -74,5 +74,7 @@ Keep physical scaling pending if it cannot be performed; never infer it from 'ap
 ## Implementation record
 
 The earlier Settings build passed 20 tests and a renderer startup check. Its claimed maintainer verification of keyboard navigation, locale behaviour and Windows scaling was inferred incorrectly and is withdrawn. Those checks require actual evidence. The expanded workspace scope is not complete.
+
+2026-09-05: Added a React workspace, three AI mode controls, four profiles, NL/EN settings, style card, vocabulary and configurable shortcuts. Preference tests cover migration, malformed fields, storage failure and shortcut conflicts. Registration restores the previous shortcuts on failure. A real Electron smoke script exercises the preload, typing, Dutch persistence, draft retention, AI mode, keyboard focus and compact layout. All 28 tests passed. Lint and the production build passed before and after the formatting cleanup. See [workspace evidence](../evidence/2026-09-05-workspace.md). Runtime controls are not yet text-changing features.
 
 Navigation: [Project home](../../README.md), [documentation](../../docs/README.md), [delivery plans](../README.md).
