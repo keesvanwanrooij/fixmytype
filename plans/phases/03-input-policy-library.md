@@ -2,7 +2,7 @@
 
 ## Status
 
-🔄 In progress. The implementation scope is locked by the maintainer's instruction to continue.
+✅ Complete. The advisory library, calibration contracts and clean Windows checkout verification are finished. This does not enable native input suppression.
 
 ## Outcome
 
@@ -29,31 +29,31 @@ Required prior capabilities: phases 1. The maintainer's GO authorizes implementa
 
 ### Package 1: Regression audit
 
-- [ ] Write failing tests for unknown modifier bits in crates/input-core/tests/policy_classification.rs.
-- [ ] Add equal timestamp, zero window, clock reset and key-up baseline tests.
-- [ ] Replace the return-enum-only property assertion with preservation invariants and a fixed seed.
-- [ ] Audit the public event type and avoid claiming numeric key codes are safe to log.
+- [x] Write failing tests for unknown modifier bits in crates/input-core/tests/policy_classification.rs.
+- [x] Add equal timestamp, zero window, clock reset and key-up baseline tests.
+- [x] Replace the return-enum-only property assertion with preservation invariants and a fixed seed.
+- [x] Audit the public event type and avoid claiming numeric key codes are safe to log.
 
 ### Package 2: Policy and calibration
 
-- [ ] Preserve unknown modifier bits in src/event.rs and treat any unknown state as non-filterable.
-- [ ] Make invalid timing and disabled windows preserve input in src/policy.rs.
-- [ ] Add a bounded sensitivity type and explicit caller-provided timing table without a hidden hardware default.
-- [ ] Add pure calibration summaries that propose settings only after enough visible samples.
+- [x] Preserve unknown modifier bits in src/event.rs and treat any unknown state as non-filterable.
+- [x] Make invalid timing and disabled windows preserve input in src/policy.rs.
+- [x] Add a bounded sensitivity type and explicit caller-provided timing table without a hidden hardware default.
+- [x] Add pure calibration summaries that propose settings only after enough visible samples.
 
 ### Package 3: Quality and API evidence
 
-- [ ] Document key hold versus switch chatter and the caller's key-lifetime responsibilities.
-- [ ] Test each sensitivity boundary and deliberate double-letter fixtures.
-- [ ] Run formatting, Clippy, deterministic property cases and normal-dependency inspection.
-- [ ] Update docs/23-input-core-api.md and record exact Windows commands.
+- [x] Document key hold versus switch chatter and the caller's key-lifetime responsibilities.
+- [x] Test each sensitivity boundary and deliberate double-letter fixtures.
+- [x] Run formatting, Clippy, deterministic property cases and normal-dependency inspection.
+- [x] Update docs/23-input-core-api.md and record exact Windows commands.
 
 ### Package 4: cleanup and delivery
 
-- [ ] Review the changed files for duplicated state, dead code, resource leaks and missing boundary validation.
-- [ ] Run affected tests after cleanup and retain actual red/green evidence under plans/evidence.
-- [ ] Update the phase record, reference docs and changelog with verified behaviour and known limitations.
-- [ ] Review the staged diff, commit this verified phase to main and push it to GitHub.
+- [x] Review the changed files for duplicated state, dead code, resource leaks and missing boundary validation.
+- [x] Run affected tests after cleanup and retain actual red/green evidence under plans/evidence.
+- [x] Update the phase record, reference docs and changelog with verified behaviour and known limitations.
+- [x] Review the staged diff, commit this verified phase to main and push it to GitHub.
 
 ## Acceptance criteria
 
@@ -63,13 +63,15 @@ The package-specific failure cases above must have tests or a documented physica
 
 ## Live checks
 
-- [ ] Run the crate checks from a clean Windows checkout without native input privileges.
+- [x] Run the crate checks from a clean Windows checkout without native input privileges.
 
 ## Stop condition and rollback
 
 The classifier is advice. It must not gain a hook or suppression side effect. Keep a usable draft, preserve existing user content, cancel app-owned jobs and document the reduced capability if a path fails.
 
 ## Implementation record
+
+Completed against code commit `9a366d0`. Sixteen Rust tests pass, including two fixed-seed generated suites of 512 cases each. Formatting, Clippy and dependency inspection pass in both the main checkout and an isolated clean Windows worktree. The crate has no normal dependencies. See [phase-3 evidence](../evidence/2026-09-05-phase3-policy.md).
 
 ### Starting checkpoint
 

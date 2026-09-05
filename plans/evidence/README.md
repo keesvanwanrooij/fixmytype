@@ -4,6 +4,8 @@ Use this directory for concise dated records of commands, source commit, synthet
 
 ## Records
 
+The [phase-3 policy verification](2026-09-05-phase3-policy.md) covers fixed-seed invariants, calibration contracts and a clean Windows worktree run.
+
 The [phase-2 completion audit](2026-09-05-phase2-audit.md) verifies every enabled keyboard path and persistence across separate app processes. Only its physical scaling row remains open.
 
 Read [workspace checks](2026-09-05-workspace.md), [local repair](2026-09-05-local-repair.md), [revision transactions](2026-09-05-transactions.md) and [the first usable dictation workflow](2026-09-05-dictation-workflow.md). These records distinguish app-owned behavior from physical and external-application checks that remain pending.

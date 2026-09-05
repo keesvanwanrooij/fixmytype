@@ -16,7 +16,7 @@ The expanded phases remain in progress where their original scope exceeds this u
 |---|---|---|
 | 1 | ✅ Complete | [Project foundation](phases/01-project-foundation.md) |
 | 2 | 🧪 Code verified; physical scaling pending | [Workspace, profiles and shortcuts](phases/02-settings-and-localisation.md) |
-| 3 | 🔄 In progress | [Preserve-first input policy](phases/03-input-policy-library.md) |
+| 3 | ✅ Complete | [Preserve-first input policy](phases/03-input-policy-library.md) |
 | 4 | ⬜ Planned | [Target capabilities and native lifecycle](phases/04-native-observation-worker.md) |
 | 5 | ⬜ Planned | [Typing protection and personal calibration](phases/05-safe-chatter-protection.md) |
 | 6 | 🔄 In progress | [Local repair and personal tone](phases/06-selected-text-repair.md) |
@@ -28,7 +28,7 @@ The expanded phases remain in progress where their original scope exceeds this u
 | 12 | ⬜ Planned | [Windows package and first-user candidate](phases/12-windows-candidate.md) |
 | 13 | ⬜ Planned | [First-user acceptance and public release gate](phases/13-first-user-acceptance.md) |
 
-Phases 2 and 3 contain existing baseline code, but their expanded scope and corrected verification remain open. A prior 'app works' message confirmed startup only, not scaling, keyboard navigation or external application compatibility.
+Phase 2's code and keyboard/tray lifecycle checks are complete; its physical Windows text-scaling check remains open. Phase 3 is complete with isolated Windows build evidence. A prior 'app works' message confirmed startup only, not scaling or external application compatibility.
 
 ## Work order
 
@@ -36,7 +36,7 @@ Finish one verified capability at a time, using its ordered packages. Independen
 
 ### Current execution focus
 
-The app-owned portions of phases 6, 7 and 8 are delivered. The maintainer now requests phase-by-phase completion with a GitHub checkpoint before each phase and a verified result commit afterwards. Audit phase 2's remaining interaction and lifecycle checks first, then finish phase 3's independent input policy. Windows text scaling is currently 100 percent; its physical 200-percent check remains open. Keep unsupported native integration and physical acceptance explicit.
+The app-owned portions of phases 6, 7 and 8 are delivered. The phase-2 completion audit fixed save feedback and tray language, and phase 3 now passes its full contract. Phase 4 is next after phase 2's remaining acceptance is resolved. Windows text scaling is currently 100 percent; its physical 200-percent check needs maintainer evidence. Each phase now has a pushed checkpoint before work and a verified outcome commit after it. Keep unsupported native integration and physical acceptance explicit.
 
 Use [phase instructions](phases/README.md) for evidence rules, [bug fixes](bug-fixes/README.md) for regressions and [optimizations](optimizations/README.md) for measurements. The [evidence index](evidence/README.md) lists actual checks.
 
