@@ -2,7 +2,7 @@
 
 ## Status
 
-⬜ Planned
+🔄 In progress. The first delivery covers visible calibration and the existing app-owned filter. Native hooks and physical acceptance remain pending.
 
 ## Outcome
 
@@ -72,6 +72,25 @@ Any lost key or stuck-key state blocks this phase. Disable the native path while
 
 ## Implementation record
 
-Implementation of this revised phase has not yet been verified.
+### Approved implementation checkpoint
+
+Starting commit: `79d307a`. The maintainer asked to continue. Phase 3's pure policy and phase 4's target/process boundary are verified. Keep phase 2's physical scaling check separate.
+
+Goal: let a user measure one problem key, label accidental and deliberate pairs, review a conservative proposal and explicitly accept or remove a per-key setting for the owned editor.
+
+Decisions: no question changes the approved scope. Use the existing levels and millisecond windows. A focused calibration exercise captures two trusted, unmodified presses of one chosen letter. The user labels the interval; the app does not infer intent from ordinary writing. Raw timing samples remain in memory during that exercise and are discarded on cancel, unmount or a new key choice. Only accepted aggregate counts and a per-key level may be saved. A separate versioned storage key avoids rewriting existing preferences. The Rust calibration algorithm remains the proposal authority through a named, bounded main-process request.
+
+Tasks:
+
+1. Add failing tests for Shift, untrusted or unknown metadata in `tests/typing-filter.test.ts`, then tighten the app-owned filter without changing native input.
+2. Add failing tests for pair capture, invalid intervals, held keys, cancellation and accepted-summary validation in `tests/calibration.test.ts`.
+3. Extend `apps/input-worker` with a strict calibration request that calls the existing Rust summary function. Test that calibration does not start observation and that other operations reject its fields.
+4. Add a named calibration IPC operation and exact reply validation in main and preload. It sends interval/intent pairs only, never typed text.
+5. Add `CalibrationPanel.tsx` under Settings with NL/EN instructions, selected key, visible counts, review, accept, cancel and removal controls. Keep the capture area local to that mounted exercise.
+6. Connect accepted per-key levels to `Workspace.tsx`. Keep profile exclusions, pause, IME and modifier preservation ahead of filtering.
+7. Exercise the real rendered calibration panel, acceptance, cancellation, removal and denied samples. Rerun the existing target, phase-2 and writing/dictation checks.
+8. Review bounds, privacy and resource cleanup, update phase/evidence/reference docs and commit and push this verified slice.
+
+Out of scope for this slice: system-wide hooks, arbitrary external insertion, native callback latency claims and physical damaged-keyboard acceptance. The full phase stays open until those packages have their own evidence. A calibration proposal is not proof that a physical keyboard is safe to filter.
 
 Navigation: [Project home](../../README.md), [documentation](../../docs/README.md), [delivery plans](../README.md).
