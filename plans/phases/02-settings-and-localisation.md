@@ -75,6 +75,8 @@ Keep physical scaling pending if it cannot be performed; never infer it from 'ap
 
 ### Visual follow-up checkpoint
 
+Result: the rendered regression failed with a measured 0px gap. The dedicated `setup-actions` rule now gives the button 24px of space. Both locales pass the real Electron check, and the Dutch screenshot was inspected. All 48 unit tests, lint and the production build passed. The capture needed a visible, focused window before Chromium could supply an image. The synthetic instance correctly reported a shortcut conflict with the user's already running app; the user's app was not stopped.
+
 The maintainer reports that the app looks good and requests space above the Local setup recheck button. Add a rendered regression to `scripts/phase2-check.cjs`, fail it on the current zero gap, then add a dedicated setup-actions layout rule in `src/renderer/styles.css` and `App.tsx`. Verify both languages and inspect the rendered Dutch page. This is approval of the shown layout apart from the requested spacing fix, not explicit evidence of Windows 200-percent text scaling. Continue phase 4's independent safety work while that acceptance row remains recorded.
 
 The completion audit passes 48 desktop tests, lint, build and `npm run test:phase2`. The last command uses two real Electron processes with one isolated profile: it tabs through every enabled control in both locales, verifies failure feedback, invokes the real tray callbacks, quits and reloads persisted Dutch preferences. It does not touch the running user's profile. The parent removes its own synthetic profile after both processes exit. See [completion evidence](../evidence/2026-09-05-phase2-audit.md).

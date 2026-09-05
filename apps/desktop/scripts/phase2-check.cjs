@@ -27,6 +27,19 @@ app.on("browser-window-created", (_event, window) => {
       run(
         `Array.from(document.querySelectorAll('button')).find(b=>b.textContent.includes(${JSON.stringify(label)})).click()`,
       );
+    async function checkSetupSpacing(label) {
+      await click(label);
+      await wait(
+        `Boolean(document.querySelector('.main-content > .primary-button'))`,
+      );
+      const gap = await run(
+        `document.querySelector('.main-content > .primary-button').getBoundingClientRect().top-document.querySelector('.settings-grid').getBoundingClientRect().bottom`,
+      );
+      assert.ok(
+        gap >= 24,
+        `Setup actions need at least 24px above them, got ${gap}px`,
+      );
+    }
     async function tabEveryControl() {
       const count = await run(
         `(()=>{window.testControls=Array.from(document.querySelectorAll('a[href],button:not(:disabled),input:not(:disabled),select:not(:disabled),textarea:not(:disabled)')).filter(e=>e.getClientRects().length>0);window.testControls.forEach((e,i)=>e.dataset.testFocus=String(i));window.testControls[0].focus();return window.testControls.length;})()`,
@@ -59,6 +72,7 @@ app.on("browser-window-created", (_event, window) => {
         );
       } else {
         await tabEveryControl();
+        await checkSetupSpacing("Local setup");
         await click("Settings");
         await wait(`Boolean(document.querySelector('.save-row'))`);
         await tabEveryControl();
@@ -80,6 +94,16 @@ app.on("browser-window-created", (_event, window) => {
         await click("Schrijven");
         await wait(`Boolean(document.querySelector('#writing-editor'))`);
         await tabEveryControl();
+        await checkSetupSpacing("Lokale installatie");
+        if (process.env.FIXMYTYPE_CAPTURE === "1") {
+          window.show();
+          window.focus();
+          await new Promise((r) => setTimeout(r, 1000));
+          require("node:fs").writeFileSync(
+            path.join(__dirname, "../.cache/setup-spacing.png"),
+            (await window.capturePage()).toPNG(),
+          );
+        }
       }
       assert.deepEqual(
         trayMenu.items

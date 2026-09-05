@@ -198,7 +198,7 @@ export function App() {
             </div>
             <button
               type="button"
-              className="primary-button"
+              className="primary-button setup-actions"
               onClick={writing.refresh}
             >
               {w.checkAgain}

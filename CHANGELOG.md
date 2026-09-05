@@ -6,6 +6,8 @@ All notable user-visible changes to FixMyType will be documented here. This proj
 
 ### Fixed
 
+- The Local setup recheck button now has 24px of space above it, verified in Dutch and English.
+
 - The Rust policy preserves unknown modifier bits, equal timestamps and disabled or unrepresentable timing windows. Debug output no longer exposes key codes or event timestamps.
 
 - Settings no longer reports a successful save when local storage rejects the write.
