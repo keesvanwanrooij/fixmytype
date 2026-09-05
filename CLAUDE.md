@@ -44,6 +44,8 @@ A test that passes before the behavior exists does not prove the behavior. Do no
 
 ## Starting a phase
 
+Before phase implementation, commit and push a checkpoint containing the phase scope, starting evidence and remaining acceptance checks. After implementation, tests and cleanup, commit and push the verified outcome separately. Preserve unrelated changes. A checkpoint is not a completion claim.
+
 At the beginning of every phase, ask only the clarifying questions that materially change what will be built. Each question must explain, in plain language:
 
 1. The decision being made.

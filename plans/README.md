@@ -36,7 +36,7 @@ Finish one verified capability at a time, using its ordered packages. Independen
 
 ### Current execution focus
 
-The maintainer requested a usable correction and dictation workflow before access expires. Deliver the app-owned editor portions of phases 6, 7 and 8 next. They do not need the external Windows adapter from phases 4 and 5. Use explicit copying for external applications until target ownership is proven. Keep native integration and physical acceptance open rather than marking those phases complete.
+The app-owned portions of phases 6, 7 and 8 are delivered. The maintainer now requests phase-by-phase completion with a GitHub checkpoint before each phase and a verified result commit afterwards. Audit phase 2's remaining interaction and lifecycle checks first, then finish phase 3's independent input policy. Windows text scaling is currently 100 percent; its physical 200-percent check remains open. Keep unsupported native integration and physical acceptance explicit.
 
 Use [phase instructions](phases/README.md) for evidence rules, [bug fixes](bug-fixes/README.md) for regressions and [optimizations](optimizations/README.md) for measurements. The [evidence index](evidence/README.md) lists actual checks.
 

@@ -73,6 +73,16 @@ Keep physical scaling pending if it cannot be performed; never infer it from 'ap
 
 ## Implementation record
 
+### Completion audit checkpoint
+
+Status: locked for implementation under the maintainer's instruction to continue. The baseline is `f2b945f`. The only pre-existing untracked file is the root `package-lock.json`; it is not part of this phase.
+
+The next package tests every enabled workspace and Settings control with Tab in NL and EN, tests language persistence across separate Electron launches, and exercises close-to-tray and reopening. It also audits translated tray labels and truthful save feedback. Files in scope are `src/main/main.ts`, a tray-label helper, `src/renderer/SettingsPanel.tsx`, `src/renderer/App.tsx`, focused tests and an isolated lifecycle script under `apps/desktop/scripts`.
+
+The host currently reports Windows TextScaleFactor 100. Do not change the user's global accessibility settings or substitute browser zoom for a physical 200-percent check. That row remains a maintainer check. Phase 3 depends on phase 1, so its independent library work can proceed while this physical check remains pending.
+
+Acceptance commands: `npm test`, `npm run lint`, `npm run build`, the new lifecycle command and `node scripts/check-docs.mjs`. Make a second commit and push after verification, with the remaining physical row explicit.
+
 The earlier Settings build passed 20 tests and a renderer startup check. Its claimed maintainer verification of keyboard navigation, locale behaviour and Windows scaling was inferred incorrectly and is withdrawn. Those checks require actual evidence. The expanded workspace scope is not complete.
 
 2026-09-05: Added a React workspace, three AI mode controls, four profiles, NL/EN settings, style card, vocabulary and configurable shortcuts. Preference tests cover migration, malformed fields, storage failure and shortcut conflicts. Registration restores the previous shortcuts on failure. A real Electron smoke script exercises the preload, typing, Dutch persistence, draft retention, AI mode, keyboard focus and compact layout. All 28 tests passed. Lint and the production build passed before and after the formatting cleanup. See [workspace evidence](../evidence/2026-09-05-workspace.md). Runtime controls are not yet text-changing features.
