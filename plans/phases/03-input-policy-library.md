@@ -2,7 +2,7 @@
 
 ## Status
 
-⬜ Planned
+🔄 In progress. The implementation scope is locked by the maintainer's instruction to continue.
 
 ## Outcome
 
@@ -70,6 +70,12 @@ The package-specific failure cases above must have tests or a documented physica
 The classifier is advice. It must not gain a hook or suppression side effect. Keep a usable draft, preserve existing user content, cancel app-owned jobs and document the reduced capability if a path fails.
 
 ## Implementation record
+
+### Starting checkpoint
+
+The crate has eight tests, masks unknown modifier bits and labels event metadata as content-free. This package will preserve all modifier bits, reject equal/reversed/disabled timing, add sensitivity levels 1-5 with an explicit monotonic timing table and summarize explicitly labelled calibration intervals. Calibration requires at least ten accidental and ten deliberate examples, caps input at 1,000 samples, and refuses overlapping groups. These are safety gates for a proposal, not a learned hardware default or permission to suppress input.
+
+Files: `src/event.rs`, `src/policy.rs`, new `src/calibration.rs`, public exports, Rust integration tests, the crate README and docs/23-input-core-api.md. There is no hook, logging, OS setting change, device recording or desktop behavior change in this phase. Evidence will include fixed-seed generated preservation tests, boundary fixtures and a clean Windows worktree check. Commit this checkpoint before writing implementation, then commit and push the verified result.
 
 Commit 4c39473 added the initial Rust crate and eight tests. This expanded audit reopens completion because unknown modifier bits are discarded and generated tests did not prove sufficient safety invariants.
 
