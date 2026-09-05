@@ -27,6 +27,7 @@ npm test
 npm run lint
 npm run build
 npm run test:smoke
+npm run test:phase2
 ~~~
 
 The smoke check starts the real built app with an isolated synthetic profile. Optional integration checks require local Ollama, installed speech resources and ffmpeg. Download the public test fixture first:

@@ -6,6 +6,9 @@ All notable user-visible changes to FixMyType will be documented here. This proj
 
 ### Fixed
 
+- Settings no longer reports a successful save when local storage rejects the write.
+- Tray actions and tooltip follow the Dutch or English interface setting.
+
 - The Electron source build now loads its bundled Settings screen from relative asset paths.
 - The sandboxed Electron preload now uses CommonJS, so the Settings screen receives its safe desktop bridge.
 

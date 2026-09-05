@@ -21,6 +21,7 @@ import type { InterfaceLanguage } from "../shared/settings.js";
 import { isPreferences } from "../shared/preferences.js";
 import { replaceShortcuts } from "./shortcuts.js";
 import { registerWorkspace } from "./workspace-ipc.js";
+import { trayCopy } from "./tray-copy.js";
 
 const ownsInstance = app.requestSingleInstanceLock();
 if (!ownsInstance) app.quit();
@@ -92,10 +93,12 @@ const refreshTrayMenu = (): void => {
     return;
   }
 
+  const labels = trayCopy(interfaceLanguage);
+  tray.setToolTip(labels.tooltip);
   tray.setContextMenu(
     Menu.buildFromTemplate([
-      { label: "Open settings", click: openSettings },
-      { label: "Hide settings", click: () => mainWindow?.hide() },
+      { label: labels.open, click: openSettings },
+      { label: labels.hide, click: () => mainWindow?.hide() },
       {
         label: protectionActionLabel(protectionEnabled, interfaceLanguage),
         click: () =>
@@ -103,7 +106,7 @@ const refreshTrayMenu = (): void => {
       },
       { type: "separator" },
       {
-        label: "Quit FixMyType",
+        label: labels.quit,
         click: () => {
           isQuitting = true;
           app.quit();
@@ -121,7 +124,6 @@ const updateProtectionEnabled = (enabled: boolean): void => {
 
 const createTray = (): void => {
   tray = new Tray(trayIcon());
-  tray.setToolTip("FixMyType settings");
   tray.on("click", openSettings);
   refreshTrayMenu();
 };

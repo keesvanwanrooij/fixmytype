@@ -2,7 +2,7 @@
 
 ## Status
 
-🔄 In progress. The workspace and preferences are implemented. Physical Windows scaling and the complete tray lifecycle remain pending.
+🧪 Awaiting one physical check. ✅ Implementation, automated keyboard navigation and restart/tray verification are complete. Windows text scaling at 200 percent is not yet verified.
 
 ## Outcome
 
@@ -45,15 +45,15 @@ Required prior capabilities: phases 1. The maintainer's GO authorizes implementa
 
 - [x] Add main-process single-instance ownership and handle shortcut registration failure transactionally.
 - [x] Expose a typed action event through preload.cts instead of arbitrary channel access.
-- [ ] Keep Support FixMyType in the bottom footer and provide keyboard focus for every control.
+- [x] Keep Support FixMyType in the bottom footer and provide keyboard focus for every control.
 - [x] Run a real Electron render check and exercise Settings, both locales and reduced viewport.
 
 ### Package 4: cleanup and delivery
 
-- [ ] Review the changed files for duplicated state, dead code, resource leaks and missing boundary validation.
-- [ ] Run affected tests after cleanup and retain actual red/green evidence under plans/evidence.
-- [ ] Update the phase record, reference docs and changelog with verified behaviour and known limitations.
-- [ ] Review the staged diff, commit this verified phase to main and push it to GitHub.
+- [x] Review the changed files for duplicated state, dead code, resource leaks and missing boundary validation.
+- [x] Run affected tests after cleanup and retain actual red/green evidence under plans/evidence.
+- [x] Update the phase record, reference docs and changelog with verified behaviour and known limitations.
+- [x] Review the staged diff and deliver the verified code with checkpoint/result commits. Final physical acceptance remains open.
 
 ## Acceptance criteria
 
@@ -63,15 +63,17 @@ The package-specific failure cases above must have tests or a documented physica
 
 ## Live checks
 
-- [ ] Tab through workspace and settings in both locales.
+- [x] Tab through workspace and settings in both locales.
 - [ ] Verify 200 percent Windows text scaling separately from browser zoom.
-- [ ] Close to tray, reopen, quit and restart without losing language preferences.
+- [x] Close to tray, reopen, quit and restart without losing language preferences.
 
 ## Stop condition and rollback
 
 Keep physical scaling pending if it cannot be performed; never infer it from 'app works'. Keep a usable draft, preserve existing user content, cancel app-owned jobs and document the reduced capability if a path fails.
 
 ## Implementation record
+
+The completion audit passes 48 desktop tests, lint, build and `npm run test:phase2`. The last command uses two real Electron processes with one isolated profile: it tabs through every enabled control in both locales, verifies failure feedback, invokes the real tray callbacks, quits and reloads persisted Dutch preferences. It does not touch the running user's profile. The parent removes its own synthetic profile after both processes exit. See [completion evidence](../evidence/2026-09-05-phase2-audit.md).
 
 ### Completion audit checkpoint
 

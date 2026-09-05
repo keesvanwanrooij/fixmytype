@@ -15,7 +15,7 @@ The expanded phases remain in progress where their original scope exceeds this u
 | Phase | Status | Outcome |
 |---|---|---|
 | 1 | ✅ Complete | [Project foundation](phases/01-project-foundation.md) |
-| 2 | 🔄 In progress | [Workspace, profiles and shortcuts](phases/02-settings-and-localisation.md) |
+| 2 | 🧪 Code verified; physical scaling pending | [Workspace, profiles and shortcuts](phases/02-settings-and-localisation.md) |
 | 3 | ⬜ Planned | [Preserve-first input policy](phases/03-input-policy-library.md) |
 | 4 | ⬜ Planned | [Target capabilities and native lifecycle](phases/04-native-observation-worker.md) |
 | 5 | ⬜ Planned | [Typing protection and personal calibration](phases/05-safe-chatter-protection.md) |

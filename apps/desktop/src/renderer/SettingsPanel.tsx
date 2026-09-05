@@ -7,7 +7,7 @@ import {
 import type { Words } from "./words.js";
 type Props = {
   preferences: Preferences;
-  save: (value: Preferences) => void;
+  save: (value: Preferences) => "invalid" | "unavailable" | undefined;
   words: Words;
 };
 export function SettingsPanel({ preferences, save, words: w }: Props) {
@@ -26,8 +26,8 @@ export function SettingsPanel({ preferences, save, words: w }: Props) {
       setMessage(w.invalid);
       return;
     }
-    save(next);
-    setMessage(w.saved);
+    const issue = save(next);
+    setMessage(issue ? w[issue] : w.saved);
   }
   return (
     <>

@@ -23,6 +23,7 @@ export function App() {
     const issue = savePreferences(window.localStorage, value);
     setPreferences(value);
     setNotice(issue ?? "");
+    return issue;
   };
   useEffect(() => {
     document.documentElement.lang = preferences.interfaceLanguage;
