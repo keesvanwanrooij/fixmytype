@@ -11,6 +11,7 @@
     "test:smoke": "electron scripts/smoke.cjs",
     "test:phase2": "node scripts/phase2-check.mjs",
     "test:targets": "node scripts/target-check.mjs",
+    "test:calibration": "node scripts/target-check.mjs calibration",
     "test:workflow": "electron scripts/workflow-smoke.cjs",
     "test:runtime": "node scripts/runtime-check.mjs",
     "setup:speech": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/setup-speech.ps1",

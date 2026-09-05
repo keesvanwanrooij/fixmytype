@@ -11,9 +11,14 @@ import { Workspace } from "./Workspace.js";
 import { SettingsPanel } from "./SettingsPanel.js";
 import { useWriting } from "./useWriting.js";
 import { HistoryList } from "./HistoryList.js";
+import { CalibrationPanel } from "./CalibrationPanel.js";
+import { loadCalibrations, saveCalibrations } from "../shared/calibration.js";
 type Page = "workspace" | "history" | "setup" | "settings";
 export function App() {
   const [loaded] = useState(() => loadPreferences(window.localStorage));
+  const [calibration, setCalibration] = useState(() =>
+    loadCalibrations(window.localStorage),
+  );
   const [preferences, setPreferences] = useState(loaded.preferences);
   const [page, setPage] = useState<Page>("workspace");
   const writing = useWriting(
@@ -142,6 +147,7 @@ export function App() {
         )}
         {page === "workspace" && (
           <Workspace
+            calibrations={calibration.values}
             preferences={preferences}
             update={update}
             writing={writing}
@@ -149,12 +155,24 @@ export function App() {
           />
         )}
         {page === "settings" && (
-          <SettingsPanel
-            key={preferences.interfaceLanguage}
-            preferences={preferences}
-            save={update}
-            words={w}
-          />
+          <>
+            <SettingsPanel
+              key={preferences.interfaceLanguage}
+              preferences={preferences}
+              save={update}
+              words={w}
+            />
+            <CalibrationPanel
+              language={preferences.interfaceLanguage}
+              values={calibration.values}
+              issue={calibration.issue}
+              save={(values) => {
+                const issue = saveCalibrations(window.localStorage, values);
+                if (!issue) setCalibration({ values });
+                return issue;
+              }}
+            />
+          </>
         )}
         {page === "history" && (
           <>

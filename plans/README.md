@@ -6,7 +6,7 @@ This is the canonical delivery status for the approved typing, repair, dictation
 
 ✅ The source build supports local AI suggestions and automatic correction inside FixMyType, even while later typing continues. It supports guarded Undo, repeated-letter filtering, local Whisper dictation and explicit copying to other apps. Start it with `Start FixMyType.cmd` or follow [the desktop guide](../apps/desktop/README.md).
 
-✅ Verification now includes 73 desktop tests, 21 Rust tests, lint, a production build, real Electron interaction, local AI correction and a fake-microphone-to-Whisper workflow. See [target and process evidence](evidence/04-targets.md) and [dictation evidence](evidence/2026-09-05-dictation-workflow.md).
+✅ Verification now includes 78 desktop tests, 22 Rust tests, lint, a production build, real Electron interaction, local AI correction and a fake-microphone-to-Whisper workflow. Settings also supports explicitly accepted key calibration. See [calibration evidence and feedback](evidence/2026-09-06-calibration.md), [target evidence](evidence/04-targets.md) and [dictation evidence](evidence/2026-09-05-dictation-workflow.md).
 
 The expanded phases remain in progress where their original scope exceeds this usable slice. External input hooks, direct insertion, TTS, spoken commands, companion work, packaging and physical acceptance are not complete.
 
@@ -18,7 +18,7 @@ The expanded phases remain in progress where their original scope exceeds this u
 | 2 | 🧪 Code verified; physical scaling pending | [Workspace, profiles and shortcuts](phases/02-settings-and-localisation.md) |
 | 3 | ✅ Complete | [Preserve-first input policy](phases/03-input-policy-library.md) |
 | 4 | ✅ Complete | [Target capabilities and native lifecycle](phases/04-native-observation-worker.md) |
-| 5 | ⬜ Planned | [Typing protection and personal calibration](phases/05-safe-chatter-protection.md) |
+| 5 | 🔄 Calibration delivered; native path pending | [Typing protection and personal calibration](phases/05-safe-chatter-protection.md) |
 | 6 | 🔄 In progress | [Local repair and personal tone](phases/06-selected-text-repair.md) |
 | 7 | 🔄 In progress | [Concurrent sentence repair, history and Undo](phases/07-sentence-repair-experiment.md) |
 | 8 | 🔄 In progress | [Dictation, vocabulary and spoken commands](phases/08-dictation-and-commands.md) |
@@ -36,7 +36,7 @@ Finish one verified capability at a time, using its ordered packages. Independen
 
 ### Current execution focus
 
-The app-owned portions of phases 6, 7 and 8 are delivered. Phase 2 now also has a tested 24px gap above its setup action, and the maintainer approves the shown interface. Phases 3 and 4 pass their contracts. Phase 5 is the next code phase. Windows text scaling is currently 100 percent; phase 2's physical 200-percent check still needs maintainer evidence. Each phase has a pushed checkpoint before work and a verified outcome commit after it. Keep unsupported native integration and physical acceptance explicit.
+The app-owned portions of phases 6, 7 and 8 are delivered. Phase 2 has a tested 24px gap above its setup action. Phases 3 and 4 pass their contracts. Phase 5 now delivers visible calibration and per-key settings for the owned editor; native interception remains open. The [first physical feedback list](evidence/2026-09-06-calibration.md) covers calibration, intended repeats, dictation and phase 2's pending 200-percent Windows text-size check. Each slice has a pushed checkpoint before work and a verified result afterward. Keep unsupported native integration and physical acceptance explicit.
 
 Use [phase instructions](phases/README.md) for evidence rules, [bug fixes](bug-fixes/README.md) for regressions and [optimizations](optimizations/README.md) for measurements. The [evidence index](evidence/README.md) lists actual checks.
 

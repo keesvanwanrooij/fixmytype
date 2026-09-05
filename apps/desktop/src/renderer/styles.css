@@ -39,7 +39,8 @@ button:focus-visible,
 a:focus-visible,
 input:focus-visible,
 select:focus-visible,
-textarea:focus-visible {
+textarea:focus-visible,
+.calibration-capture:focus-visible {
   outline: 3px solid var(--accent);
   outline-offset: 4px;
 }
@@ -285,6 +286,39 @@ input[type="text"],
 .setup-actions {
   margin-top: 24px;
 }
+
+.calibration-panel {
+  margin-top: 24px;
+}
+.calibration-panel > p {
+  margin-top: 12px;
+  line-height: 1.55;
+}
+.calibration-panel > button {
+  margin-top: 12px;
+}
+.calibration-panel > label {
+  max-width: 240px;
+}
+.calibration-capture {
+  padding: 24px;
+  margin: 16px 0;
+  border: 2px dashed var(--accent);
+  border-radius: 8px;
+}
+.calibration-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 16px 0;
+}
+.calibration-saved {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 0;
+}
 .panel {
   padding: 22px;
   border: 1px solid var(--border);
@@ -485,7 +519,8 @@ input[type="range"] {
   gap: 10px;
   margin: 16px 0;
 }
-.toolbar button {
+.toolbar button,
+.calibration-panel button {
   padding: 10px 14px;
   border: 1px solid #43514d;
   border-radius: 8px;
@@ -497,7 +532,8 @@ input[type="range"] {
   opacity: 0.5;
   cursor: default;
 }
-.toolbar .primary-button {
+.toolbar .primary-button,
+.calibration-panel .primary-button {
   background: #c9e6ba;
   color: #152019;
 }

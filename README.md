@@ -10,6 +10,8 @@ You can now write, correct and dictate inside the desktop app. It has local AI s
 
 You choose deterministic typing protection at levels 1 through 5. AI stays separate, with Off, Suggest and Automatic modes. Personal profiles distinguish browser prompts, prose, code and spreadsheets. Your own tone comes from an editable local style card and vocabulary.
 
+Settings includes [key calibration](docs/18-chatter-protection.md). Measure a problem key, label unwanted and deliberate pairs, then review a proposal before accepting it. Only accepted per-key levels and counts are saved. This adjusts the FixMyType editor, not typing in other apps.
+
 Keep typing while an earlier sentence is corrected in the FixMyType editor. If you edit that sentence before AI returns, the result becomes a draft instead of overwriting your changes. Dictation inserts at the original editor selection when that range is still valid. Both paths keep session history with Undo. AI can still misunderstand your meaning, so review changes before sharing them.
 
 Read-aloud, spoken commands, external application adapters and the visual companion remain planned. The non-AI filter only suppresses exceptionally fast repeated presses of the same letter inside this app. It does not guess which of two different letters you intended.

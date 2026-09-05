@@ -4,13 +4,21 @@ import { useRef } from "react";
 import { ChatterFilter } from "../shared/typing-filter.js";
 import type { useWriting } from "./useWriting.js";
 import { HistoryList } from "./HistoryList.js";
+import type { Calibrations } from "../shared/calibration.js";
 type Props = {
+  calibrations: Calibrations;
   preferences: Preferences;
   update: (value: Preferences) => void;
   writing: ReturnType<typeof useWriting>;
   words: Words;
 };
-export function Workspace({ preferences, update, writing, words: w }: Props) {
+export function Workspace({
+  preferences,
+  update,
+  writing,
+  words: w,
+  calibrations,
+}: Props) {
   const { text, onText } = writing;
   const filter = useRef(new ChatterFilter());
   return (
@@ -147,7 +155,7 @@ export function Workspace({ preferences, update, writing, words: w }: Props) {
             if (
               filter.current.suppress(
                 { ...event, isComposing: event.nativeEvent.isComposing },
-                preferences.sensitivity,
+                calibrations[event.code]?.level ?? preferences.sensitivity,
               )
             )
               event.preventDefault();

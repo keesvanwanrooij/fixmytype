@@ -10,6 +10,7 @@ import { isPreferences } from "../shared/preferences.js";
 import { localModelReady, repairText } from "./local-repair.js";
 import { speechReady, transcribe } from "./speech-service.js";
 import { InputWorker } from "./input-worker.js";
+import { validSamples } from "../shared/calibration.js";
 export function registerWorkspace(window: BrowserWindow) {
   const worker = new InputWorker(
     app.isPackaged
@@ -99,6 +100,15 @@ export function registerWorkspace(window: BrowserWindow) {
     if (typeof value !== "string" || value.length > 100000)
       throw Error("INVALID_TEXT");
     clipboard.writeText(value);
+  });
+  handle("workspace:calibrate", async (_event, value) => {
+    if (!window.isVisible() || !validSamples(value))
+      throw Error("INVALID_CALIBRATION");
+    try {
+      return (await worker.request("calibrate", undefined, value)).calibration;
+    } catch {
+      throw Error("CALIBRATION_UNAVAILABLE");
+    }
   });
   handle("workspace:microphone", (_event, value) => {
     microphone = value === true && window.isVisible();

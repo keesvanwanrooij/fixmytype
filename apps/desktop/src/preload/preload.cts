@@ -1,9 +1,12 @@
 import { contextBridge, ipcRenderer } from "electron";
 
 import type { Action, Preferences } from "../shared/preferences.js";
+import type { Sample } from "../shared/calibration.js";
 
 contextBridge.exposeInMainWorld("fixMyType", {
   status: () => ipcRenderer.invoke("workspace:status"),
+  calibrate: (samples: Sample[]) =>
+    ipcRenderer.invoke("workspace:calibrate", samples),
   copy: (text: string) => ipcRenderer.invoke("workspace:copy", text),
   microphone: (enabled: boolean) =>
     ipcRenderer.invoke("workspace:microphone", enabled),

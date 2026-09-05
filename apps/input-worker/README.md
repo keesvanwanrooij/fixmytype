@@ -17,13 +17,15 @@ The desktop's `npm test` and `npm start` also build this worker. You need the Ru
 
 ## Protocol
 
-Each request is one UTF-8 JSON line, including a newline, with at most 4,096 bytes. Its only fields are `version`, `id` and `operation`. Version is 1. Request IDs are positive, increasing JavaScript-safe integers. Unknown fields, duplicate IDs, unsupported versions, malformed input and oversized lines produce `INVALID_MESSAGE` and terminate the process. Input is never echoed.
+Each request is one UTF-8 JSON line, including a newline, with at most 4,096 bytes. Its fields are `version`, `id` and `operation`. Only `calibrate` also requires `samples`. Version is 1. Request IDs are positive, increasing JavaScript-safe integers. Unknown fields, duplicate IDs, unsupported versions, malformed input and oversized lines produce `INVALID_MESSAGE` and terminate the process. Input is never echoed.
 
 ~~~json
 {"version":1,"id":1,"operation":"status"}
 ~~~
 
 The supported operations are `status`, `start`, `stop`, `probe` and `shutdown`. Starting twice or stopping twice is idempotent. Only `probe` after `start` calls Windows discovery. Status does not inspect the desktop. Stop clears the last target and increments the consent epoch. EOF exits normally; shutdown acknowledges before exiting. A new process always starts idle.
+
+The additional `calibrate` operation runs the existing input-core summary without starting observation. It accepts at most 60 samples, each containing an integer `interval` from 1 through 5,000 milliseconds and an `intent` of `accidental` or `deliberate`. Samples contain no key code, text or absolute timestamp. Other operations reject the samples field, including null. The response adds `calibration` with a status, optional level represented as null when unavailable, and aggregate counts. This is a proposal, not a command to enable protection or persist data. See [calibration](../../docs/18-chatter-protection.md).
 
 Probe results contain an opaque process/window identifier, an unknown document identity, a field category and two false capabilities: `read_selection` and `replace_range`. The identifier can be reused by Windows and is not a document identity. Metadata is a snapshot, not continuing authority. Every external write remains denied.
 

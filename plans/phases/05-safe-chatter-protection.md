@@ -29,10 +29,10 @@ Required prior capabilities: phases 3, 4. The maintainer's GO authorizes impleme
 
 ### Package 1: Visible calibration
 
-- [ ] Create a calibration workspace component with synthetic prompts and event timing summaries.
-- [ ] Test incomplete samples, deliberate repeated letters, modifier combinations and cancellation.
-- [ ] Show per-key proposals and persist only an explicitly accepted summary.
-- [ ] Keep raw key sequences out of history and diagnostics.
+- [x] Create a calibration workspace component with synthetic prompts and event timing summaries.
+- [x] Test incomplete samples, deliberate repeated letters, modifier combinations and cancellation.
+- [x] Show per-key proposals and persist only an explicitly accepted summary.
+- [x] Keep raw key sequences out of history and diagnostics.
 
 ### Package 2: Protection integration
 
@@ -71,6 +71,14 @@ The package-specific failure cases above must have tests or a documented physica
 Any lost key or stuck-key state blocks this phase. Disable the native path while retaining calibration evidence. Keep a usable draft, preserve existing user content, cancel app-owned jobs and document the reduced capability if a path fails.
 
 ## Implementation record
+
+### Verified first slice
+
+Visible calibration and the owned-editor connection pass 78 desktop tests, 22 Rust tests and real Electron checks. A labelled 12ms KeyA proposal changes that key's owned-editor threshold while another key keeps the general setting. Shift, pause and key-up events remain preserved. The real local AI/Whisper workflow passes after the change. See [red/green and rendered evidence](../evidence/2026-09-06-calibration.md).
+
+The cleanup and documentation pass applies to this slice, not the still-open native packages. Main validates the calibration payload and reply, the worker reuses the existing Rust algorithm, and the UI saves only after Accept succeeds. Timing samples are temporary. A screenshot review corrected the new controls to use the existing button styles and focus treatment.
+
+Next: obtain the physical feedback in the evidence file, then implement native protected-context integration and measurements in a separate checkpoint. Do not mark this whole phase complete from DOM tests or promote external fields from their metadata alone.
 
 ### Approved implementation checkpoint
 

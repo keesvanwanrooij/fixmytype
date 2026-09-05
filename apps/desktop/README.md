@@ -29,6 +29,7 @@ npm run build
 npm run test:smoke
 npm run test:phase2
 npm run test:targets
+npm run test:calibration
 ~~~
 
 The smoke check starts the real built app with an isolated synthetic profile. Optional integration checks require local Ollama, installed speech resources and ffmpeg. Download the public test fixture first:
@@ -44,6 +45,8 @@ npm run test:workflow
 The workflow check uses a fake microphone backed by the public JFK fixture, not your physical microphone. It verifies real repair, continued typing, caret retention, dictation, microphone release and Undo. Set `FIXMYTYPE_CAPTURE=1` to request screenshots too. Chromium capture intermittently reports `UnknownVizError` on this host; capture is separate from the behavioral assertions. Test profiles are isolated temporary directories and contain only synthetic content.
 
 ## Boundaries
+
+Settings now includes per-key calibration. You label measured pairs and explicitly accept a Rust-generated proposal. Accepted key settings override general sensitivity only inside the owned editor. A failed save leaves the old settings intact. Cancel discards the current exercise without removing accepted keys. Follow [the calibration guide](../../docs/18-chatter-protection.md) before testing a damaged key. The calibration integration check uses real Chromium input with a synthetic clock, not a physical keyboard.
 
 Only the app-owned editor is supported for insertion and correction. External typing hooks, direct selected-field insertion, TTS, spoken commands and companion capture remain planned. Code and spreadsheet profiles block AI prose repair. The simple chatter filter handles matching letter keys, not arbitrary keyboard damage. The editor is capped at 100,000 characters; a repair request is capped at 4,000 characters.
 

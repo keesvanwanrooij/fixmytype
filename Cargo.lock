@@ -62,6 +62,7 @@ dependencies = [
 name = "fixmytype-input-worker"
 version = "0.1.0"
 dependencies = [
+ "fixmytype-input-core",
  "serde",
  "serde_json",
  "windows-sys",

@@ -1,9 +1,11 @@
 import type { Action, Preferences } from "../shared/preferences.js";
+import type { Sample, Proposal } from "../shared/calibration.js";
 
 declare global {
   interface Window {
     fixMyType: {
       status: () => Promise<{ ai: boolean; speech: boolean; worker: boolean }>;
+      calibrate: (samples: Sample[]) => Promise<Proposal>;
       copy: (text: string) => Promise<void>;
       microphone: (enabled: boolean) => Promise<boolean>;
       cancel: () => Promise<void>;

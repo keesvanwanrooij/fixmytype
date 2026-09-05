@@ -8,7 +8,14 @@ try {
   await new Promise((resolve, reject) => {
     const child = spawn(
       electron,
-      [path.join(import.meta.dirname, "target-check.cjs")],
+      [
+        path.join(
+          import.meta.dirname,
+          process.argv[2] === "calibration"
+            ? "calibration-check.cjs"
+            : "target-check.cjs",
+        ),
+      ],
       {
         windowsHide: true,
         stdio: ["ignore", "pipe", "pipe"],

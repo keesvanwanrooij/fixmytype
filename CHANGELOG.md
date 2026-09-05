@@ -6,6 +6,8 @@ All notable user-visible changes to FixMyType will be documented here. This proj
 
 ### Fixed
 
+- The app-owned repeated-letter filter preserves Shift, untrusted events and missing physical-key metadata.
+
 - The Local setup recheck button now has 24px of space above it, verified in Dutch and English.
 
 - The Rust policy preserves unknown modifier bits, equal timestamps and disabled or unrepresentable timing windows. Debug output no longer exposes key codes or event timestamps.
@@ -17,6 +19,8 @@ All notable user-visible changes to FixMyType will be documented here. This proj
 - The sandboxed Electron preload now uses CommonJS, so the Settings screen receives its safe desktop bridge.
 
 ### Added
+
+- Settings offers Dutch and English key calibration with explicit pair labels, Rust proposals, accepted per-key levels, cancellation and removal. Raw intervals are not persisted.
 
 - Target leases keep delayed corrections from applying after the chosen text field changes. Protected and unsupported targets receive no write capability.
 - An idle Rust metadata worker has bounded messages, parent-owned cancellation and tested crash, restart and quit handling. Native input suppression remains unconnected.

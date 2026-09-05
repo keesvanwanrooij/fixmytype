@@ -1,4 +1,4 @@
-type Key = {
+export type Key = {
   key: string;
   timeStamp: number;
   repeat: boolean;
@@ -6,7 +6,22 @@ type Key = {
   altKey: boolean;
   metaKey: boolean;
   isComposing: boolean;
+  shiftKey: boolean;
+  isTrusted: boolean;
+  code: string;
 };
+export const cleanKey = (key: Key) =>
+  key.isTrusted === true &&
+  key.repeat === false &&
+  key.ctrlKey === false &&
+  key.altKey === false &&
+  key.metaKey === false &&
+  key.shiftKey === false &&
+  key.isComposing === false &&
+  Number.isFinite(key.timeStamp) &&
+  key.timeStamp >= 0 &&
+  /^Key[A-Z]$/.test(key.code) &&
+  /^[a-z]$/i.test(key.key);
 export class ChatterFilter {
   private previous?: Key;
   reset() {
@@ -15,19 +30,13 @@ export class ChatterFilter {
   suppress(event: Key, level: number): boolean {
     const previous = this.previous;
     this.previous = event;
-    const safe = (key: Key) =>
-      !key.repeat &&
-      !key.ctrlKey &&
-      !key.altKey &&
-      !key.metaKey &&
-      !key.isComposing &&
-      /^[a-z]$/i.test(key.key);
     const elapsed = event.timeStamp - (previous?.timeStamp ?? event.timeStamp);
     return Boolean(
       previous &&
-      safe(previous) &&
-      safe(event) &&
+      cleanKey(previous) &&
+      cleanKey(event) &&
       previous.key === event.key &&
+      previous.code === event.code &&
       Number.isInteger(level) &&
       level >= 1 &&
       level <= 5 &&

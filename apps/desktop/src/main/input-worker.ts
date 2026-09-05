@@ -1,11 +1,19 @@
 import { spawn, type ChildProcessWithoutNullStreams } from "node:child_process";
+import {
+  validProposal,
+  validSamples,
+  type Proposal,
+  type Sample,
+} from "../shared/calibration.js";
 
-type Operation = "status" | "start" | "stop" | "probe" | "shutdown";
+type Operation =
+  "status" | "start" | "stop" | "probe" | "shutdown" | "calibrate";
 type Reply = {
   version: 1;
   id: number;
   state: "idle" | "started" | "closed";
   epoch: number;
+  calibration?: Proposal;
   target: null | {
     target_id: string;
     document_id: null;
@@ -17,11 +25,19 @@ type Reply = {
 const exact = (value: Record<string, unknown>, keys: string[]) =>
   Object.keys(value).length === keys.length &&
   keys.every((key) => Object.hasOwn(value, key));
-function validReply(value: unknown): value is Reply {
+function validReply(value: unknown, operation: Operation): value is Reply {
   if (!value || typeof value !== "object") return false;
   const v = value as Record<string, unknown>;
   if (
-    !exact(v, ["version", "id", "state", "epoch", "target"]) ||
+    !exact(v, [
+      "version",
+      "id",
+      "state",
+      "epoch",
+      "target",
+      ...(operation === "calibrate" ? ["calibration"] : []),
+    ]) ||
+    (operation === "calibrate" && !validProposal(v.calibration)) ||
     v.version !== 1 ||
     !Number.isSafeInteger(v.id) ||
     !Number.isSafeInteger(v.epoch) ||
@@ -66,6 +82,7 @@ export class InputWorker {
   private sequence = 0;
   private pending?: {
     id: number;
+    operation: Operation;
     resolve: (value: Reply) => void;
     reject: (error: Error) => void;
   };
@@ -133,7 +150,10 @@ export class InputWorker {
           return;
         }
       }
-      if (!validReply(value) || value.id !== this.pending.id) {
+      if (
+        !validReply(value, this.pending.operation) ||
+        value.id !== this.pending.id
+      ) {
         fail("WORKER_PROTOCOL");
         return;
       }
@@ -141,7 +161,15 @@ export class InputWorker {
     });
     return child;
   }
-  async request(operation: Operation, signal?: AbortSignal): Promise<Reply> {
+  async request(
+    operation: Operation,
+    signal?: AbortSignal,
+    samples?: Sample[],
+  ): Promise<Reply> {
+    if (
+      operation === "calibrate" ? !validSamples(samples) : samples !== undefined
+    )
+      throw Error("INVALID_CALIBRATION");
     if (this.closing) throw Error("WORKER_CLOSED");
     if (signal?.aborted) throw Error("WORKER_CANCELLED");
     if (this.pending) throw Error("WORKER_BUSY");
@@ -163,6 +191,7 @@ export class InputWorker {
       }, this.timeoutMs);
       this.pending = {
         id,
+        operation,
         resolve: (value) => {
           finish();
           resolve(value);
@@ -173,7 +202,14 @@ export class InputWorker {
         },
       };
       signal?.addEventListener("abort", abort, { once: true });
-      child.stdin.write(JSON.stringify({ version: 1, id, operation }) + "\n");
+      child.stdin.write(
+        JSON.stringify({
+          version: 1,
+          id,
+          operation,
+          ...(samples ? { samples } : {}),
+        }) + "\n",
+      );
     });
   }
   async reset(): Promise<void> {

@@ -81,3 +81,28 @@ fn request_ids_must_increase() {
     assert_eq!(lines.len(), 2);
     assert_eq!(lines[1]["error"], "INVALID_MESSAGE");
 }
+
+#[test]
+fn calibration_is_advisory_and_does_not_start_observation() {
+    let samples: Vec<Value> = (0..20).map(|i| json!({"interval":if i < 10 {12} else {40},"intent":if i < 10 {"accidental"} else {"deliberate"}})).collect();
+    let input = format!(
+        "{}\n",
+        json!({"version":1,"id":1,"operation":"calibrate","samples":samples})
+    );
+    let (result, lines) = run(&input);
+    result.unwrap();
+    assert_eq!(lines[0]["state"], "idle");
+    assert_eq!(lines[0]["target"], Value::Null);
+    assert_eq!(
+        lines[0]["calibration"],
+        json!({"status":"suggested","level":2,"accidentalCount":10,"deliberateCount":10})
+    );
+    for invalid in [
+        json!({"version":1,"id":1,"operation":"status","samples":[]}),
+        json!({"version":1,"id":1,"operation":"status","samples":null}),
+        json!({"version":1,"id":1,"operation":"calibrate"}),
+        json!({"version":1,"id":1,"operation":"calibrate","samples":[{"interval":0,"intent":"accidental"}]}),
+    ] {
+        assert!(run(&format!("{invalid}\n")).0.is_err());
+    }
+}

@@ -7,6 +7,25 @@ const executable = path.resolve(
   "../../../target/debug/fixmytype-input-worker.exe",
 );
 describe("real native child ownership", () => {
+  it("returns a Rust calibration proposal without starting observation", async () => {
+    const worker = new InputWorker(executable);
+    try {
+      const samples = Array.from({ length: 20 }, (_, i) => ({
+        interval: i < 10 ? 12 : 40,
+        intent: i < 10 ? ("accidental" as const) : ("deliberate" as const),
+      }));
+      const response = await worker.request("calibrate", undefined, samples);
+      expect(response.state).toBe("idle");
+      expect(response.calibration).toEqual({
+        status: "suggested",
+        level: 2,
+        accidentalCount: 10,
+        deliberateCount: 10,
+      });
+    } finally {
+      await worker.dispose();
+    }
+  });
   const fixture = path.join(import.meta.dirname, "fixtures/worker.mjs");
   it.each(["oversized", "version", "state", "unknown", "id", "write"])(
     "rejects a %s reply and releases the child",

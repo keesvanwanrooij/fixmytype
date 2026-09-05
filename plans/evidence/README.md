@@ -4,6 +4,8 @@ Use this directory for concise dated records of commands, source commit, synthet
 
 ## Records
 
+The [visible calibration slice](2026-09-06-calibration.md) records labelled key pairs, real Rust proposals, explicit storage, the owned-editor filter and the remaining physical feedback list.
+
 The [phase-4 target and lifecycle verification](04-targets.md) covers owned-editor leases, real Win32 field metadata, strict process boundaries, crashes, restart and Electron quit. It does not claim direct browser or Office editing.
 
 The [phase-3 policy verification](2026-09-05-phase3-policy.md) covers fixed-seed invariants, calibration contracts and a clean Windows worktree run.
