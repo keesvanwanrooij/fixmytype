@@ -12,6 +12,11 @@ import {
 } from "../shared/document-buffer.js";
 import type { Preferences } from "../shared/preferences.js";
 import { startRecording, type Recording } from "./recorder.js";
+import {
+  TargetSession,
+  editorDescriptor,
+  type TargetLease,
+} from "../shared/target.js";
 export type Entry = {
   id: number;
   kind: "repair" | "speech";
@@ -23,8 +28,50 @@ export type Entry = {
 };
 const editor = () =>
   document.querySelector<HTMLTextAreaElement>("#writing-editor");
-export function useWriting(preferences: Preferences) {
+export function useWriting(
+  preferences: Preferences,
+  surface: "workspace" | "history" | "inactive",
+) {
   const buffer = useRef(new DocumentBuffer());
+  const target = useRef(new TargetSession());
+  const documentId = useRef(crypto.randomUUID());
+  const micTarget = useRef<TargetLease | undefined>(undefined);
+  useLayoutEffect(() => {
+    const expected = editor();
+    const selectEditor = () =>
+      target.current.select(
+        editorDescriptor(expected, expected, documentId.current),
+      );
+    if (surface === "workspace") selectEditor();
+    else
+      target.current.select(
+        surface === "history"
+          ? {
+              targetId: "writing-editor",
+              documentId: documentId.current,
+              scope: "owned",
+              kind: "plain",
+            }
+          : null,
+      );
+    const focus = (event: FocusEvent) => {
+      if (event.target === expected) {
+        if (!target.current.capture()) selectEditor();
+      } else if (
+        event.target instanceof HTMLElement &&
+        event.target.matches(
+          "textarea,select,[contenteditable],input:not([type=checkbox]):not([type=radio]):not([type=button]):not([type=range])",
+        )
+      ) {
+        target.current.select(null);
+      }
+    };
+    document.addEventListener("focusin", focus);
+    return () => {
+      document.removeEventListener("focusin", focus);
+      target.current.select(null);
+    };
+  }, [surface]);
   const [text, setText] = useState("");
   const [history, setHistory] = useState<Entry[]>([]);
   const [busy, setBusy] = useState(false);
@@ -66,7 +113,17 @@ export function useWriting(preferences: Preferences) {
     buffer.current.replaceText(value);
     setText(value);
   };
-  const apply = (anchor: number, result: string) => {
+  const apply = (
+    anchor: number,
+    result: string,
+    lease: TargetLease | undefined,
+  ) => {
+    if (!target.current.allows(lease)) return;
+    if (
+      surface === "workspace" &&
+      editorDescriptor(editor(), editor(), documentId.current).kind !== "plain"
+    )
+      return;
     const d = buffer.current,
       range = d.range(anchor),
       el = editor();
@@ -143,6 +200,7 @@ export function useWriting(preferences: Preferences) {
     if (!range || pending.current) return;
     const original = range.original,
       version = epoch.current,
+      lease = target.current.capture(),
       p = options.current;
     pending.current = true;
     setBusy(true);
@@ -159,7 +217,7 @@ export function useWriting(preferences: Preferences) {
       }
       let undo: Undo | undefined;
       if (p.aiMode === "automatic" && !composing.current)
-        undo = apply(anchor, result);
+        undo = apply(anchor, result, lease);
       const state =
         p.aiMode === "automatic" && !composing.current
           ? undo
@@ -203,6 +261,7 @@ export function useWriting(preferences: Preferences) {
   useEffect(() => {
     if (
       preferences.aiMode === "off" ||
+      surface !== "workspace" ||
       !status.ai ||
       preferences.profile === "code" ||
       preferences.profile === "spreadsheet" ||
@@ -240,10 +299,11 @@ export function useWriting(preferences: Preferences) {
     busy,
     recording,
     transcribing,
+    surface,
   ]);
   const accept = (entry: Entry) => {
     if (!entry.anchor) return;
-    const undo = apply(entry.anchor, entry.result);
+    const undo = apply(entry.anchor, entry.result, target.current.capture());
     if (undo) scanned.current.push(undo.anchor);
     setHistory((current) =>
       current.map((e) =>
@@ -261,7 +321,11 @@ export function useWriting(preferences: Preferences) {
   const undo = (entry: Entry) => {
     if (!entry.undo) return;
     // Undo uses the same selection transformation and consumes its inverse anchor.
-    const inverse = apply(entry.undo.anchor, entry.undo.original);
+    const inverse = apply(
+      entry.undo.anchor,
+      entry.undo.original,
+      target.current.capture(),
+    );
     if (inverse) {
       scanned.current.push(inverse.anchor);
     }
@@ -295,7 +359,10 @@ export function useWriting(preferences: Preferences) {
           setMessage(version !== epoch.current ? "cancelled" : "noSpeech");
           return;
         }
-        const undo = anchor ? apply(anchor, result) : undefined;
+        const undo =
+          anchor && micTarget.current
+            ? apply(anchor, result, micTarget.current)
+            : undefined;
         append({
           id: ++sequence.current,
           kind: "speech",
@@ -328,6 +395,7 @@ export function useWriting(preferences: Preferences) {
     try {
       const el = editor(),
         d = buffer.current;
+      micTarget.current = target.current.capture();
       micAnchor.current = d.capture(
         el?.selectionStart ?? d.text.length,
         el?.selectionEnd ?? d.text.length,

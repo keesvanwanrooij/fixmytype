@@ -55,6 +55,7 @@ app.commandLine.appendSwitch(
         assert.deepEqual(await run("window.fixMyType.status()"), {
           ai: true,
           speech: true,
+          worker: true,
         });
         await click("Suggest");
         await write("This sentense has a speling mistake.");

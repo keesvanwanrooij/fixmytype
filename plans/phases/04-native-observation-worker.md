@@ -2,7 +2,7 @@
 
 ## Status
 
-🔄 In progress. The implementation checkpoint is approved by the maintainer's instruction to finish phases 2 through 4.
+✅ Complete for the target-contract and native-lifecycle scope. External editing remains unsupported. Phase 2's physical scaling check remains separate.
 
 ## Outcome
 
@@ -29,31 +29,31 @@ Required prior capabilities: phases 2, 3. The maintainer's GO authorizes impleme
 
 ### Package 1: Target contract
 
-- [ ] Create src/shared/target.ts with target ID, document identity, capabilities and consent epoch.
-- [ ] Test stale target, password, read-only, elevated and unknown contexts before adapter implementation.
-- [ ] Implement the app-owned editor adapter first and a capability result for unsupported external controls.
-- [ ] Document candidate Windows APIs and their read versus write limits in plans/evidence/04-targets.md.
+- [x] Create src/shared/target.ts with target ID, document identity, capabilities and consent epoch.
+- [x] Test stale target, password, read-only, elevated and unknown contexts before adapter implementation.
+- [x] Implement the app-owned editor adapter first and a capability result for unsupported external controls.
+- [x] Document candidate Windows APIs and their read versus write limits in plans/evidence/04-targets.md.
 
 ### Package 2: Native process boundary
 
-- [ ] Create apps/input-worker with bounded versioned request and response messages.
-- [ ] Validate unknown fields, protocol version, oversized messages and repeated start or stop.
-- [ ] Keep target discovery out of timing-critical keyboard callbacks.
-- [ ] Implement cancellation and shutdown that release all app-owned native resources.
+- [x] Create apps/input-worker with bounded versioned request and response messages.
+- [x] Validate unknown fields, protocol version, oversized messages and repeated start or stop.
+- [x] Keep target discovery out of timing-critical keyboard callbacks. No keyboard callbacks are installed in this phase.
+- [x] Implement cancellation and shutdown that release all app-owned native resources.
 
 ### Package 3: Windows evidence
 
-- [ ] Build a controlled Windows fixture with plain, password and read-only fields.
-- [ ] Prove target changes invalidate operations before adding any insertion path.
-- [ ] Test worker crash, restart, no active target and Electron quit.
-- [ ] Record browser, Word, Excel and terminal capabilities honestly in the compatibility matrix.
+- [x] Build a controlled Windows fixture with plain, password and read-only fields.
+- [x] Prove target changes invalidate operations before adding any external insertion path. The existing owned editor now checks target leases too.
+- [x] Test worker crash, restart, no active target and Electron quit.
+- [x] Record browser, Word, Excel and terminal capabilities honestly in the compatibility matrix.
 
 ### Package 4: cleanup and delivery
 
-- [ ] Review the changed files for duplicated state, dead code, resource leaks and missing boundary validation.
-- [ ] Run affected tests after cleanup and retain actual red/green evidence under plans/evidence.
-- [ ] Update the phase record, reference docs and changelog with verified behaviour and known limitations.
-- [ ] Review the staged diff, commit this verified phase to main and push it to GitHub.
+- [x] Review the changed files for duplicated state, dead code, resource leaks and missing boundary validation.
+- [x] Run affected tests after cleanup and retain actual red/green evidence under plans/evidence.
+- [x] Update the phase record, reference docs and changelog with verified behaviour and known limitations.
+- [x] Review the staged diff and deliver this verified phase to main with its result commit and GitHub push.
 
 ## Acceptance criteria
 
@@ -63,14 +63,22 @@ The package-specific failure cases above must have tests or a documented physica
 
 ## Live checks
 
-- [ ] Run the controlled target fixture and verify denied targets.
-- [ ] Change focus while a request waits and confirm no mutation.
+- [x] Run the controlled target fixture and verify denied targets.
+- [x] Change focus while a request waits and confirm no mutation, even after focus returns to the editor.
 
 ## Stop condition and rollback
 
 UI Automation TextPattern alone cannot safely write historical ranges. Unsupported writes must remain drafts. Keep a usable draft, preserve existing user content, cancel app-owned jobs and document the reduced capability if a path fails.
 
 ## Implementation record
+
+### Verified outcome
+
+The result passes 73 desktop tests and 21 Rust tests, desktop lint/build, real Electron target and lifecycle fixtures, NL/EN phase-2 regression checks, the compact-layout smoke check and the local AI/Whisper workflow. See [the full evidence](../evidence/04-targets.md) for red tests, cleanup findings, Windows fixtures and exact limits.
+
+The native child starts idle. It reads only metadata after an explicit protocol start/probe, and the current renderer cannot invoke those operations. Main owns cancellation, deadlines and process restart. Real Win32 controls prove field classification only. The app-owned editor proves guarded mutation. No external field, browser, Word document, Excel cell or terminal prompt gains write capability from this phase.
+
+The next code phase is [phase 5](05-safe-chatter-protection.md). Its hook and calibration work must use the same preserve-first rules and must not promote a field from its class name alone. Before phase-2 acceptance, the maintainer still needs to inspect actual Windows text scaling at 200 percent.
 
 ### Implementation checkpoint
 

@@ -3,7 +3,7 @@ import type { Action, Preferences } from "../shared/preferences.js";
 declare global {
   interface Window {
     fixMyType: {
-      status: () => Promise<{ ai: boolean; speech: boolean }>;
+      status: () => Promise<{ ai: boolean; speech: boolean; worker: boolean }>;
       copy: (text: string) => Promise<void>;
       microphone: (enabled: boolean) => Promise<boolean>;
       cancel: () => Promise<void>;

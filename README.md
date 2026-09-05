@@ -18,7 +18,7 @@ The app preserves uncertain input. Unsupported external text fields receive a dr
 
 ## Start the source build
 
-You need Node.js for the desktop and Rust for native components.
+You need Node.js and the Rust Windows MSVC toolchain with its C++ build tools. The desktop build and tests compile the native worker too.
 
 ~~~powershell
 git clone https://github.com/keesvanwanrooij/fixmytype.git
@@ -69,6 +69,7 @@ The local core stays free, without advertising, an account requirement or a paid
 
 ~~~text
 apps/desktop/     Electron main, React interface and local services
+apps/input-worker/ Bounded native metadata process, no external writes
 crates/input-core/ Pure Rust event policy and tests
 docs/             Thirty product and engineering references
 plans/            Phases, evidence, bug fixes and measured optimizations

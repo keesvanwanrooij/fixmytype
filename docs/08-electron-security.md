@@ -14,6 +14,8 @@ Keep preload as CommonJS while sandboxing is enabled. Retain context isolation a
 
 ## Content isolation
 
+The native worker's executable path is fixed in main. Requests and replies are independently validated and capped at 4,096 bytes per line. An unresponsive child is cancelled; an incompatible response tears down the session. A restarted worker is idle. Native metadata cannot authorize an external write, and no generic worker-command API crosses the preload. Main stops the child on hide, renderer failure and quit.
+
 Model output, transcript and screen observations are plain text, not HTML or instructions. Render them as text. Microphone and display permissions are tied to a live feature session and must be revoked on cancellation or window closure. Desktop sources are selected explicitly rather than enumerated into every renderer.
 
 Navigation: [Project home](../README.md), [documentation](README.md), [delivery plans](../plans/README.md).

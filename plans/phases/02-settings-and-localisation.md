@@ -67,6 +67,13 @@ The package-specific failure cases above must have tests or a documented physica
 - [ ] Verify 200 percent Windows text scaling separately from browser zoom.
 - [x] Close to tray, reopen, quit and restart without losing language preferences.
 
+### Remaining maintainer check
+
+1. Copy any draft you need to keep before quitting the app through its tray menu.
+2. Open Windows Settings, Accessibility, Text size. Choose 200 percent and apply. This is Windows text size, not the browser's zoom control.
+3. Start the updated app. Check Write, History, Local setup and Settings in NL and EN. Confirm that labels, controls and the bottom Support FixMyType button remain reachable without overlapping text. Scroll where needed.
+4. Report the Windows setting and any clipped or unreachable control, preferably with a screenshot of synthetic content. Restore your preferred Windows setting afterward. Only then close the physical acceptance row.
+
 ## Stop condition and rollback
 
 Keep physical scaling pending if it cannot be performed; never infer it from 'app works'. Keep a usable draft, preserve existing user content, cancel app-owned jobs and document the reduced capability if a path fails.

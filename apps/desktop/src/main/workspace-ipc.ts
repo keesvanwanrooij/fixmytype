@@ -9,7 +9,16 @@ import path from "node:path";
 import { isPreferences } from "../shared/preferences.js";
 import { localModelReady, repairText } from "./local-repair.js";
 import { speechReady, transcribe } from "./speech-service.js";
+import { InputWorker } from "./input-worker.js";
 export function registerWorkspace(window: BrowserWindow) {
+  const worker = new InputWorker(
+    app.isPackaged
+      ? path.join(process.resourcesPath, "fixmytype-input-worker.exe")
+      : path.join(
+          import.meta.dirname,
+          "../../../../target/debug/fixmytype-input-worker.exe",
+        ),
+  );
   const runtime = app.isPackaged
     ? path.join(app.getPath("userData"), "runtime")
     : path.join(import.meta.dirname, "../../.cache/runtime");
@@ -19,14 +28,25 @@ export function registerWorkspace(window: BrowserWindow) {
     if (event.senderFrame !== window.webContents.mainFrame)
       throw Error("INVALID_SENDER");
   };
-  const cancel = () => {
+  const cancel = (notify = true) => {
     microphone = false;
     for (const job of jobs.values()) job.abort();
-    window.webContents.send("capture:stop");
+    if (notify && !window.webContents.isDestroyed())
+      window.webContents.send("capture:stop");
   };
-  window.on("hide", cancel);
-  window.webContents.on("render-process-gone", cancel);
-  app.on("before-quit", cancel);
+  window.on("hide", () => cancel());
+  window.on("hide", () => void worker.reset());
+  window.webContents.on("render-process-gone", () => void worker.reset());
+  window.webContents.on("render-process-gone", () => cancel(false));
+  const beforeQuit = () => {
+    cancel();
+    void worker.dispose();
+  };
+  app.on("before-quit", beforeQuit);
+  window.once("closed", () => {
+    app.removeListener("before-quit", beforeQuit);
+    void worker.dispose();
+  });
   window.webContents.session.setPermissionCheckHandler(
     (contents, permission, _origin, details) =>
       contents === window.webContents &&
@@ -55,13 +75,26 @@ export function registerWorkspace(window: BrowserWindow) {
       return fn(event, value);
     });
   };
-  handle("workspace:status", async () => ({
-    ai: await localModelReady(AbortSignal.timeout(3000)).then(
-      () => true,
-      () => false,
-    ),
-    speech: await speechReady(runtime),
-  }));
+  let checking:
+    Promise<{ ai: boolean; speech: boolean; worker: boolean }> | undefined;
+  handle("workspace:status", () => {
+    checking ??= Promise.all([
+      worker.request("status").then(
+        () => true,
+        () => false,
+      ),
+      localModelReady(AbortSignal.timeout(3000)).then(
+        () => true,
+        () => false,
+      ),
+      speechReady(runtime),
+    ])
+      .then(([worker, ai, speech]) => ({ worker, ai, speech }))
+      .finally(() => {
+        checking = undefined;
+      });
+    return checking;
+  });
   handle("workspace:copy", (_event, value) => {
     if (typeof value !== "string" || value.length > 100000)
       throw Error("INVALID_TEXT");
@@ -103,7 +136,7 @@ export function registerWorkspace(window: BrowserWindow) {
       return await transcribe(job.audio, job.language, runtime, signal);
     } catch {
       // Electron logs rejected handlers. Never expose provider text in parse errors.
-      throw Error('LOCAL_OPERATION_FAILED');
+      throw Error("LOCAL_OPERATION_FAILED");
     } finally {
       jobs.delete(kind);
     }

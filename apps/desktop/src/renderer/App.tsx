@@ -16,7 +16,10 @@ export function App() {
   const [loaded] = useState(() => loadPreferences(window.localStorage));
   const [preferences, setPreferences] = useState(loaded.preferences);
   const [page, setPage] = useState<Page>("workspace");
-  const writing = useWriting(preferences);
+  const writing = useWriting(
+    preferences,
+    page === "workspace" || page === "history" ? page : "inactive",
+  );
   const [notice, setNotice] = useState(loaded.issue ?? "");
   const w = wordsFor(preferences.interfaceLanguage);
   const update = (value: Preferences) => {

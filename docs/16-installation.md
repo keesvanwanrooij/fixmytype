@@ -2,7 +2,7 @@
 
 ## Current source build
 
-Install Node.js and the Rust toolchain before building the respective components. Electron is installed with the desktop dependencies. From a terminal, clone the public repository, enter apps/desktop and run npm install, npm test and npm start. The final command typechecks, builds and launches Electron.
+Install Node.js and the Rust Windows MSVC toolchain with its C++ build tools before building. Electron is installed with the desktop dependencies. From a terminal, clone the public repository, enter apps/desktop and run npm install, npm test and npm start. Tests and startup compile the native worker. The final command also typechecks, builds and launches Electron.
 
 To check the Rust library, return to the repository root and run cargo test --workspace. Native input integration is separate from a passing library test.
 

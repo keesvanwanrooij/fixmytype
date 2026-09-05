@@ -4,7 +4,7 @@ The Electron main process owns local runtime requests, shortcuts and microphone 
 
 ## Install and start
 
-From this folder, run:
+Install Node.js and the Rust Windows MSVC toolchain, including its C++ build tools. From this folder, run:
 
 ~~~powershell
 npm install
@@ -28,9 +28,12 @@ npm run lint
 npm run build
 npm run test:smoke
 npm run test:phase2
+npm run test:targets
 ~~~
 
 The smoke check starts the real built app with an isolated synthetic profile. Optional integration checks require local Ollama, installed speech resources and ffmpeg. Download the public test fixture first:
+
+The build and unit-test commands also compile the [native worker](../input-worker/README.md). The target check uses controlled text and real child processes. It verifies target changes, protected fields, renderer failure and quit without using your microphone. It needs a working Windows desktop session. The worker starts idle and does not enable system-wide protection.
 
 ~~~powershell
 curl.exe -L --fail -o .cache/jfk.wav https://raw.githubusercontent.com/ggml-org/whisper.cpp/b4938/samples/jfk.wav

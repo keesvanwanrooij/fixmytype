@@ -5,9 +5,12 @@
   "type": "module",
   "main": "dist/main/main.js",
   "scripts": {
+    "pretest": "npm run build:worker",
+    "build:worker": "cargo build --locked --manifest-path ../input-worker/Cargo.toml",
     "test": "vitest run",
     "test:smoke": "electron scripts/smoke.cjs",
     "test:phase2": "node scripts/phase2-check.mjs",
+    "test:targets": "node scripts/target-check.mjs",
     "test:workflow": "electron scripts/workflow-smoke.cjs",
     "test:runtime": "node scripts/runtime-check.mjs",
     "setup:speech": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/setup-speech.ps1",
@@ -16,7 +19,7 @@
     "lint": "eslint src tests --max-warnings=0",
     "build:renderer": "vite build",
     "build:main": "tsc -p tsconfig.build.json",
-    "build": "npm run typecheck && npm run build:renderer && npm run build:main"
+    "build": "npm run build:worker && npm run typecheck && npm run build:renderer && npm run build:main"
   },
   "dependencies": {
     "electron": "^44.2.0",

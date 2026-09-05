@@ -1,6 +1,6 @@
 # Architecture
 
-The desktop application uses React and TypeScript inside a sandboxed Electron renderer. Electron main owns trusted services and validates IPC, the messages crossing process boundaries. A Rust input library supplies deterministic policy. A later native adapter supplies only capabilities verified for each Windows target.
+The desktop application uses React and TypeScript inside a sandboxed Electron renderer. Electron main owns trusted services and validates IPC, the messages crossing process boundaries. A Rust input library supplies deterministic policy. A separate Rust metadata worker starts idle and exposes no external write capability. App-owned editing uses document ranges and target leases; external adapters remain unverified.
 
 ## Modules and ownership
 
@@ -20,6 +20,8 @@ Typed requests carry an operation ID, limits and the intended target. Validate a
 The internal editor records edits as transactions and rebases untouched ranges. External adapters must expose their actual ability to validate and mutate a range. UI Automation TextPattern is a read interface, not a general range-writing API. Without a dependable write contract, offer a suggestion or deliberate transfer instead of changing historical text.
 
 ## Lifecycle
+
+The [worker protocol](../apps/input-worker/README.md) accepts bounded JSON lines, rejects schema drift and exits on EOF. Main owns request deadlines, cancellation and restart. Restart never restores observation consent. The public preload exposes health only, not native start/probe operations. See [target evidence](../plans/evidence/04-targets.md) for the owned-editor and process checks.
 
 A single app instance owns shortcuts and workers. Closing the window hides it; Quit cancels recording, speech, inference and native callbacks. A lost worker connection leaves protection paused. Startup restores preferences but does not restore microphone or screen consent.
 

@@ -18,6 +18,9 @@ All notable user-visible changes to FixMyType will be documented here. This proj
 
 ### Added
 
+- Target leases keep delayed corrections from applying after the chosen text field changes. Protected and unsupported targets receive no write capability.
+- An idle Rust metadata worker has bounded messages, parent-owned cancellation and tested crash, restart and quit handling. Native input suppression remains unconnected.
+
 - Rust sensitivity validation and bounded, explicitly labelled calibration summaries. These remain advisory until connected to a confirmed calibration workflow.
 
 - A writing workspace with AI Off, Suggest and Automatic modes, local Ollama repair, guarded history and Undo.

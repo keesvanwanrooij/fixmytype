@@ -4,6 +4,8 @@ Use this directory for concise dated records of commands, source commit, synthet
 
 ## Records
 
+The [phase-4 target and lifecycle verification](04-targets.md) covers owned-editor leases, real Win32 field metadata, strict process boundaries, crashes, restart and Electron quit. It does not claim direct browser or Office editing.
+
 The [phase-3 policy verification](2026-09-05-phase3-policy.md) covers fixed-seed invariants, calibration contracts and a clean Windows worktree run.
 
 The [phase-2 completion audit](2026-09-05-phase2-audit.md) verifies every enabled keyboard path and persistence across separate app processes. Only its physical scaling row remains open.
