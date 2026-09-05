@@ -17,7 +17,7 @@ The expanded phases remain in progress where their original scope exceeds this u
 | 1 | ✅ Complete | [Project foundation](phases/01-project-foundation.md) |
 | 2 | 🧪 Code verified; physical scaling pending | [Workspace, profiles and shortcuts](phases/02-settings-and-localisation.md) |
 | 3 | ✅ Complete | [Preserve-first input policy](phases/03-input-policy-library.md) |
-| 4 | ⬜ Planned | [Target capabilities and native lifecycle](phases/04-native-observation-worker.md) |
+| 4 | 🔄 In progress | [Target capabilities and native lifecycle](phases/04-native-observation-worker.md) |
 | 5 | ⬜ Planned | [Typing protection and personal calibration](phases/05-safe-chatter-protection.md) |
 | 6 | 🔄 In progress | [Local repair and personal tone](phases/06-selected-text-repair.md) |
 | 7 | 🔄 In progress | [Concurrent sentence repair, history and Undo](phases/07-sentence-repair-experiment.md) |
@@ -36,7 +36,7 @@ Finish one verified capability at a time, using its ordered packages. Independen
 
 ### Current execution focus
 
-The app-owned portions of phases 6, 7 and 8 are delivered. The phase-2 completion audit fixed save feedback and tray language, and phase 3 now passes its full contract. Phase 4 is next after phase 2's remaining acceptance is resolved. Windows text scaling is currently 100 percent; its physical 200-percent check needs maintainer evidence. Each phase now has a pushed checkpoint before work and a verified outcome commit after it. Keep unsupported native integration and physical acceptance explicit.
+The app-owned portions of phases 6, 7 and 8 are delivered. Phase 2 now also has a tested 24px gap above its setup action, and the maintainer approves the shown interface. Phase 3 passes its full contract. Phase 4's independent target and process work is underway as requested. Windows text scaling is currently 100 percent; its physical 200-percent check still needs maintainer evidence. Each phase has a pushed checkpoint before work and a verified outcome commit after it. Keep unsupported native integration and physical acceptance explicit.
 
 Use [phase instructions](phases/README.md) for evidence rules, [bug fixes](bug-fixes/README.md) for regressions and [optimizations](optimizations/README.md) for measurements. The [evidence index](evidence/README.md) lists actual checks.
 

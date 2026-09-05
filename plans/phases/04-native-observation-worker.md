@@ -2,7 +2,7 @@
 
 ## Status
 
-⬜ Planned
+🔄 In progress. The implementation checkpoint is approved by the maintainer's instruction to finish phases 2 through 4.
 
 ## Outcome
 
@@ -72,6 +72,25 @@ UI Automation TextPattern alone cannot safely write historical ranges. Unsupport
 
 ## Implementation record
 
-Implementation of this revised phase has not yet been verified.
+### Implementation checkpoint
+
+Starting commit: `896ebf6`. Phase 3 is complete. Phase 2's code passes; its separate physical 200-percent scaling check remains open and does not block this independent safety boundary.
+
+Goal: identify the app-owned document, invalidate delayed work when its target changes, and host a bounded native metadata observer without enabling external writes.
+
+Decisions: `src/shared/target.ts` owns capability and consent-epoch checks. The writing hook must check a captured lease before applying an asynchronous result. A target change leaves the result available as a draft. Manual acceptance still requires a matching document range. A Rust `apps/input-worker` process accepts versioned JSON lines on stdin and returns metadata only. It does not install keyboard hooks, read window titles or text, or inject input. It starts idle. Native discovery runs only on an explicit probe request after start. All external write capabilities remain false, including recognizable Win32 edit fields. The Electron main process owns the child and closes it on quit or renderer failure.
+
+Tasks, in execution order:
+
+1. Add failing target and editor-adapter tests under `apps/desktop/tests` for stale epochs, changed documents and denied field types.
+2. Implement the target contract and connect request/apply guards in `src/renderer/useWriting.ts` and `App.tsx`. Add a controlled Electron fixture with password, read-only and plain fields.
+3. Add failing Rust protocol tests, then implement the strict reader, idle/start/stop/probe/shutdown states and Windows metadata adapter in `apps/input-worker`.
+4. Add real child-process tests for malformed messages, crash, restart, EOF and cancellation. Wire ownership through `src/main/input-worker.ts` and `workspace-ipc.ts`. Add the native build to the source launcher path.
+5. Run a controlled Windows fixture. Record the difference between native metadata recognition and supported editing in `plans/evidence/04-targets.md` and `docs/11-windows-compatibility.md`.
+6. Review resource lifetimes, rerun desktop and Rust checks, update these checkboxes from actual evidence, and commit and push the verified result.
+
+Out of scope: global key suppression belongs to phase 5. Browser, Office and terminal insertion remain unsupported. No settings change grants observation consent. A worker failure must leave the existing app-owned writing and dictation workflow usable.
+
+Acceptance: `npm test`, `npm run lint`, `npm run build`, the phase-2 regression, the new target/worker checks and the existing workflow check must pass. Rust formatting, clippy and workspace tests must pass. Documentation links must resolve. No physical or external-application support is inferred from a helper test.
 
 Navigation: [Project home](../../README.md), [documentation](../../docs/README.md), [delivery plans](../README.md).
