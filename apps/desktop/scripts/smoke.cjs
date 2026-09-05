@@ -1,5 +1,6 @@
 // Run the real main process and preload against an isolated synthetic profile.
 const { app } = require("electron");
+app.disableHardwareAcceleration();
 const fs = require("node:fs/promises");
 const path = require("node:path");
 const os = require("node:os");
@@ -40,10 +41,11 @@ const assert = require("node:assert/strict");
         );
         await new Promise((r) => setTimeout(r, 150));
         await fs.mkdir(path.join(__dirname, "../.cache"), { recursive: true });
-        await fs.writeFile(
-          path.join(__dirname, "../.cache/workspace.png"),
-          (await web.capturePage()).toPNG(),
-        );
+        if (process.env.FIXMYTYPE_CAPTURE === "1")
+          await fs.writeFile(
+            path.join(__dirname, "../.cache/workspace.png"),
+            (await web.capturePage()).toPNG(),
+          );
         await evaluate(
           'Array.from(document.querySelectorAll("nav button")).find(b=>b.textContent.includes("Settings")).click()',
         );
@@ -90,10 +92,11 @@ const assert = require("node:assert/strict");
           ),
           true,
         );
-        await fs.writeFile(
-          path.join(__dirname, "../.cache/workspace-compact.png"),
-          (await web.capturePage()).toPNG(),
-        );
+        if (process.env.FIXMYTYPE_CAPTURE === "1")
+          await fs.writeFile(
+            path.join(__dirname, "../.cache/workspace-compact.png"),
+            (await web.capturePage()).toPNG(),
+          );
         assert.deepEqual(errors, []);
         console.log(
           "PASS: real preload, editor, NL persistence, separate repair language, retained draft, AI mode, keyboard focus, compact layout, no renderer errors.",

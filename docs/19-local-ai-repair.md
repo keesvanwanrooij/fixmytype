@@ -4,6 +4,8 @@ AI repair has three modes: Off, Suggest and Automatic. It works independently of
 
 ## Request contract
 
+The current source build implements this path in the app-owned editor through Ollama and `llama3.2:3b`. See [provider evidence](../plans/evidence/2026-09-05-local-repair.md). External editor integration and a general local-resource picker remain open. Intensity and a system prompt guide output; they do not prove preservation of meaning. Review automatic edits before using the text.
+
 A repair request contains bounded text, language, intensity, approved style guidance and vocabulary. The receiver validates all fields. Text is untrusted data: instructions inside a document must not change tool permissions, endpoint, mode or output schema.
 
 Only a verified local inference route is allowed. Discovering a localhost endpoint is not enough if the selected provider forwards work remotely. Disallow cloud-backed entries and never add an online fallback when local work fails.

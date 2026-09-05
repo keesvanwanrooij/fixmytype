@@ -8,6 +8,8 @@ To check the Rust library, return to the repository root and run cargo test --wo
 
 ## First-run setup target
 
+The current source build is usable inside its writing workspace. Run `npm run setup:speech` from `apps/desktop` once for pinned, checksummed local Whisper resources. Start local Ollama and install `llama3.2:3b` for text repair. Use the app's Local setup screen to check availability. See [the desktop guide](../apps/desktop/README.md) for exact commands and current boundaries.
+
 The setup screen must inspect available local runtimes, show ready or missing state, and explain the download size before installation. It should reuse an existing local service where compatible. Download failure and cancellation must leave existing resources working.
 
 The first-user package will include a Windows installer or unpacked app plus checksums, supported-context notes and a test script. Until phase 12 has installer evidence, do not advertise a developer build as an end-user release.
@@ -16,7 +18,7 @@ The first-user package will include a Windows installer or unpacked app plus che
 
 If the window is blank, inspect renderer and preload errors. The current build needs relative Vite asset paths and a CommonJS sandbox preload. Repeatedly reinstalling dependencies does not diagnose a renderer crash.
 
-Quit through the tray before starting another instance. Future builds must enforce single-instance ownership so cache locks and shortcuts cannot conflict.
+Quit through the tray to exit completely. The desktop enforces single-instance ownership; a second launch reopens the existing window.
 
 ## Removal
 

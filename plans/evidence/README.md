@@ -4,6 +4,6 @@ Use this directory for concise dated records of commands, source commit, synthet
 
 ## Records
 
-The current scope revision reopens the old Settings accessibility claims and input-policy audit. New evidence will be linked here as packages are verified.
+Read [workspace checks](2026-09-05-workspace.md), [local repair](2026-09-05-local-repair.md), [revision transactions](2026-09-05-transactions.md) and [the first usable dictation workflow](2026-09-05-dictation-workflow.md). These records distinguish app-owned behavior from physical and external-application checks that remain pending.
 
 Navigation: [Project home](../../README.md), [documentation](../../docs/README.md), [delivery plans](../README.md).

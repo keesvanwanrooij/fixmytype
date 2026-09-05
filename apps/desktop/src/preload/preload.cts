@@ -1,9 +1,22 @@
 import { contextBridge, ipcRenderer } from "electron";
-import type { Settings } from "../shared/settings.js";
 
 import type { Action, Preferences } from "../shared/preferences.js";
 
 contextBridge.exposeInMainWorld("fixMyType", {
+  status: () => ipcRenderer.invoke("workspace:status"),
+  copy: (text: string) => ipcRenderer.invoke("workspace:copy", text),
+  microphone: (enabled: boolean) =>
+    ipcRenderer.invoke("workspace:microphone", enabled),
+  cancel: () => ipcRenderer.invoke("workspace:cancel"),
+  repair: (text: string, preferences: Preferences) =>
+    ipcRenderer.invoke("workspace:job", { kind: "repair", text, preferences }),
+  transcribe: (audio: Uint8Array, language: string) =>
+    ipcRenderer.invoke("workspace:job", { kind: "speech", audio, language }),
+  onCaptureStop: (listener: () => void) => {
+    const handler = () => listener();
+    ipcRenderer.on("capture:stop", handler);
+    return () => ipcRenderer.removeListener("capture:stop", handler);
+  },
   onAction: (listener: (action: Action) => void): (() => void) => {
     const handler = (_event: Electron.IpcRendererEvent, action: unknown) => {
       if (
@@ -30,7 +43,5 @@ contextBridge.exposeInMainWorld("fixMyType", {
     ipcRenderer.on("protection:changed", handler);
     return () => ipcRenderer.removeListener("protection:changed", handler);
   },
-  syncSettings: (settings: Settings) =>
-    ipcRenderer.invoke("settings:sync", settings) as Promise<void>,
   support: () => ipcRenderer.invoke("support:open") as Promise<void>,
 });

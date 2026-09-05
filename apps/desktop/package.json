@@ -6,6 +6,10 @@
   "main": "dist/main/main.js",
   "scripts": {
     "test": "vitest run",
+    "test:smoke": "electron scripts/smoke.cjs",
+    "test:workflow": "electron scripts/workflow-smoke.cjs",
+    "test:runtime": "node scripts/runtime-check.mjs",
+    "setup:speech": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/setup-speech.ps1",
     "start": "npm run build && electron .",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src tests --max-warnings=0",

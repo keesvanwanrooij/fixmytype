@@ -1,29 +1,46 @@
 import { createSettings } from "../src/shared/settings.js";
-import { loadSettings, resetSettings, saveSettings, settingsStorageKey } from "../src/shared/settings-storage.js";
+import {
+  loadSettings,
+  resetSettings,
+  saveSettings,
+  settingsStorageKey,
+} from "../src/shared/settings-storage.js";
 import { describe, expect, it } from "vitest";
 
 describe("settings storage", () => {
   it("uses safe runtime defaults and reports malformed saved data", () => {
     const storage = {
       getItem: () => "{not-json",
-      setItem: () => undefined
+      setItem: () => undefined,
     };
 
-    expect(loadSettings(storage)).toEqual({ issue: "invalid", settings: createSettings() });
+    expect(loadSettings(storage)).toEqual({
+      issue: "invalid",
+      settings: createSettings(),
+    });
   });
 
   it("loads only a complete validated settings record", () => {
     const storage = {
-      getItem: () => JSON.stringify({
-        version: 1,
-        settings: { interfaceLanguage: "nl", repairLanguage: "en", protectionEnabled: false }
-      }),
-      setItem: () => undefined
+      getItem: () =>
+        JSON.stringify({
+          version: 1,
+          settings: {
+            interfaceLanguage: "nl",
+            repairLanguage: "en",
+            protectionEnabled: false,
+          },
+        }),
+      setItem: () => undefined,
     };
 
     expect(loadSettings(storage)).toEqual({
       issue: undefined,
-      settings: { interfaceLanguage: "nl", repairLanguage: "en", protectionEnabled: false }
+      settings: {
+        interfaceLanguage: "nl",
+        repairLanguage: "en",
+        protectionEnabled: false,
+      },
     });
   });
 
@@ -32,10 +49,13 @@ describe("settings storage", () => {
       getItem: () => {
         throw new Error("blocked");
       },
-      setItem: () => undefined
+      setItem: () => undefined,
     };
 
-    expect(loadSettings(storage)).toEqual({ issue: "unavailable", settings: createSettings() });
+    expect(loadSettings(storage)).toEqual({
+      issue: "unavailable",
+      settings: createSettings(),
+    });
   });
 
   it("does not overwrite local storage with an incomplete settings object", () => {
@@ -44,11 +64,14 @@ describe("settings storage", () => {
       getItem: () => null,
       setItem: () => {
         writes += 1;
-      }
+      },
     };
 
     // Runtime data can bypass TypeScript, so persistence must validate again.
-    const incomplete = { interfaceLanguage: "nl", repairLanguage: "auto" } as ReturnType<typeof createSettings>;
+    const incomplete = {
+      interfaceLanguage: "nl",
+      repairLanguage: "auto",
+    } as ReturnType<typeof createSettings>;
 
     expect(saveSettings(storage, incomplete)).toBe("invalid");
     expect(writes).toBe(0);
@@ -60,9 +83,12 @@ describe("settings storage", () => {
       getItem: () => null,
       setItem: () => {
         writes += 1;
-      }
+      },
     };
-    const withTypedContent = { ...createSettings(), typedContent: "private draft" } as ReturnType<typeof createSettings>;
+    const withTypedContent = {
+      ...createSettings(),
+      typedContent: "private draft",
+    } as ReturnType<typeof createSettings>;
 
     // The persisted schema is an allowlist, not a list of required fields plus arbitrary extras.
     expect(saveSettings(storage, withTypedContent)).toBe("invalid");
@@ -76,7 +102,7 @@ describe("settings storage", () => {
       setItem: () => undefined,
       removeItem: (key: string) => {
         removed.push(key);
-      }
+      },
     };
 
     expect(resetSettings(storage)).toBeUndefined();

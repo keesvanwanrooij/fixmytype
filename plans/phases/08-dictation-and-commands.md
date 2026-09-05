@@ -2,7 +2,7 @@
 
 ## Status
 
-⬜ Planned
+🔄 In progress. The app-owned dictation path passes real local transcription and fake-microphone Electron checks. Speech commands, physical Dutch microphone checks, crash recovery and external insertion remain open.
 
 ## Outcome
 
@@ -30,13 +30,13 @@ Required prior capabilities: phases 4, 7. The maintainer's GO authorizes impleme
 ### Package 1: Capture lifecycle
 
 - [ ] Write tests for capture state, cancellation and duration limits in tests/dictation.test.ts.
-- [ ] Create renderer capture code with explicit microphone permission and track cleanup.
-- [ ] Snapshot the intended target at recording start and invalidate it on target changes.
-- [ ] Bound audio memory and serialize local recognizer requests.
+- [x] Create renderer capture code with explicit microphone permission and track cleanup.
+- [x] Snapshot the app-owned range at recording start and invalidate it when that text changes.
+- [x] Bound audio memory and serialize local recognizer requests.
 
 ### Package 2: Local transcription
 
-- [ ] Create src/main/transcription.ts with a configured Whisper-compatible executable and local resources.
+- [x] Create `src/main/speech-service.ts` with a pinned Whisper executable and local resources.
 - [ ] Pass audio through app-owned temporary files, with cleanup on success, error and startup recovery.
 - [ ] Test missing executable, corrupt audio, timeout, empty result and cancellation.
 - [ ] Transcribe a synthetic English fixture and an explicit Dutch test fixture; record expected output.
@@ -45,15 +45,15 @@ Required prior capabilities: phases 4, 7. The maintainer's GO authorizes impleme
 
 - [ ] Feed approved vocabulary into the recognition path where supported.
 - [ ] Separate command mode from literal dictation and start with punctuation or formatting commands.
-- [ ] Add the result to session history and insert only through the validated target adapter.
-- [ ] Retain a draft if target identity changes or safe insertion is unsupported.
+- [x] Add the result to session history and insert only through the app-owned range transaction.
+- [x] Retain a draft if the captured range changes or safe insertion is unsupported.
 
 ### Package 4: cleanup and delivery
 
-- [ ] Review the changed files for duplicated state, dead code, resource leaks and missing boundary validation.
-- [ ] Run affected tests after cleanup and retain actual red/green evidence under plans/evidence.
-- [ ] Update the phase record, reference docs and changelog with verified behaviour and known limitations.
-- [ ] Review the staged diff, commit this verified phase to main and push it to GitHub.
+- [x] Review the delivered slice for duplicated state, dead code, resource leaks and missing boundary validation.
+- [x] Run affected tests after cleanup and retain actual red/green evidence under plans/evidence.
+- [x] Update the phase record, reference docs and changelog with verified behaviour and known limitations.
+- [x] Review the staged diff and deliver the verified app-owned slice to main. Remaining phase tasks above stay open.
 
 ## Acceptance criteria
 
@@ -72,6 +72,8 @@ Do not capture the user's live microphone merely to test setup. Physical audio c
 
 ## Implementation record
 
-Implementation of this revised phase has not yet been verified.
+2026-09-05: Installed pinned whisper.cpp b4938 Windows x64 and multilingual base with verified SHA-256 values. Added a repeatable `npm run setup:speech` script, a 115-second recording limit, WAV validation and private temporary-session cleanup. Dictation targets the app-owned selection captured at recording start; changed selections keep a transcript draft. External insertion, vocabulary hints and spoken commands remain open.
+
+The integrated writer is ready for first-user feedback within this scope. The public JFK sample passed real CPU transcription in 1.4 seconds in one run. A real Electron fake-microphone test verified capture, insertion, track release and Undo. See [workflow evidence](../evidence/2026-09-05-dictation-workflow.md). Do not count this as a physical microphone test.
 
 Navigation: [Project home](../../README.md), [documentation](../../docs/README.md), [delivery plans](../README.md).

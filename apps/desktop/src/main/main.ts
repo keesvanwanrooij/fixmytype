@@ -19,8 +19,8 @@ import {
 import type { InterfaceLanguage } from "../shared/settings.js";
 
 import { isPreferences } from "../shared/preferences.js";
-import { isSettings } from "../shared/settings-storage.js";
 import { replaceShortcuts } from "./shortcuts.js";
+import { registerWorkspace } from "./workspace-ipc.js";
 
 const ownsInstance = app.requestSingleInstanceLock();
 if (!ownsInstance) app.quit();
@@ -60,6 +60,7 @@ const createWindow = (): BrowserWindow => {
     },
   });
 
+  registerWorkspace(window);
   void window.loadFile(
     path.join(import.meta.dirname, "../renderer/index.html"),
   );
@@ -147,22 +148,13 @@ app.on("before-quit", () => {
 
 ipcMain.handle("support:open", (event): Promise<void> => {
   if (
-    event.sender !== mainWindow?.webContents ||
+    event.senderFrame !== mainWindow?.webContents.mainFrame ||
     !isAllowedExternalUrl(supportUrl)
   ) {
     throw new Error("The support link request was rejected.");
   }
 
   return shell.openExternal(supportUrl);
-});
-
-ipcMain.handle("settings:sync", (event, settings: unknown): void => {
-  if (event.sender !== mainWindow?.webContents || !isSettings(settings)) {
-    throw new Error("The settings update was rejected.");
-  }
-
-  interfaceLanguage = settings.interfaceLanguage;
-  updateProtectionEnabled(settings.protectionEnabled);
 });
 
 ipcMain.handle("preferences:sync", (event, value: unknown): boolean => {
@@ -185,7 +177,8 @@ ipcMain.handle("preferences:sync", (event, value: unknown): boolean => {
         updateProtectionEnabled(!protectionEnabled);
         return;
       }
-      if (action === "show") openSettings();
+      if (action === "show" || action === "dictate" || action === "repair")
+        openSettings();
       mainWindow?.webContents.send("action", action);
     },
   );

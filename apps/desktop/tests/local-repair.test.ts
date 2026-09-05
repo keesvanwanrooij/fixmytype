@@ -2,9 +2,18 @@ import { expect, it, vi } from "vitest";
 import { repairText } from "../src/main/local-repair.js";
 import { createPreferences } from "../src/shared/preferences.js";
 const preferences = { ...createPreferences(), aiMode: "suggest" as const };
-it('preserves signed numbers and percentages',async()=>{
-  const f=vi.fn().mockResolvedValueOnce(new Response(JSON.stringify({details:{format:'gguf'}}))).mockResolvedValueOnce(new Response(JSON.stringify({response:'{"text":"Return 10%."}'})));
-  await expect(repairText('Return -10%.',preferences,new AbortController().signal,f)).rejects.toThrow('PROTECTED_TEXT_CHANGED');
+it("preserves signed numbers and percentages", async () => {
+  const f = vi
+    .fn()
+    .mockResolvedValueOnce(
+      new Response(JSON.stringify({ details: { format: "gguf" } })),
+    )
+    .mockResolvedValueOnce(
+      new Response(JSON.stringify({ response: '{"text":"Return 10%."}' })),
+    );
+  await expect(
+    repairText("Return -10%.", preferences, new AbortController().signal, f),
+  ).rejects.toThrow("PROTECTED_TEXT_CHANGED");
 });
 const response = (value: unknown) => new Response(JSON.stringify(value));
 it("only contacts the fixed loopback runtime and parses a bounded result", async () => {

@@ -9,12 +9,14 @@ import {
 import { wordsFor } from "./words.js";
 import { Workspace } from "./Workspace.js";
 import { SettingsPanel } from "./SettingsPanel.js";
+import { useWriting } from "./useWriting.js";
+import { HistoryList } from "./HistoryList.js";
 type Page = "workspace" | "history" | "setup" | "settings";
 export function App() {
   const [loaded] = useState(() => loadPreferences(window.localStorage));
   const [preferences, setPreferences] = useState(loaded.preferences);
   const [page, setPage] = useState<Page>("workspace");
-  const [text, setText] = useState("");
+  const writing = useWriting(preferences);
   const [notice, setNotice] = useState(loaded.issue ?? "");
   const w = wordsFor(preferences.interfaceLanguage);
   const update = (value: Preferences) => {
@@ -50,9 +52,17 @@ export function App() {
           setPage("workspace");
           return;
         }
-        setNotice("operationPending");
+        if (action === "dictate") {
+          setPage("workspace");
+          void writing.dictate();
+        }
+        if (action === "repair") {
+          setPage("workspace");
+          writing.repair();
+        }
+        if (action === "read") setNotice("operationPending");
       }),
-    [],
+    [writing],
   );
   const reset = () => {
     try {
@@ -103,6 +113,19 @@ export function App() {
         </div>
       </aside>
       <main className="main-content">
+        {(writing.recording || writing.transcribing) && (
+          <div className="notice" role="status">
+            {writing.recording ? w.recordingNow : w.transcribing}
+            {writing.recording && (
+              <button type="button" onClick={() => void writing.dictate()}>
+                {w.stopRecording}
+              </button>
+            )}
+            <button type="button" onClick={writing.cancel}>
+              {w.cancel}
+            </button>
+          </div>
+        )}
         {notice && (
           <div className="notice" role="status">
             {notice in w ? w[notice as keyof typeof w] : notice}
@@ -117,8 +140,7 @@ export function App() {
           <Workspace
             preferences={preferences}
             update={update}
-            text={text}
-            onText={setText}
+            writing={writing}
             words={w}
           />
         )}
@@ -136,10 +158,13 @@ export function App() {
               <span className="eyebrow">{w.history}</span>
               <h1>{w.historyTitle}</h1>
             </header>
-            <section className="empty-state">
-              <span>↶</span>
-              <p>{w.historyBody}</p>
-            </section>
+            <HistoryList writing={writing} words={w} />
+            {writing.history.length === 0 && (
+              <section className="empty-state">
+                <span>↶</span>
+                <p>{w.historyBody}</p>
+              </section>
+            )}
           </>
         )}
         {page === "setup" && (
@@ -153,17 +178,30 @@ export function App() {
               {(["typing", "ai", "voice"] as const).map((name) => (
                 <section className="panel" key={name}>
                   <h2>{w[name]}</h2>
-                  <span className="badge">{w.pending}</span>
+                  <span className="badge">
+                    {name === "typing"
+                      ? w.workspace
+                      : writing.status[name === "ai" ? "ai" : "speech"]
+                        ? w.ready
+                        : w.pending}
+                  </span>
                   <p className="help-text">
                     {name === "typing"
                       ? w.nativePending
                       : name === "ai"
-                        ? w.aiPending
-                        : w.speechPending}
+                        ? w.aiSetup
+                        : w.speechSetup}
                   </p>
                 </section>
               ))}
             </div>
+            <button
+              type="button"
+              className="primary-button"
+              onClick={writing.refresh}
+            >
+              {w.checkAgain}
+            </button>
           </>
         )}
         <footer className="support-footer">

@@ -29,24 +29,24 @@ Required prior capabilities: phases 1. The maintainer's GO authorizes implementa
 
 ### Package 1: Validated preferences
 
-- [ ] Add tests for v1 migration and malformed new fields in apps/desktop/tests/preferences.test.ts.
-- [ ] Create src/shared/preferences.ts with AI mode, sensitivity, intensity, profile, style, vocabulary and shortcuts.
-- [ ] Preserve prior language settings through explicit migration; never infer capture consent from storage.
-- [ ] Reject duplicate shortcuts, oversized style cards and invalid vocabulary entries.
+- [x] Add tests for v1 migration and malformed new fields in apps/desktop/tests/preferences.test.ts.
+- [x] Create src/shared/preferences.ts with AI mode, sensitivity, intensity, profile, style, vocabulary and shortcuts.
+- [x] Preserve prior language settings through explicit migration; never infer capture consent from storage.
+- [x] Reject duplicate shortcuts, oversized style cards and invalid vocabulary entries.
 
 ### Package 2: Writing workspace
 
-- [ ] Split src/renderer/main.tsx into an App shell, Workspace and Settings components.
-- [ ] Place AI Off, Suggest and Automatic controls beside the writing area with clear availability text.
-- [ ] Add a Settings-only interface language selector and separate repair language selector.
-- [ ] Implement editable profiles, style card and vocabulary with visible validation feedback.
+- [x] Split src/renderer/main.tsx into an App shell, Workspace and Settings components.
+- [x] Place AI Off, Suggest and Automatic controls beside the writing area with clear availability text.
+- [x] Add a Settings-only interface language selector and separate repair language selector.
+- [x] Implement editable profiles, style card and vocabulary with visible validation feedback.
 
 ### Package 3: Interaction and lifecycle
 
-- [ ] Add main-process single-instance ownership and handle shortcut registration failure transactionally.
-- [ ] Expose a typed action event through preload.cts instead of arbitrary channel access.
+- [x] Add main-process single-instance ownership and handle shortcut registration failure transactionally.
+- [x] Expose a typed action event through preload.cts instead of arbitrary channel access.
 - [ ] Keep Support FixMyType in the bottom footer and provide keyboard focus for every control.
-- [ ] Run a real Electron render check and exercise Settings, both locales and reduced viewport.
+- [x] Run a real Electron render check and exercise Settings, both locales and reduced viewport.
 
 ### Package 4: cleanup and delivery
 

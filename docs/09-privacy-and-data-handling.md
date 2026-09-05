@@ -4,6 +4,8 @@ FixMyType processes user content locally. Downloads retrieve application resourc
 
 ## Data inventory
 
+Current implementation: preferences, style and vocabulary persist in the local profile. Draft text and the last 50 history entries stay in memory only. There is no retained-history opt-in, export or screen capture yet. Temporary audio is deleted after normal completion, cancellation and handled errors. Forced termination can leave files under the desktop `.cache/runtime/sessions` directory; startup recovery is still a phase-8 task. The inventory below also describes planned controls, not just shipped features.
+
 | Data | Default lifetime | User control |
 |---|---|---|
 | Preferences and app profiles | Local profile until reset | You edit, export or reset them |

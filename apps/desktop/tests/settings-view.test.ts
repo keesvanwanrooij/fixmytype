@@ -1,5 +1,11 @@
-import { createSettings, setInterfaceLanguage } from "../src/shared/settings.js";
-import { resetSettingsView, updateSettingsView } from "../src/shared/settings-view.js";
+import {
+  createSettings,
+  setInterfaceLanguage,
+} from "../src/shared/settings.js";
+import {
+  resetSettingsView,
+  updateSettingsView,
+} from "../src/shared/settings-view.js";
 import { describe, expect, it } from "vitest";
 
 describe("settings view", () => {
@@ -9,14 +15,24 @@ describe("settings view", () => {
       getItem: () => "{not-json",
       setItem: () => {
         writes += 1;
-      }
+      },
     };
     const view = { issue: "invalid" as const, settings: createSettings() };
 
     // A user may continue working, but the broken bytes must not be silently replaced.
-    expect(updateSettingsView(view, setInterfaceLanguage(view.settings, "nl"), storage)).toEqual({
+    expect(
+      updateSettingsView(
+        view,
+        setInterfaceLanguage(view.settings, "nl"),
+        storage,
+      ),
+    ).toEqual({
       issue: "invalid",
-      settings: { interfaceLanguage: "nl", repairLanguage: "auto", protectionEnabled: true }
+      settings: {
+        interfaceLanguage: "nl",
+        repairLanguage: "auto",
+        protectionEnabled: true,
+      },
     });
     expect(writes).toBe(0);
   });
@@ -27,11 +43,17 @@ describe("settings view", () => {
       getItem: () => null,
       setItem: (_key: string, value: string) => {
         writes.push(value);
-      }
+      },
     };
     const view = { issue: undefined, settings: createSettings() };
 
-    expect(updateSettingsView(view, setInterfaceLanguage(view.settings, "nl"), storage).issue).toBeUndefined();
+    expect(
+      updateSettingsView(
+        view,
+        setInterfaceLanguage(view.settings, "nl"),
+        storage,
+      ).issue,
+    ).toBeUndefined();
     expect(writes).toHaveLength(1);
   });
 
@@ -42,10 +64,13 @@ describe("settings view", () => {
       setItem: () => undefined,
       removeItem: (key: string) => {
         removed.push(key);
-      }
+      },
     };
 
-    expect(resetSettingsView(storage)).toEqual({ issue: undefined, settings: createSettings() });
+    expect(resetSettingsView(storage)).toEqual({
+      issue: undefined,
+      settings: createSettings(),
+    });
     expect(removed).toEqual(["fixmytype:settings:v1"]);
   });
 });

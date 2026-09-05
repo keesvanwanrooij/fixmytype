@@ -1,0 +1,378 @@
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
+import {
+  DocumentBuffer,
+  completedSentences,
+  type Undo,
+} from "../shared/document-buffer.js";
+import type { Preferences } from "../shared/preferences.js";
+import { startRecording, type Recording } from "./recorder.js";
+export type Entry = {
+  id: number;
+  kind: "repair" | "speech";
+  original: string;
+  result: string;
+  state: "suggested" | "applied" | "stale" | "ignored" | "undone";
+  anchor?: number;
+  undo?: Undo;
+};
+const editor = () =>
+  document.querySelector<HTMLTextAreaElement>("#writing-editor");
+export function useWriting(preferences: Preferences) {
+  const buffer = useRef(new DocumentBuffer());
+  const [text, setText] = useState("");
+  const [history, setHistory] = useState<Entry[]>([]);
+  const [busy, setBusy] = useState(false);
+  const [recording, setRecording] = useState(false);
+  const [transcribing, setTranscribing] = useState(false);
+  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState({ ai: false, speech: false });
+  const pending = useRef(false),
+    epoch = useRef(0),
+    sequence = useRef(0),
+    scanned = useRef<number[]>([]);
+  const microphone = useRef<Recording | undefined>(undefined),
+    starting = useRef(false),
+    stopping = useRef(false),
+    micAnchor = useRef<number | undefined>(undefined);
+  const composing = useRef(false),
+    selection = useRef<{ start: number; end: number } | undefined>(undefined);
+  const options = useRef(preferences);
+  options.current = preferences;
+  const sentences = completedSentences(text);
+  const sentenceVersion = text.slice(0, sentences.at(-1)?.end ?? 0);
+  const refresh = useCallback(() => {
+    void window.fixMyType
+      .status()
+      .then(setStatus)
+      .catch(() => setMessage("runtimeError"));
+  }, []);
+  useEffect(refresh, [refresh]);
+  const append = (entry: Entry) =>
+    setHistory((current) => {
+      const list = [entry, ...current];
+      for (const old of list.slice(50)) {
+        if (old.anchor) buffer.current.release(old.anchor);
+        if (old.undo) buffer.current.release(old.undo.anchor);
+      }
+      return list.slice(0, 50);
+    });
+  const onText = (value: string) => {
+    buffer.current.replaceText(value);
+    setText(value);
+  };
+  const apply = (anchor: number, result: string) => {
+    const d = buffer.current,
+      range = d.range(anchor),
+      el = editor();
+    if (range && el && document.activeElement === el) {
+      const delta = result.length - (range.end - range.start);
+      const shift = (n: number) =>
+        n <= range.start
+          ? n
+          : n >= range.end
+            ? n + delta
+            : range.start + result.length;
+      selection.current = {
+        start: shift(el.selectionStart),
+        end: shift(el.selectionEnd),
+      };
+    }
+    const undo = d.apply(anchor, result);
+    setText(d.text);
+    return undo;
+  };
+  useLayoutEffect(() => {
+    if (selection.current) {
+      editor()?.setSelectionRange(
+        selection.current.start,
+        selection.current.end,
+      );
+      selection.current = undefined;
+    }
+  }, [text]);
+  const cancel = useCallback(() => {
+    epoch.current++;
+    microphone.current?.cancel();
+    microphone.current = undefined;
+    if (micAnchor.current) buffer.current.release(micAnchor.current);
+    micAnchor.current = undefined;
+    setRecording(false);
+    setMessage("cancelled");
+    void window.fixMyType.cancel();
+  }, []);
+  useEffect(
+    () =>
+      window.fixMyType.onCaptureStop(() => {
+        epoch.current++;
+        microphone.current?.cancel();
+        microphone.current = undefined;
+        if (micAnchor.current) buffer.current.release(micAnchor.current);
+        micAnchor.current = undefined;
+        setRecording(false);
+      }),
+    [],
+  );
+  useEffect(() => {
+    epoch.current++;
+    void window.fixMyType.cancel();
+    return () => {
+      epoch.current++;
+    };
+  }, [
+    preferences.aiMode,
+    preferences.profile,
+    preferences.repairLanguage,
+    preferences.intensity,
+    preferences.styleCard,
+  ]);
+  useEffect(
+    () => () => {
+      microphone.current?.cancel();
+      void window.fixMyType.cancel();
+    },
+    [],
+  );
+  const requestRepair = async (anchor: number) => {
+    const range = buffer.current.range(anchor);
+    if (!range || pending.current) return;
+    const original = range.original,
+      version = epoch.current,
+      p = options.current;
+    pending.current = true;
+    setBusy(true);
+    setMessage("repairing");
+    try {
+      const result = await window.fixMyType.repair(original, p);
+      if (version !== epoch.current) {
+        buffer.current.release(anchor);
+        return;
+      }
+      if (result === original) {
+        setMessage("unchanged");
+        return;
+      }
+      let undo: Undo | undefined;
+      if (p.aiMode === "automatic" && !composing.current)
+        undo = apply(anchor, result);
+      const state =
+        p.aiMode === "automatic" && !composing.current
+          ? undo
+            ? "applied"
+            : "stale"
+          : buffer.current.range(anchor)
+            ? "suggested"
+            : "stale";
+      if (undo) scanned.current.push(undo.anchor);
+      append({
+        id: ++sequence.current,
+        kind: "repair",
+        original,
+        result,
+        state,
+        anchor,
+        undo,
+      });
+      setMessage(state === "stale" ? "staleResult" : "repairDone");
+    } catch {
+      if (version === epoch.current) setMessage("repairError");
+    } finally {
+      pending.current = false;
+      setBusy(false);
+    }
+  };
+  const repair = () => {
+    if (pending.current || options.current.aiMode === "off") return;
+    const el = editor(),
+      d = buffer.current;
+    const start = el?.selectionStart ?? 0,
+      end = el?.selectionEnd ?? 0;
+    if (!d.text.trim()) return;
+    const anchor = d.capture(
+      start === end ? 0 : start,
+      start === end ? d.text.length : end,
+    );
+    scanned.current.push(anchor);
+    void requestRepair(anchor);
+  };
+  useEffect(() => {
+    if (
+      preferences.aiMode === "off" ||
+      !status.ai ||
+      preferences.profile === "code" ||
+      preferences.profile === "spreadsheet" ||
+      busy ||
+      recording ||
+      transcribing
+    )
+      return;
+    const timer = window.setTimeout(() => {
+      if (pending.current || composing.current) return;
+      const d = buffer.current;
+      scanned.current = scanned.current.filter((id) => Boolean(d.range(id)));
+      const seen = new Set(
+        scanned.current.map((id) => {
+          const r = d.range(id)!;
+          return `${r.start}:${r.end}`;
+        }),
+      );
+      const next = completedSentences(d.text).find(
+        (r) => r.end - r.start <= 4000 && !seen.has(`${r.start}:${r.end}`),
+      );
+      if (next) {
+        const anchor = d.capture(next.start, next.end);
+        scanned.current.push(anchor);
+        void requestRepair(anchor);
+      }
+    }, 700);
+    return () => clearTimeout(timer);
+    // Unfinished later typing must not restart the timer for an earlier complete sentence.
+  }, [
+    sentenceVersion,
+    preferences.aiMode,
+    preferences.profile,
+    status.ai,
+    busy,
+    recording,
+    transcribing,
+  ]);
+  const accept = (entry: Entry) => {
+    if (!entry.anchor) return;
+    const undo = apply(entry.anchor, entry.result);
+    if (undo) scanned.current.push(undo.anchor);
+    setHistory((current) =>
+      current.map((e) =>
+        e.id === entry.id
+          ? { ...e, state: undo ? "applied" : "stale", undo }
+          : e,
+      ),
+    );
+  };
+  const ignore = (entry: Entry) => {
+    setHistory((current) =>
+      current.map((e) => (e.id === entry.id ? { ...e, state: "ignored" } : e)),
+    );
+  };
+  const undo = (entry: Entry) => {
+    if (!entry.undo) return;
+    // Undo uses the same selection transformation and consumes its inverse anchor.
+    const inverse = apply(entry.undo.anchor, entry.undo.original);
+    if (inverse) {
+      scanned.current.push(inverse.anchor);
+    }
+    setHistory((current) =>
+      current.map((e) =>
+        e.id === entry.id ? { ...e, state: inverse ? "undone" : "stale" } : e,
+      ),
+    );
+  };
+  const dictate = async () => {
+    if (starting.current || stopping.current) return;
+    if (microphone.current) {
+      const mic = microphone.current;
+      microphone.current = undefined;
+      setRecording(false);
+      stopping.current = true;
+      setTranscribing(true);
+      const version = epoch.current,
+        anchor = micAnchor.current;
+      micAnchor.current = undefined;
+      try {
+        const audio = await mic.stop();
+        await window.fixMyType.microphone(false);
+        setMessage("transcribing");
+        const result = await window.fixMyType.transcribe(
+          audio,
+          options.current.repairLanguage,
+        );
+        if (version !== epoch.current || !result.trim()) {
+          if (anchor) buffer.current.release(anchor);
+          setMessage(version !== epoch.current ? "cancelled" : "noSpeech");
+          return;
+        }
+        const undo = anchor ? apply(anchor, result) : undefined;
+        append({
+          id: ++sequence.current,
+          kind: "speech",
+          original: "",
+          result,
+          state: undo ? "applied" : "stale",
+          undo,
+        });
+        setMessage(undo ? "dictated" : "staleResult");
+      } catch (error) {
+        setMessage(
+          error instanceof Error && error.message === "NO_SPEECH"
+            ? "noSpeech"
+            : "speechError",
+        );
+        if (anchor) buffer.current.release(anchor);
+      } finally {
+        stopping.current = false;
+        setTranscribing(false);
+        void window.fixMyType.microphone(false);
+      }
+      return;
+    }
+    if (!status.speech) {
+      setMessage("speechError");
+      return;
+    }
+    starting.current = true;
+    const version = epoch.current;
+    try {
+      const el = editor(),
+        d = buffer.current;
+      micAnchor.current = d.capture(
+        el?.selectionStart ?? d.text.length,
+        el?.selectionEnd ?? d.text.length,
+      );
+      await window.fixMyType.microphone(true);
+      const mic = await startRecording(() => void dictate());
+      if (version !== epoch.current) {
+        mic.cancel();
+        void window.fixMyType.microphone(false);
+        return;
+      }
+      microphone.current = mic;
+      setRecording(true);
+      setMessage("recordingNow");
+    } catch {
+      if (micAnchor.current) buffer.current.release(micAnchor.current);
+      micAnchor.current = undefined;
+      setMessage("microphoneError");
+      void window.fixMyType.microphone(false);
+    } finally {
+      starting.current = false;
+    }
+  };
+  const copy = (value = text) =>
+    void window.fixMyType
+      .copy(value)
+      .then(() => setMessage("copied"))
+      .catch(() => setMessage("copyError"));
+  return {
+    text,
+    onText,
+    history,
+    busy,
+    recording,
+    transcribing,
+    message,
+    status,
+    refresh,
+    repair,
+    dictate,
+    cancel,
+    accept,
+    ignore,
+    undo,
+    copy,
+    composing,
+  };
+}

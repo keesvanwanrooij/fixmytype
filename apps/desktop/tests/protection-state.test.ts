@@ -1,4 +1,7 @@
-import { nextProtectionEnabled, protectionActionLabel } from "../src/main/protection-state.js";
+import {
+  nextProtectionEnabled,
+  protectionActionLabel,
+} from "../src/main/protection-state.js";
 import { describe, expect, it } from "vitest";
 
 describe("protection preference", () => {

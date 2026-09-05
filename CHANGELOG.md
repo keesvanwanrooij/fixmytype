@@ -11,11 +11,19 @@ All notable user-visible changes to FixMyType will be documented here. This proj
 
 ### Added
 
+- A writing workspace with AI Off, Suggest and Automatic modes, local Ollama repair, guarded history and Undo.
+- Local Whisper dictation with explicit microphone capture, a stop/cancel banner and session cleanup.
+- Repeated-letter filtering inside the writing editor, five sensitivity levels, four profiles and configurable shortcuts.
+- A checked speech setup script, a Windows source launcher and real-engine workflow tests with fake microphone input.
+
 - A local Settings screen in Dutch and English with separate repair-language selection.
 - A persisted protection preference that stays clear about the planned input filter.
 - A tray pause or resume control for that preference and a bottom Support FixMyType button.
 
 ### Changed
+
+- Completed-sentence scheduling no longer waits for later typing to stop. Late edits preserve later text and cursor position.
+- Delivery status distinguishes app-owned functionality from pending system-wide protection, speech commands and companion work.
 
 - Contributor workflow now requires material phase questions with clear options and consequences, and a verified GitHub push as build-loop step 8.
 

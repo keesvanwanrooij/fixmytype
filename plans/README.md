@@ -2,7 +2,15 @@
 
 This is the canonical delivery status for the approved typing, repair, dictation and companion product. Read [the project home](../README.md), [documentation](../docs/README.md) and [the ten approved additions](../docs/24-product-workflows.md) before implementing a phase.
 
-## Phase overview
+## Usable now
+
+✅ The source build supports local AI suggestions and automatic correction inside FixMyType, even while later typing continues. It supports guarded Undo, repeated-letter filtering, local Whisper dictation and explicit copying to other apps. Start it with `Start FixMyType.cmd` or follow [the desktop guide](../apps/desktop/README.md).
+
+✅ Verification includes 47 unit tests, lint, a production build, real Electron interaction, real Dutch/English AI correction and a fake-microphone-to-Whisper workflow. See [the evidence](evidence/2026-09-05-dictation-workflow.md).
+
+The expanded phases remain in progress where their original scope exceeds this usable slice. External input hooks, direct insertion, TTS, spoken commands, companion work, packaging and physical acceptance are not complete.
+
+## Phase status
 
 | Phase | Status | Outcome |
 |---|---|---|
@@ -11,9 +19,9 @@ This is the canonical delivery status for the approved typing, repair, dictation
 | 3 | ⬜ Planned | [Preserve-first input policy](phases/03-input-policy-library.md) |
 | 4 | ⬜ Planned | [Target capabilities and native lifecycle](phases/04-native-observation-worker.md) |
 | 5 | ⬜ Planned | [Typing protection and personal calibration](phases/05-safe-chatter-protection.md) |
-| 6 | ⬜ Planned | [Local repair and personal tone](phases/06-selected-text-repair.md) |
-| 7 | ⬜ Planned | [Concurrent sentence repair, history and Undo](phases/07-sentence-repair-experiment.md) |
-| 8 | ⬜ Planned | [Dictation, vocabulary and spoken commands](phases/08-dictation-and-commands.md) |
+| 6 | 🔄 In progress | [Local repair and personal tone](phases/06-selected-text-repair.md) |
+| 7 | 🔄 In progress | [Concurrent sentence repair, history and Undo](phases/07-sentence-repair-experiment.md) |
+| 8 | 🔄 In progress | [Dictation, vocabulary and spoken commands](phases/08-dictation-and-commands.md) |
 | 9 | ⬜ Planned | [Narration and chosen-window companion](phases/09-companion-and-narration.md) |
 | 10 | ⬜ Planned | [Guided setup, resource scheduling and CI](phases/10-runtime-setup-and-ci.md) |
 | 11 | ⬜ Planned | [Compatibility, accessibility and measured reliability](phases/11-compatibility-and-reliability.md) |

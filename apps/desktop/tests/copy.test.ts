@@ -11,6 +11,8 @@ describe("interface copy", () => {
   it("provides complete Dutch settings copy", () => {
     expect(copyFor("nl").support).toBe("Support FixMyType");
     expect(copyFor("nl").language).toBe("Taal");
-    expect(copyFor("nl").resetSettings).toBe("Lokale instellingen opnieuw instellen");
+    expect(copyFor("nl").resetSettings).toBe(
+      "Lokale instellingen opnieuw instellen",
+    );
   });
 });

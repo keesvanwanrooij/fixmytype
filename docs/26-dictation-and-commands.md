@@ -1,8 +1,10 @@
 # Dictation and spoken commands
 
-The recording shortcut toggles capture, and all shortcuts are configurable. Capture state must stay visible even when the main app is minimized. Recording begins only from an explicit user action and ends on stop, cancel, quit or unrecoverable device loss.
+The recording shortcut toggles capture, and all shortcuts are configurable. Capture state must stay visible while recording. The current build stops when hidden; a future compact control may support visible background recording. Recording begins only from an explicit user action and ends on stop, cancel, quit or unrecoverable device loss.
 
 ## Audio lifecycle
+
+The current build provides app-owned dictation through whisper.cpp. Recording is limited to 115 seconds and stops when the window hides. A banner remains visible across app pages. Spoken commands and external insertion are not implemented. See [workflow evidence](../plans/evidence/2026-09-05-dictation-workflow.md) and [desktop setup](../apps/desktop/README.md).
 
 Bound recording duration and memory. Capture permission failure produces a clear message. Release every media track on stop. Convert to the exact local recognizer input format, and keep temporary audio in an app-owned location. Clean completed files and stale interrupted files without scanning unrelated folders.
 

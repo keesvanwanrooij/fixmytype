@@ -4,13 +4,15 @@ Your keyboard should not make writing harder.
 
 FixMyType is an open-source Windows typing assistant being built for damaged keyboards and busy writers. The goal is to help you type, repair, dictate and listen while keeping your words on your computer.
 
-Current status: the desktop Settings shell and initial Rust policy library run. The expanded writing workspace, native protection, local AI, speech and companion are in development. See [delivery status](plans/README.md) for verified progress.
+You can now write, correct and dictate inside the desktop app. It has local AI suggestions, automatic sentence correction, guarded Undo, a repeated-letter filter and local Whisper dictation. System-wide correction and direct insertion into other apps are not connected yet. Use Copy text to move your draft into a browser, Word or another editor. See [delivery status](plans/README.md) for verified progress.
 
 ## One writing companion, your choice of help
 
 You choose deterministic typing protection at levels 1 through 5. AI stays separate, with Off, Suggest and Automatic modes. Personal profiles distinguish browser prompts, prose, code and spreadsheets. Your own tone comes from an editable local style card and vocabulary.
 
-The intended workflow lets you keep typing while older sentences are repaired. Dictation puts a transcript into local history and a validated selected destination. Narration reads your text aloud. An optional companion describes a chosen window and helps prepare replies. These capabilities must pass their individual tests before they are advertised as available.
+Keep typing while an earlier sentence is corrected in the FixMyType editor. If you edit that sentence before AI returns, the result becomes a draft instead of overwriting your changes. Dictation inserts at the original editor selection when that range is still valid. Both paths keep session history with Undo. AI can still misunderstand your meaning, so review changes before sharing them.
+
+Read-aloud, spoken commands, external application adapters and the visual companion remain planned. The non-AI filter only suppresses exceptionally fast repeated presses of the same letter inside this app. It does not guess which of two different letters you intended.
 
 The app preserves uncertain input. Unsupported external text fields receive a draft or suggestion. Passwords, elevated applications, secure desktop and formulas are excluded from automatic prose changes. You control recording, observation and retained history.
 
@@ -23,10 +25,27 @@ git clone https://github.com/keesvanwanrooij/fixmytype.git
 cd fixmytype/apps/desktop
 npm install
 npm test
+npm run setup:speech
 npm start
 ~~~
 
 The last command builds Electron and opens the current app. Run cargo test --workspace from the repository root to check the Rust library. Follow [installation](docs/16-installation.md) for prerequisites and packaging status. A source build is not yet an end-user installer.
+
+Speech setup downloads about 150 MiB once, verifies SHA-256 checksums and then works locally. AI repair uses your local Ollama installation with `llama3.2:3b`. If needed, start Ollama and run `ollama pull llama3.2:3b` once. Runtime weights have their own upstream licenses and are not included in the repository's Apache-2.0 license.
+
+For later starts on Windows, double-click `Start FixMyType.cmd` in the repository. You can also run `npm start` from `apps/desktop`.
+
+## Try your first draft
+
+1. Open Settings to choose Nederlands or English. Set the repair language separately.
+2. Choose Suggest and type a sentence with a typo. Accept or ignore the result below the editor.
+3. Choose Automatic if you want completed sentences corrected as you continue typing. Undo remains available in history.
+4. Choose Dictate, allow your microphone, speak and choose Stop recording. Audio is processed locally. Each recording lasts at most 115 seconds.
+5. Choose Copy text and paste the result into the app where you need it.
+
+The default dictation shortcut is `Control+Alt+Shift+D`. Configure shortcuts in Settings. Closing the window hides it in the tray and cancels recording. Quit from the tray to exit. Drafts and the last 50 history entries are session-only, so copy text you want to keep before quitting.
+
+If a service is unavailable, Local setup shows how to prepare it. The first AI request can be slow while weights load. A failed correction leaves the original intact; try a shorter selection or retry after loading. See the [desktop guide](apps/desktop/README.md) for checks and known limits.
 
 ## Find your way
 

@@ -43,7 +43,7 @@ Required prior capabilities: phases 2, 4. The maintainer's GO authorizes impleme
 
 ### Package 3: User path
 
-- [ ] Connect Workspace selection to request, waiting, proposal, Accept and Ignore states.
+- [x] Connect Workspace selection to request, waiting, proposal, Accept and Ignore states.
 - [ ] Cancel pending work when mode changes, target closes or selection ownership is lost.
 - [x] Use a controlled local inference fixture to measure a real repair in Dutch and English.
 - [x] Record latency and output quality without claiming every suggestion is correct.

@@ -20,7 +20,51 @@ const en = {
   suggest: "Suggest",
   automatic: "Automatic",
   modeHelp:
-    "Off leaves your text as you type it. Suggestions need approval. Automatic repair requires a connected local service and a verified editor.",
+    "AI checks completed sentences after a short pause. Suggest waits for you. Automatic applies safe results while you keep typing. Review the history: AI can misread your meaning.",
+  repairNow: "Repair text / selection",
+  startRecording: "Dictate",
+  stopRecording: "Stop recording",
+  transcribing: "Transcribing…",
+  repairing: "Repairing…",
+  copy: "Copy text",
+  cancel: "Cancel",
+  filterHere: "Filter rapid repeated letters",
+  workspaceHelp:
+    "Write here, then copy to your browser, Word or another app. Dictation inserts at the selection where recording started.",
+  accept: "Accept",
+  ignore: "Ignore",
+  undo: "Undo",
+  suggested: "Suggestion",
+  applied: "Applied",
+  stale: "Kept as a draft",
+  ignored: "Ignored",
+  undone: "Undone",
+  recordingNow:
+    "Microphone is recording. Stop to transcribe. Maximum 115 seconds.",
+  runtimeError: "The local service did not respond. Check Local setup.",
+  repairError:
+    "Repair failed or changed protected text. Your original remains. Check Local setup or try a shorter selection.",
+  speechError:
+    "Transcription failed. Check Local setup. Your existing text is unchanged.",
+  microphoneError:
+    "Microphone access failed. Check Windows microphone permissions and your input device.",
+  noSpeech:
+    "No usable speech was detected. Try again closer to the microphone.",
+  unchanged: "No correction was needed.",
+  repairDone: "The result is in your history below.",
+  dictated: "Dictation was inserted. You can undo it below.",
+  staleResult:
+    "Your text changed while processing. The result stays in history for you to copy.",
+  cancelled: "Cancelled. Your text is unchanged.",
+  copied: "Copied. Paste it where you want to use it.",
+  copyError: "Copy failed. Select the text and use Control+C.",
+  aiReady: "Local AI is available",
+  speechReady: "Local dictation is available",
+  checkAgain: "Check again",
+  aiSetup:
+    "Uses your local Ollama installation with llama3.2:3b. Start Ollama and run ollama pull llama3.2:3b if it is missing. Cloud aliases are rejected.",
+  speechSetup:
+    "Uses whisper.cpp and multilingual base locally. From apps/desktop, run npm run setup:speech once. Recording only starts when you choose Dictate.",
   protection: "Typing protection",
   sensitivity: "Keyboard sensitivity",
   intensity: "Repair intensity",
@@ -98,7 +142,52 @@ const nl: Words = {
   suggest: "Voorstellen",
   automatic: "Automatisch",
   modeHelp:
-    "Uit laat je tekst staan zoals je typt. Voorstellen wachten op akkoord. Automatisch herstel vereist een verbonden lokale dienst en een geteste editor.",
+    "AI controleert afgeronde zinnen na een korte pauze. Voorstellen wacht op jou. Automatisch past veilige resultaten toe terwijl je verder typt. Controleer de geschiedenis: AI kan je bedoeling verkeerd begrijpen.",
+  repairNow: "Tekst / selectie herstellen",
+  startRecording: "Dicteren",
+  stopRecording: "Opname stoppen",
+  transcribing: "Spraak omzetten…",
+  repairing: "Tekst herstellen…",
+  copy: "Tekst kopiëren",
+  cancel: "Annuleren",
+  filterHere: "Snelle dubbele letters filteren",
+  workspaceHelp:
+    "Schrijf hier en kopieer naar je browser, Word of een andere app. Dictatie komt bij de selectie waar je de opname startte.",
+  accept: "Accepteren",
+  ignore: "Negeren",
+  undo: "Ongedaan maken",
+  suggested: "Voorstel",
+  applied: "Toegepast",
+  stale: "Als concept bewaard",
+  ignored: "Genegeerd",
+  undone: "Ongedaan gemaakt",
+  recordingNow:
+    "Je microfoon neemt op. Stop om de spraak om te zetten. Maximaal 115 seconden.",
+  runtimeError:
+    "De lokale dienst reageert niet. Controleer Lokale installatie.",
+  repairError:
+    "Herstel is mislukt of veranderde beschermde tekst. Je origineel blijft staan. Controleer Lokale installatie of probeer een kortere selectie.",
+  speechError:
+    "Spraak omzetten is mislukt. Controleer Lokale installatie. Je bestaande tekst is niet gewijzigd.",
+  microphoneError:
+    "De microfoon is niet beschikbaar. Controleer de microfoonrechten in Windows en je invoerapparaat.",
+  noSpeech:
+    "Er is geen bruikbare spraak gevonden. Probeer het opnieuw dichter bij de microfoon.",
+  unchanged: "Er was geen correctie nodig.",
+  repairDone: "Het resultaat staat hieronder in je geschiedenis.",
+  dictated: "Je dictatie is ingevoegd. Hieronder kun je dit ongedaan maken.",
+  staleResult:
+    "Je tekst is tijdens de verwerking gewijzigd. Het resultaat blijft in de geschiedenis om te kopiëren.",
+  cancelled: "Geannuleerd. Je tekst is niet gewijzigd.",
+  copied: "Gekopieerd. Plak de tekst waar je hem wilt gebruiken.",
+  copyError: "Kopiëren is mislukt. Selecteer de tekst en gebruik Control+C.",
+  aiReady: "Lokale AI is beschikbaar",
+  speechReady: "Lokale dictatie is beschikbaar",
+  checkAgain: "Opnieuw controleren",
+  aiSetup:
+    "Gebruikt je lokale Ollama-installatie met llama3.2:3b. Start Ollama en voer ollama pull llama3.2:3b uit als deze ontbreekt. Cloudvarianten worden geweigerd.",
+  speechSetup:
+    "Gebruikt whisper.cpp en het meertalige base-bestand lokaal. Voer vanuit apps/desktop eenmalig npm run setup:speech uit. Opnemen begint alleen als je Dicteren kiest.",
   protection: "Typbescherming",
   sensitivity: "Toetsenbordgevoeligheid",
   intensity: "Herstelintensiteit",

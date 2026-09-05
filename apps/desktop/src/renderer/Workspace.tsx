@@ -1,19 +1,18 @@
 import type { Preferences } from "../shared/preferences.js";
 import type { Words } from "./words.js";
+import { useRef } from "react";
+import { ChatterFilter } from "../shared/typing-filter.js";
+import type { useWriting } from "./useWriting.js";
+import { HistoryList } from "./HistoryList.js";
 type Props = {
   preferences: Preferences;
   update: (value: Preferences) => void;
-  text: string;
-  onText: (value: string) => void;
+  writing: ReturnType<typeof useWriting>;
   words: Words;
 };
-export function Workspace({
-  preferences,
-  update,
-  text,
-  onText,
-  words: w,
-}: Props) {
+export function Workspace({ preferences, update, writing, words: w }: Props) {
+  const { text, onText } = writing;
+  const filter = useRef(new ChatterFilter());
   return (
     <>
       <header className="page-header">
@@ -59,16 +58,100 @@ export function Workspace({
         </label>
       </section>
       <p className="help-text">{w.modeHelp}</p>
+      <div className="toolbar">
+        <button
+          type="button"
+          className="primary-button"
+          disabled={
+            writing.busy ||
+            preferences.aiMode === "off" ||
+            !text.trim() ||
+            preferences.profile === "code" ||
+            preferences.profile === "spreadsheet"
+          }
+          onClick={writing.repair}
+        >
+          {writing.busy ? w.repairing : w.repairNow}
+        </button>
+        <button
+          type="button"
+          className={writing.recording ? "recording-button" : ""}
+          disabled={writing.transcribing}
+          onClick={() => void writing.dictate()}
+        >
+          {writing.recording
+            ? w.stopRecording
+            : writing.transcribing
+              ? w.transcribing
+              : w.startRecording}
+        </button>
+        <button type="button" disabled={!text} onClick={() => writing.copy()}>
+          {w.copy}
+        </button>
+        {(writing.busy || writing.recording || writing.transcribing) && (
+          <button type="button" onClick={writing.cancel}>
+            {w.cancel}
+          </button>
+        )}
+        <label className="inline-check">
+          <input
+            type="checkbox"
+            checked={preferences.protectionEnabled}
+            onChange={(event) =>
+              update({
+                ...preferences,
+                protectionEnabled: event.target.checked,
+              })
+            }
+          />
+          {w.filterHere}
+        </label>
+      </div>
+      <p className="operation-status" role="status" aria-live="polite">
+        {writing.message
+          ? (w[writing.message as keyof Words] ?? w.runtimeError)
+          : w.workspaceHelp}
+      </p>
       <section className="editor-card">
         <label className="sr-only" htmlFor="writing-editor">
           {w.editor}
         </label>
         <textarea
           id="writing-editor"
+          maxLength={100000}
           spellCheck={false}
           value={text}
           placeholder={w.placeholder}
           onChange={(event) => onText(event.target.value)}
+          onCompositionStart={() => {
+            writing.composing.current = true;
+            filter.current.reset();
+          }}
+          onCompositionEnd={() => {
+            writing.composing.current = false;
+          }}
+          onBlur={() => filter.current.reset()}
+          onKeyDown={(event) => {
+            if (event.key === "Escape") {
+              writing.cancel();
+              return;
+            }
+            if (
+              !preferences.protectionEnabled ||
+              preferences.profile === "code" ||
+              preferences.profile === "spreadsheet"
+            ) {
+              filter.current.reset();
+              return;
+            }
+            if (
+              filter.current.suppress(
+                { ...event, isComposing: event.nativeEvent.isComposing },
+                preferences.sensitivity,
+              )
+            )
+              event.preventDefault();
+          }}
         />
         <div className="editor-bottom">
           <span>{w.session}</span>
@@ -87,9 +170,13 @@ export function Workspace({
         <article>
           <span className="status-dot waiting" />
           <h2>{w.ai}</h2>
-          <p>{w.aiPending}</p>
+          <p>
+            {writing.status.ai ? w.aiReady : w.aiPending} ·{" "}
+            {writing.status.speech ? w.speechReady : w.speechPending}
+          </p>
         </article>
       </div>
+      <HistoryList writing={writing} words={w} />
     </>
   );
 }

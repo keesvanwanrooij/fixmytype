@@ -474,3 +474,64 @@ input[type="range"] {
     outline: 2px solid Highlight;
   }
 }
+:root .toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0;
+}
+.toolbar button {
+  padding: 10px 14px;
+  border: 1px solid #43514d;
+  border-radius: 8px;
+  background: #263630;
+  color: #f0f5ed;
+  cursor: pointer;
+}
+.toolbar button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.toolbar .primary-button {
+  background: #c9e6ba;
+  color: #152019;
+}
+.toolbar .recording-button {
+  background: #8f3434;
+  border-color: #ffacac;
+}
+.inline-check {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 13px;
+}
+.operation-status {
+  min-height: 36px;
+  color: #c5d1c9;
+  font-size: 14px;
+}
+.history-list {
+  display: grid;
+  gap: 16px;
+  margin-top: 24px;
+}
+.change-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.original-text {
+  color: #a8b6ad;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  border-left: 2px solid #546458;
+  padding-left: 12px;
+}
+.result-text {
+  color: #f0f5ed;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
