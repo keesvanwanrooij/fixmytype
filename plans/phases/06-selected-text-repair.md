@@ -2,7 +2,7 @@
 
 ## Status
 
-⬜ Planned
+🔄 In progress. The loopback provider and editor path are implemented; integration checks are running.
 
 ## Outcome
 
@@ -29,24 +29,24 @@ Required prior capabilities: phases 2, 4. The maintainer's GO authorizes impleme
 
 ### Package 1: Provider boundary
 
-- [ ] Write tests for local endpoint validation, cloud-backed entries, timeout and invalid output in tests/repair-provider.test.ts.
-- [ ] Create src/main/repair-provider.ts using bounded local requests with AbortSignal.
-- [ ] Discover installed local resources and expose unavailable state with setup guidance.
-- [ ] Send text as structured request data and keep it out of URLs, process arguments and logs.
+- [x] Test endpoint restrictions, cloud-backed entries and invalid output in `tests/local-repair.test.ts`. Add direct deadline and runtime-disconnect tests before closing the phase.
+- [x] Create `src/main/local-repair.ts` with AbortSignal requests and a deadline at the Electron boundary.
+- [x] Check the installed supported local resource and expose setup guidance. A general local-resource picker is deferred.
+- [x] Send text as structured request data and keep it out of URLs, process arguments and logs.
 
 ### Package 2: Repair contract
 
-- [ ] Create src/shared/repair.ts with bounded request and response validation.
-- [ ] Apply profile guards for formulas, code, links and approved vocabulary.
-- [ ] Include editable style guidance while treating document instructions as untrusted input.
+- [x] Validate bounded requests and responses in `src/main/local-repair.ts` instead of a duplicate shared validator.
+- [x] Apply profile guards for formulas, code, links and approved vocabulary.
+- [x] Include editable style guidance while treating document instructions as untrusted input.
 - [ ] Test mode Off, ignored proposals, oversized response and empty replacement.
 
 ### Package 3: User path
 
 - [ ] Connect Workspace selection to request, waiting, proposal, Accept and Ignore states.
 - [ ] Cancel pending work when mode changes, target closes or selection ownership is lost.
-- [ ] Use a controlled local inference fixture to measure a real repair in Dutch and English.
-- [ ] Record latency and output quality without claiming every suggestion is correct.
+- [x] Use a controlled local inference fixture to measure a real repair in Dutch and English.
+- [x] Record latency and output quality without claiming every suggestion is correct.
 
 ### Package 4: cleanup and delivery
 
@@ -63,7 +63,7 @@ The package-specific failure cases above must have tests or a documented physica
 
 ## Live checks
 
-- [ ] Repair synthetic damaged Dutch and English prose with the installed local runtime.
+- [x] Repair synthetic damaged Dutch and English prose with the installed local runtime.
 - [ ] Stop the runtime mid-request and verify original text remains.
 
 ## Stop condition and rollback
@@ -72,6 +72,8 @@ Never accept a localhost cloud proxy as local processing or apply output outside
 
 ## Implementation record
 
-Implementation of this revised phase has not yet been verified.
+2026-09-05: `src/main/local-repair.ts` validates the fixed Ollama endpoint, rejects cloud-backed aliases and guards numbers, vocabulary, code and formulas. Unit tests passed after initial missing-module failures. The first real English correction succeeded in 41.7 seconds including cold loading. This is not a latency target. The app-owned editor path is being prioritized at the maintainer's request; external selection capture still needs phase 4.
+
+See [provider evidence](../evidence/2026-09-05-local-repair.md). The core provider package is delivered separately from the cross-phase UI wiring.
 
 Navigation: [Project home](../../README.md), [documentation](../../docs/README.md), [delivery plans](../README.md).
