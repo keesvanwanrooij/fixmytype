@@ -14,6 +14,82 @@ fn policy() -> InputPolicy {
     InputPolicy::new(REPEAT_WINDOW)
 }
 
+#[test]
+fn event_debug_does_not_publish_numeric_key_sequences() {
+    assert_eq!(
+        format!("{:?}", key_down(30, 123456)),
+        "InputEvent { metadata: redacted }"
+    );
+    assert_eq!(
+        format!("{:?}", PhysicalKey::new(30)),
+        "PhysicalKey { code: redacted }"
+    );
+}
+
+#[test]
+fn unknown_modifier_bits_never_become_plain_input() {
+    for bits in 1..=u8::MAX {
+        let flagged = InputEvent::new(
+            PhysicalKey::new(30),
+            1001,
+            KeyState::Down,
+            Modifiers::from_bits(bits),
+            false,
+        );
+        assert!(flagged.modifiers().any());
+        assert_eq!(
+            policy().classify(Some(key_down(30, 1000)), flagged),
+            Classification::Preserve
+        );
+        let prior = InputEvent::new(
+            PhysicalKey::new(30),
+            1000,
+            KeyState::Down,
+            Modifiers::from_bits(bits),
+            false,
+        );
+        assert_eq!(
+            policy().classify(Some(prior), key_down(30, 1001)),
+            Classification::Preserve
+        );
+    }
+}
+
+#[test]
+fn equal_timestamps_and_disabled_or_unrepresentable_windows_preserve() {
+    assert_eq!(
+        policy().classify(Some(key_down(30, 1000)), key_down(30, 1000)),
+        Classification::Preserve
+    );
+    for window in [Duration::ZERO, Duration::from_micros(999), Duration::MAX] {
+        assert_eq!(
+            InputPolicy::new(window).classify(Some(key_down(30, 1000)), key_down(30, 1001)),
+            Classification::Preserve
+        );
+    }
+}
+
+#[test]
+fn key_up_baselines_and_deliberate_double_letters_are_preserved() {
+    let up = InputEvent::new(
+        PhysicalKey::new(30),
+        1000,
+        KeyState::Up,
+        Modifiers::NONE,
+        false,
+    );
+    assert_eq!(
+        policy().classify(Some(up), key_down(30, 1001)),
+        Classification::Preserve
+    );
+    for interval in [80, 120, 200] {
+        assert_eq!(
+            policy().classify(Some(key_down(30, 1000)), key_down(30, 1000 + interval)),
+            Classification::Preserve
+        );
+    }
+}
+
 // A first key-down has no previous metadata to compare. It must always be preserved.
 #[test]
 fn preserves_the_first_key_down() {
@@ -156,16 +232,17 @@ fn only_exposes_the_fixed_content_free_metadata_contract() {
 }
 
 proptest! {
+    #![proptest_config(ProptestConfig { cases: 512, rng_seed: proptest::test_runner::RngSeed::Fixed(20260905), failure_persistence: None, ..ProptestConfig::default() })]
     #[test]
-    fn arbitrary_metadata_never_panics_and_returns_a_known_recommendation(
+    fn arbitrary_metadata_obeys_preservation_invariants(
         previous_key in any::<u16>(),
         current_key in any::<u16>(),
         previous_timestamp in any::<u64>(),
         current_timestamp in any::<u64>(),
         previous_is_down in any::<bool>(),
         current_is_down in any::<bool>(),
-        previous_modifiers in 0_u8..16,
-        current_modifiers in 0_u8..16,
+        previous_modifiers in any::<u8>(),
+        current_modifiers in any::<u8>(),
         previous_injected in any::<bool>(),
         current_injected in any::<bool>(),
     ) {
@@ -184,6 +261,12 @@ proptest! {
             current_injected,
         );
 
-        prop_assert!(matches!(policy().classify(Some(previous), current), Classification::Preserve | Classification::SuspiciousRepeat));
+        let eligible=previous_key==current_key && previous_is_down && current_is_down && previous_modifiers==0 && current_modifiers==0 && !previous_injected && !current_injected && current_timestamp>previous_timestamp && current_timestamp-previous_timestamp<=40;
+        prop_assert_eq!(policy().classify(Some(previous), current),if eligible {Classification::SuspiciousRepeat} else {Classification::Preserve});
+    }
+
+    #[test]
+    fn generated_candidate_intervals_follow_exact_boundaries(key in any::<u16>(), timestamp in 0_u64..u64::MAX-100, elapsed in 0_u64..100) {
+        prop_assert_eq!(policy().classify(Some(key_down(key,timestamp)),key_down(key,timestamp+elapsed)),if elapsed>0 && elapsed<=40 {Classification::SuspiciousRepeat} else {Classification::Preserve});
     }
 }

@@ -1,9 +1,15 @@
 /// A physical keyboard key represented by the platform-specific numeric code.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(Clone, Copy, Eq, PartialEq)]
 pub struct PhysicalKey(u16);
 
+impl std::fmt::Debug for PhysicalKey {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str("PhysicalKey { code: redacted }")
+    }
+}
+
 impl PhysicalKey {
-    /// Creates a key value from content-free platform metadata.
+    /// Creates a key value. Accumulated codes can reveal writing; do not log them.
     #[must_use]
     pub const fn new(code: u16) -> Self {
         Self(code)
@@ -25,7 +31,7 @@ pub enum KeyState {
     Up,
 }
 
-/// Modifier state represented as a small, content-free bit set.
+/// Modifier state represented as a bit set that preserves unknown bits.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub struct Modifiers(u8);
 
@@ -41,26 +47,24 @@ impl Modifiers {
     /// The Windows key is active.
     pub const WINDOWS: Self = Self(1 << 3);
 
-    const KNOWN_BITS: u8 = Self::SHIFT.0 | Self::CONTROL.0 | Self::ALT.0 | Self::WINDOWS.0;
-
-    /// Keeps only the modifier bits understood by this crate.
+    /// Preserves every bit, so unknown flags cannot become plain input.
     #[must_use]
     pub const fn from_bits(bits: u8) -> Self {
-        Self(bits & Self::KNOWN_BITS)
+        Self(bits)
     }
 
-    /// Returns whether any recognised modifier is active.
+    /// Returns whether any known or unknown modifier flag is present.
     #[must_use]
     pub const fn any(self) -> bool {
         self.0 != 0
     }
 }
 
-/// Content-free metadata for one keyboard event.
+/// Privacy-sensitive numeric metadata for one keyboard event.
 ///
 /// All fields are private so callers can construct an event only from this
 /// fixed metadata contract. The type deliberately has no text-bearing field.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(Clone, Copy, Eq, PartialEq)]
 pub struct InputEvent {
     key: PhysicalKey,
     timestamp_millis: u64,
@@ -69,8 +73,14 @@ pub struct InputEvent {
     injected: bool,
 }
 
+impl std::fmt::Debug for InputEvent {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str("InputEvent { metadata: redacted }")
+    }
+}
+
 impl InputEvent {
-    /// Creates an event from the complete content-free metadata contract.
+    /// Creates an event from the fixed numeric metadata contract.
     #[must_use]
     pub const fn new(
         key: PhysicalKey,

@@ -6,6 +6,8 @@ All notable user-visible changes to FixMyType will be documented here. This proj
 
 ### Fixed
 
+- The Rust policy preserves unknown modifier bits, equal timestamps and disabled or unrepresentable timing windows. Debug output no longer exposes key codes or event timestamps.
+
 - Settings no longer reports a successful save when local storage rejects the write.
 - Tray actions and tooltip follow the Dutch or English interface setting.
 
@@ -13,6 +15,8 @@ All notable user-visible changes to FixMyType will be documented here. This proj
 - The sandboxed Electron preload now uses CommonJS, so the Settings screen receives its safe desktop bridge.
 
 ### Added
+
+- Rust sensitivity validation and bounded, explicitly labelled calibration summaries. These remain advisory until connected to a confirmed calibration workflow.
 
 - A writing workspace with AI Off, Suggest and Automatic modes, local Ollama repair, guarded history and Undo.
 - Local Whisper dictation with explicit microphone capture, a stop/cancel banner and session cleanup.

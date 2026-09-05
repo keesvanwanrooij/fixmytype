@@ -49,8 +49,12 @@ impl InputPolicy {
             return Classification::Preserve;
         };
 
-        let repeat_window_millis =
-            u64::try_from(self.repeat_window.as_millis()).unwrap_or(u64::MAX);
+        let Ok(repeat_window_millis) = u64::try_from(self.repeat_window.as_millis()) else {
+            return Classification::Preserve;
+        };
+        if elapsed_millis == 0 || repeat_window_millis == 0 {
+            return Classification::Preserve;
+        }
         if elapsed_millis <= repeat_window_millis {
             Classification::SuspiciousRepeat
         } else {
