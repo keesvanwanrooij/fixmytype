@@ -73,6 +73,10 @@ Keep physical scaling pending if it cannot be performed; never infer it from 'ap
 
 ## Implementation record
 
+### Visual follow-up checkpoint
+
+The maintainer reports that the app looks good and requests space above the Local setup recheck button. Add a rendered regression to `scripts/phase2-check.cjs`, fail it on the current zero gap, then add a dedicated setup-actions layout rule in `src/renderer/styles.css` and `App.tsx`. Verify both languages and inspect the rendered Dutch page. This is approval of the shown layout apart from the requested spacing fix, not explicit evidence of Windows 200-percent text scaling. Continue phase 4's independent safety work while that acceptance row remains recorded.
+
 The completion audit passes 48 desktop tests, lint, build and `npm run test:phase2`. The last command uses two real Electron processes with one isolated profile: it tabs through every enabled control in both locales, verifies failure feedback, invokes the real tray callbacks, quits and reloads persisted Dutch preferences. It does not touch the running user's profile. The parent removes its own synthetic profile after both processes exit. See [completion evidence](../evidence/2026-09-05-phase2-audit.md).
 
 ### Completion audit checkpoint
