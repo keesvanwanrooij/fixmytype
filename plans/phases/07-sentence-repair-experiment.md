@@ -2,7 +2,7 @@
 
 ## Status
 
-⬜ Planned
+🔄 In progress. The app-owned transaction path passes unit and live concurrency checks. History export, broader retention controls and external adapters remain open.
 
 ## Outcome
 
@@ -29,24 +29,24 @@ Required prior capabilities: phases 6. The maintainer's GO authorizes implementa
 
 ### Package 1: Revision engine
 
-- [ ] Write delayed-result and overlap tests before src/shared/revisions.ts.
-- [ ] Track range identity through insertion, replacement and deletion without searching by matching text.
-- [ ] Reject split Unicode boundaries, repeated apply and foreign document IDs.
-- [ ] Transform pending ranges on every manual edit and committed replacement.
+- [x] Write delayed-result and overlap tests before implementing `src/shared/document-buffer.ts`.
+- [x] Track range identity through insertion, replacement and deletion without searching by matching text.
+- [x] Reject split Unicode boundaries, repeated apply and foreign document anchors.
+- [x] Transform pending ranges on every manual edit and committed replacement.
 
 ### Package 2: Asynchronous pipeline
 
-- [ ] Detect completed sentences without sending every keystroke to inference.
+- [x] Detect completed sentences without sending every keystroke to inference.
 - [ ] Keep a bounded queue keyed by document and range; cancel superseded requests.
-- [ ] Apply Automatic results only through the validated transaction path.
-- [ ] Test two identical sentences, reversed completion order and three later appended sentences.
+- [x] Apply Automatic results only through the validated transaction path.
+- [x] Test two identical sentences, reversed completion order and three later appended sentences.
 
 ### Package 3: History and Undo
 
-- [ ] Create session history with operation type, original, replacement and tracked Undo range.
-- [ ] Make Undo preserve later typing and reject edits inside the replacement.
+- [x] Create session history with operation type, original, replacement and tracked Undo range.
+- [x] Make Undo preserve later typing and reject edits inside the replacement.
 - [ ] Offer explicit bounded retention, clear and export controls; never mix content with diagnostics.
-- [ ] Verify the live editor selection and caret survive an older-sentence replacement.
+- [x] Verify the live editor selection and caret survive an older-sentence replacement.
 
 ### Package 4: cleanup and delivery
 
@@ -72,6 +72,8 @@ If the target cannot compare and replace atomically, expose Suggest only and doc
 
 ## Implementation record
 
-Implementation of this revised phase has not yet been verified.
+2026-09-05: `src/shared/document-buffer.ts` passes tests for delayed correction with four later sentences, duplicate text ranges, stale results, Unicode boundaries and Undo after continued typing. `useWriting.ts` connects the editor, bounded session history and suggestions. External application adapters remain outside this verified path.
+
+The Electron workflow check also caught a starvation bug: later typing restarted the earlier sentence's timer. The revised scheduler keys its timer to completed text and passes continuous-typing verification. The history is session-only and capped at 50 entries. See [transaction evidence](../evidence/2026-09-05-transactions.md).
 
 Navigation: [Project home](../../README.md), [documentation](../../docs/README.md), [delivery plans](../README.md).
