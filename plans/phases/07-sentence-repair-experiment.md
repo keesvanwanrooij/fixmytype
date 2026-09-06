@@ -74,11 +74,11 @@ If the target cannot compare and replace atomically, expose Suggest only and doc
 
 ### Current checkpoint: optional draft retention
 
-Starting at `1843ec0`, add an explicit Settings control to remember only the current draft across restarts. It is off by default. Existing approval covers local retention with consent; it does not authorize retaining history, recordings or clipboard data. Storage uses a separate versioned local record, not a preference migration. State plainly that the record is not encrypted by FixMyType.
+Starting at `1843ec0`, add an explicit Settings control to remember only the current draft across restarts. It is off by default. Existing approval covers local retention with consent; it does not authorize retaining history, recordings or clipboard data. Storage uses a separate versioned local record, not a preference migration. The privacy review requires Windows-backed encryption through Electron safeStorage. Never fall back to plaintext if encryption is unavailable. This protects the saved copy, not other programs running as the same Windows user.
 
 - [ ] Write `tests/draft-storage.test.ts` before `src/shared/draft-storage.ts`. Cover default-off, exact schema, Unicode, 100,000-character limit, unreadable records and denied writes/deletion.
-- [ ] Add `useDraftRetention.ts` for debounced writes and a final flush on normal close/hide. No storage write occurs without explicit prior consent. A force-kill can lose the last pending edit.
-- [ ] Add `DraftRetentionPanel.tsx` to Settings and initialize `useWriting.ts` from a validated saved draft. Keep invalid bytes untouched until an explicit removal action.
+- [ ] Add `useDraftRetention.ts` for debounced encryption and saving. No storage write occurs without explicit prior consent. Show Saving until the latest text is persisted. A quit or force-kill before Saved can lose the pending edit; do not claim an asynchronous unload flush is guaranteed.
+- [ ] Add `DraftRetentionPanel.tsx` to Settings and initialize `useWriting.ts` only after the saved record is validated and decrypted through named IPC. Bound ciphertext and plaintext. Keep invalid bytes untouched until an explicit removal action.
 - [ ] Disabling stops new saves immediately and attempts deletion. If deletion fails, say that the older record still exists and may return on restart; provide Retry removal. Do not claim secure erasure or successful revocation persistence when storage denied it.
 - [ ] Show saving/error feedback beside the draft. Removing retained data keeps the open editor text. History and Undo remain session-only.
 - [ ] Add `scripts/draft-check.mjs` and its real Electron fixture for default-off, enable, separate-process restore, disable/removal and a clean next restart. Add controlled storage failures without weakening the expected result.
