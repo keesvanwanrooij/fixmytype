@@ -15,7 +15,9 @@ try {
             ? "calibration-check.cjs"
             : process.argv[2] === "word"
               ? "word-check.cjs"
-              : "target-check.cjs",
+              : process.argv[2] === "repair"
+                ? "repair-check.cjs"
+                : "target-check.cjs",
         ),
       ],
       {

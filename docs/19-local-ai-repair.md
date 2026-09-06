@@ -12,6 +12,8 @@ Only a verified local inference route is allowed. Discovering a localhost endpoi
 
 ## Response contract
 
+Main bounds metadata to 1 MiB and the generation response to 64 KiB while reading, including responses without a size header. The inner response must contain exactly one `text` field. A cancellation during reading prevents application. Changing the approved vocabulary also invalidates requests made with the earlier vocabulary.
+
 The service returns replacement text for the captured range. Empty output, excessive expansion, invalid schema, protected syntax changes and stale requests remain unapplied. Show a failure state that leaves the original intact.
 
 In Suggest mode, the user accepts or ignores. In Automatic mode, the revision engine validates ownership before applying. History records the actual committed change, and Undo uses a guarded reverse operation.

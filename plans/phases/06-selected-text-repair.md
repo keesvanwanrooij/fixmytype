@@ -2,7 +2,7 @@
 
 ## Status
 
-🔄 In progress. The loopback provider and editor path are implemented; integration checks are running.
+🔄 The app-owned provider and editor path are verified. Word export is available. Direct external editing and the remaining phase gates below are not complete.
 
 ## Outcome
 
@@ -39,12 +39,12 @@ Required prior capabilities: phases 2, 4. The maintainer's GO authorizes impleme
 - [x] Validate bounded requests and responses in `src/main/local-repair.ts` instead of a duplicate shared validator.
 - [x] Apply profile guards for formulas, code, links and approved vocabulary.
 - [x] Include editable style guidance while treating document instructions as untrusted input.
-- [ ] Test mode Off, ignored proposals, oversized response and empty replacement.
+- [x] Test mode Off, ignored proposals, oversized response and empty replacement. The provider tests and `npm run test:repair` cover these cases.
 
 ### Package 3: User path
 
 - [x] Connect Workspace selection to request, waiting, proposal, Accept and Ignore states.
-- [ ] Cancel pending work when mode changes, target closes or selection ownership is lost.
+- [ ] Complete cancellation for every target lifecycle. Mode, profile, language, intensity, style and vocabulary changes cancel results now; hide and quit cancel jobs. Target leases reject late writes after selection ownership is lost, but immediate provider cancellation for every target transition remains open.
 - [x] Use a controlled local inference fixture to measure a real repair in Dutch and English.
 - [x] Record latency and output quality without claiming every suggestion is correct.
 
@@ -73,6 +73,8 @@ Never accept a localhost cloud proxy as local processing or apply output outside
 ## Implementation record
 
 ### Next checkpoint: bounded responses and cancellation
+
+✅ This slice passed 89 desktop tests, lint, build, controlled real Electron cancellation/Ignore/failure checks and the real AI/Whisper workflow. The provider now reads at most 1 MiB of metadata and 64 KiB of generation bytes, checks cancellation during reading and requires exactly one replacement field. The initial UI test caught a stale waiting message after AI Off; that was fixed. See [repair evidence](../evidence/2026-09-06-repair.md).
 
 Starting at `43ce0db`, add behavioural tests in `tests/local-repair.test.ts` for extra response fields, empty and excessive output, bounded network bodies, cancellation before and after a response, and runtime disconnect. Implement the smallest provider changes in `src/main/local-repair.ts`. Add real Electron tests proving mode Off, Ignore and delayed results preserve the original. Include vocabulary changes in cancellation. Run the full suite, lint, build and the controlled provider/renderer fixture, then clean up and push. No endpoint or runtime change is required. Physical microphone and direct Word editing are outside this checkpoint.
 

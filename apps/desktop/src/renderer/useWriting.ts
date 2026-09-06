@@ -182,6 +182,7 @@ export function useWriting(
   );
   useEffect(() => {
     epoch.current++;
+    if (pending.current) setMessage("cancelled");
     void window.fixMyType.cancel();
     return () => {
       epoch.current++;
@@ -192,6 +193,7 @@ export function useWriting(
     preferences.repairLanguage,
     preferences.intensity,
     preferences.styleCard,
+    preferences.vocabulary,
   ]);
   useEffect(
     () => () => {

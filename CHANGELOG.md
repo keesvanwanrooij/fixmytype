@@ -6,6 +6,8 @@ All notable user-visible changes to FixMyType will be documented here. This proj
 
 ### Fixed
 
+- Local AI replies have streaming size limits and strict replacement fields. Cancellation and vocabulary changes discard pending results; cancelling through AI Off also clears the waiting message.
+
 - The app-owned repeated-letter filter preserves Shift, untrusted events and missing physical-key metadata.
 
 - The Local setup recheck button now has 24px of space above it, verified in Dutch and English.

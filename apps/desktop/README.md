@@ -31,6 +31,7 @@ npm run test:phase2
 npm run test:targets
 npm run test:calibration
 npm run test:word
+npm run test:repair
 ~~~
 
 The smoke check starts the real built app with an isolated synthetic profile. Optional integration checks require local Ollama, installed speech resources and ffmpeg. Download the public test fixture first:

@@ -2,6 +2,86 @@ import { expect, it, vi } from "vitest";
 import { repairText } from "../src/main/local-repair.js";
 import { createPreferences } from "../src/shared/preferences.js";
 const preferences = { ...createPreferences(), aiMode: "suggest" as const };
+// A late, malformed or oversized local response never becomes a text edit.
+it("rejects extra fields, empty output, excessive expansion and non-object replies", async () => {
+  for (const output of [
+    '{"text":"Hello.","execute":"anything"}',
+    '{"text":""}',
+    JSON.stringify({ text: "x".repeat(101) }),
+    "null",
+    "[]",
+  ]) {
+    const f = vi
+      .fn()
+      .mockResolvedValueOnce(response({ details: { format: "gguf" } }))
+      .mockResolvedValueOnce(response({ response: output }));
+    await expect(
+      repairText("Helo.", preferences, new AbortController().signal, f),
+    ).rejects.toThrow("INVALID_REPAIR");
+  }
+});
+it("honors pre-cancellation without contacting the provider", async () => {
+  const f = vi.fn(),
+    controller = new AbortController();
+  controller.abort();
+  await expect(
+    repairText("Helo.", preferences, controller.signal, f),
+  ).rejects.toThrow();
+  expect(f).not.toHaveBeenCalled();
+});
+it("discards a result if cancellation arrives while its body is being read", async () => {
+  const controller = new AbortController();
+  const f = vi
+    .fn()
+    .mockResolvedValueOnce(response({ details: { format: "gguf" } }))
+    .mockImplementationOnce(async () => {
+      controller.abort();
+      return response({ response: '{"text":"Hello."}' });
+    });
+  await expect(
+    repairText("Helo.", preferences, controller.signal, f),
+  ).rejects.toThrow();
+});
+it("caps streamed generation bytes even without a content-length header", async () => {
+  let cancelled = false;
+  const stream = new ReadableStream<Uint8Array>({
+    start(controller) {
+      controller.enqueue(new Uint8Array(65537).fill(32));
+    },
+    cancel() {
+      cancelled = true;
+    },
+  });
+  const f = vi
+    .fn()
+    .mockResolvedValueOnce(response({ details: { format: "gguf" } }))
+    .mockResolvedValueOnce(new Response(stream));
+  const controller = new AbortController();
+  // End the synthetic stream after a bounded wait if the implementation ignores the cap.
+  const timer = setTimeout(() => controller.abort(), 100);
+  try {
+    await expect(
+      repairText("Helo.", preferences, controller.signal, f),
+    ).rejects.toThrow();
+    expect(cancelled).toBe(true);
+  } finally {
+    clearTimeout(timer);
+  }
+}, 1000);
+it("rejects runtime disconnects and malformed JSON without a replacement", async () => {
+  for (const result of [
+    () => Promise.reject(Error("connection closed")),
+    () => Promise.resolve(new Response("not JSON")),
+  ]) {
+    const f = vi
+      .fn()
+      .mockResolvedValueOnce(response({ details: { format: "gguf" } }))
+      .mockImplementationOnce(result);
+    await expect(
+      repairText("Helo.", preferences, new AbortController().signal, f),
+    ).rejects.toThrow();
+  }
+});
 it("preserves signed numbers and percentages", async () => {
   const f = vi
     .fn()

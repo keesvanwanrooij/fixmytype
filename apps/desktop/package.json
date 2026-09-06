@@ -13,6 +13,7 @@
     "test:targets": "node scripts/target-check.mjs",
     "test:calibration": "node scripts/target-check.mjs calibration",
     "test:word": "node scripts/target-check.mjs word",
+    "test:repair": "node scripts/target-check.mjs repair",
     "test:workflow": "electron scripts/workflow-smoke.cjs",
     "test:runtime": "node scripts/runtime-check.mjs",
     "setup:speech": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/setup-speech.ps1",

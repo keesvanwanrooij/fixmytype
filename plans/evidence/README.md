@@ -4,6 +4,8 @@ Use this directory for concise dated records of commands, source commit, synthet
 
 ## Records
 
+The [repair cancellation checks](2026-09-06-repair.md) cover bounded provider replies, late results, AI Off, Ignore, vocabulary changes and visible failures.
+
 The [Word-first export](2026-09-06-word.md) records real Electron save/open behavior, exclusive file creation and an installed-Word text-fidelity check with synthetic content.
 
 The [visible calibration slice](2026-09-06-calibration.md) records labelled key pairs, real Rust proposals, explicit storage, the owned-editor filter and the remaining physical feedback list.

@@ -1,11 +1,51 @@
-import { isPreferences, type Preferences } from "../shared/preferences.js";
+import {
+  isPreferences,
+  isRecord,
+  type Preferences,
+} from "../shared/preferences.js";
 const endpoint = "http://127.0.0.1:11434";
 export const repairModel = "llama3.2:3b";
 type Fetcher = typeof fetch;
+async function readJson(
+  response: Response,
+  limit: number,
+  signal: AbortSignal,
+): Promise<unknown> {
+  signal.throwIfAborted();
+  if (!response.ok || !response.body) throw Error("LOCAL_AI_UNAVAILABLE");
+  const reader = response.body.getReader();
+  const abort = () => {
+    void reader.cancel().catch(() => {});
+  };
+  signal.addEventListener("abort", abort, { once: true });
+  const chunks: Uint8Array[] = [];
+  let length = 0;
+  try {
+    while (true) {
+      signal.throwIfAborted();
+      const next = await reader.read();
+      signal.throwIfAborted();
+      if (next.done) break;
+      length += next.value.byteLength;
+      if (length > limit) throw Error("RESPONSE_TOO_LARGE");
+      chunks.push(next.value);
+    }
+    try {
+      return JSON.parse(Buffer.concat(chunks, length).toString("utf8"));
+    } catch {
+      throw Error("INVALID_RESPONSE");
+    }
+  } finally {
+    signal.removeEventListener("abort", abort);
+    await reader.cancel().catch(() => {});
+    reader.releaseLock();
+  }
+}
 export async function localModelReady(
   signal: AbortSignal,
   fetcher: Fetcher = fetch,
 ) {
+  signal.throwIfAborted();
   const res = await fetcher(`${endpoint}/api/show`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -13,10 +53,10 @@ export async function localModelReady(
     signal,
     redirect: "error",
   });
-  if (!res.ok) throw Error("LOCAL_AI_UNAVAILABLE");
-  const info = await res.json();
+  const info = await readJson(res, 1048576, signal);
   if (
-    !info.details ||
+    !isRecord(info) ||
+    !isRecord(info.details) ||
     info.details.format !== "gguf" ||
     info.remote_model ||
     info.remote_host
@@ -63,25 +103,35 @@ export async function repairText(
     signal,
     redirect: "error",
   });
-  if (!res.ok) throw Error("LOCAL_AI_UNAVAILABLE");
-  const result = await res.json();
-  const output = JSON.parse(result.response);
+  const result = await readJson(res, 65536, signal);
+  if (!isRecord(result) || typeof result.response !== "string")
+    throw Error("INVALID_REPAIR");
+  let output: unknown;
+  try {
+    output = JSON.parse(result.response);
+  } catch {
+    throw Error("INVALID_REPAIR");
+  }
   if (
+    !isRecord(output) ||
+    Object.keys(output).join() !== "text" ||
     typeof output.text !== "string" ||
     !output.text.trim() ||
     output.text.length > Math.max(100, text.length * 2) ||
     output.text.includes("\u2014")
   )
     throw Error("INVALID_REPAIR");
+  const replacement = output.text;
   const protectedTokens = (s: string) =>
     s.match(/https?:\/\/\S+|[+-]?\d+(?:[.,]\d+)*(?:[:%])?/g) ?? [];
   if (
     JSON.stringify(protectedTokens(text)) !==
-    JSON.stringify(protectedTokens(output.text))
+    JSON.stringify(protectedTokens(replacement))
   )
     throw Error("PROTECTED_TEXT_CHANGED");
   for (const term of preferences.vocabulary)
-    if (text.includes(term) && !output.text.includes(term))
+    if (text.includes(term) && !replacement.includes(term))
       throw Error("PROTECTED_TEXT_CHANGED");
-  return output.text;
+  signal.throwIfAborted();
+  return replacement;
 }
