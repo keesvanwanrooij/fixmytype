@@ -72,6 +72,18 @@ Do not capture the user's live microphone merely to test setup. Physical audio c
 
 ## Implementation record
 
+### Current checkpoint: explicit spoken formatting
+
+Starting at `6ab669d`, add the approved formatting subset for Word social-post drafting. This is a separate, initially unchecked session control beside Dictate, not a change to literal dictation. NL commands start with `opdracht`; EN commands start with `command`. The fixed list contains new paragraph, new line, comma, period, question mark and exclamation mark. Unknown commands remain literal. Nothing can send, delete existing text, save files or run an application.
+
+- [ ] Write `tests/dictation.test.ts` before `src/shared/dictation.ts`, covering literal mode, NL/EN/auto, word boundaries, command-only paragraphs and unknown or destructive phrases.
+- [ ] Add the visible opt-in control and bilingual examples to `Workspace.tsx` and `words.ts`. Snapshot the choice and language at recording start in `useWriting.ts`; disable changes during capture/transcription.
+- [ ] Keep formatting inside the existing captured-range and Undo transaction. Record the raw transcript alongside a formatted result in session history when they differ.
+- [ ] Add a fake-microphone Electron fixture with controlled transcript results. Verify literal default, explicit formatting, Undo, later text preservation and locked options during recording.
+- [ ] Review resource cleanup and run unit tests, lint, build, real AI/Whisper regression, Word round-trip and documentation checks before the outcome commit.
+
+Vocabulary hints remain pending: the installed Whisper CLI exposes prompt text only through a command-line argument, which is unsuitable for private vocabulary. Do not silently add such an argument. A future stdin or private-file interface requires its own provider change and tests. Physical Dutch recognition quality and direct Word insertion remain open.
+
 2026-09-05: Installed pinned whisper.cpp b4938 Windows x64 and multilingual base with verified SHA-256 values. Added a repeatable `npm run setup:speech` script, a 115-second recording limit, WAV validation and private temporary-session cleanup. Dictation targets the app-owned selection captured at recording start; changed selections keep a transcript draft. External insertion, vocabulary hints and spoken commands remain open.
 
 The integrated writer is ready for first-user feedback within this scope. The public JFK sample passed real CPU transcription in 1.4 seconds in one run. A real Electron fake-microphone test verified capture, insertion, track release and Undo. See [workflow evidence](../evidence/2026-09-05-dictation-workflow.md). Do not count this as a physical microphone test.
