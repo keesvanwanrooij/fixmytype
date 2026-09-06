@@ -72,6 +72,18 @@ Never accept a localhost cloud proxy as local processing or apply output outside
 
 ## Implementation record
 
+### Word-first follow-up: deliberate rewriting
+
+Checkpoint base: `7a6abb7`. The user explicitly asked for sentence correction and AI rewriting. Add a separate Rewrite text / selection action. The normal repair button and automatic sentence scanner remain correction-only. A rewrite always becomes a proposal for Accept or Ignore, including when Automatic is selected. The same style card, protected tokens, local provider, captured range and Undo guards apply.
+
+- [ ] Add provider tests for explicit rewrite intent and unchanged correction defaults in `tests/local-repair.test.ts`; reject any unknown intent before inference.
+- [ ] Extend the named preload bridge and validated main job with a fixed intent, never arbitrary instructions or endpoints.
+- [ ] Add the bilingual button and reuse range capture in `useWriting.ts`. Keep AI Off and code/spreadsheet restrictions intact.
+- [ ] Extend `scripts/repair-check.cjs` to prove a rewrite stays a proposal in Automatic, preserves later typing and supports Accept/Undo. Test hidden-window rejection at the real main boundary.
+- [ ] Run unit, lint, build and real runtime checks, review cleanup, update current documentation and push the verified result.
+
+The visible-window check also prevents new jobs after hiding has cancelled a session. It does not add background observation or direct Word mutation.
+
 ### Next checkpoint: bounded responses and cancellation
 
 ✅ This slice passed 89 desktop tests, lint, build, controlled real Electron cancellation/Ignore/failure checks and the real AI/Whisper workflow. The provider now reads at most 1 MiB of metadata and 64 KiB of generation bytes, checks cancellation during reading and requires exactly one replacement field. The initial UI test caught a stale waiting message after AI Off; that was fixed. See [repair evidence](../evidence/2026-09-06-repair.md).
