@@ -8,6 +8,9 @@ contextBridge.exposeInMainWorld("fixMyType", {
   calibrate: (samples: Sample[]) =>
     ipcRenderer.invoke("workspace:calibrate", samples),
   copy: (text: string) => ipcRenderer.invoke("workspace:copy", text),
+  saveWord: (text: string, language: "nl" | "en") =>
+    ipcRenderer.invoke("workspace:save-word", { text, language }),
+  openWord: () => ipcRenderer.invoke("workspace:open-word"),
   microphone: (enabled: boolean) =>
     ipcRenderer.invoke("workspace:microphone", enabled),
   cancel: () => ipcRenderer.invoke("workspace:cancel"),

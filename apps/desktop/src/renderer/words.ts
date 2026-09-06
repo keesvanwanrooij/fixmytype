@@ -27,6 +27,22 @@ const en = {
   transcribing: "Transcribing…",
   repairing: "Repairing…",
   copy: "Copy text",
+  wordHeading: "Continue in Word",
+  wordHelp:
+    "Save the text currently in the editor as a new Word document. Suggestions are not included until you accept them. Later changes are not synced.",
+  saveWord: "Save Word document",
+  openWord: "Open saved document",
+  wordSaving: "Saving…",
+  wordSaved: "Your Word document is saved. You can open it below.",
+  wordCancelled: "Saving was cancelled. Your draft is unchanged.",
+  wordError:
+    "Saving failed. Choose a new .docx filename in a writable folder. Existing documents are never overwritten.",
+  wordOpened:
+    "The saved document was sent to your default .docx app. You can continue editing there.",
+  wordOpenError:
+    "The document could not open. Open the saved file from its folder and check your default .docx app.",
+  wordOutdated:
+    "Your draft has changed since saving. Save a new document to include those changes.",
   cancel: "Cancel",
   filterHere: "Filter rapid repeated letters",
   workspaceHelp:
@@ -149,6 +165,22 @@ const nl: Words = {
   transcribing: "Spraak omzetten…",
   repairing: "Tekst herstellen…",
   copy: "Tekst kopiëren",
+  wordHeading: "Verder in Word",
+  wordHelp:
+    "Sla de tekst in de editor op als een nieuw Word-document. Voorstellen gaan pas mee nadat je ze accepteert. Latere wijzigingen worden niet gesynchroniseerd.",
+  saveWord: "Word-document opslaan",
+  openWord: "Opgeslagen document openen",
+  wordSaving: "Opslaan…",
+  wordSaved: "Je Word-document is opgeslagen. Je kunt het hieronder openen.",
+  wordCancelled: "Opslaan is geannuleerd. Je concept is niet gewijzigd.",
+  wordError:
+    "Opslaan is mislukt. Kies een nieuwe .docx-bestandsnaam in een beschrijfbare map. Bestaande documenten worden nooit overschreven.",
+  wordOpened:
+    "Het opgeslagen document is naar je standaardapp voor .docx gestuurd. Daar kun je verder schrijven.",
+  wordOpenError:
+    "Het document kon niet openen. Open het opgeslagen bestand vanuit de map en controleer je standaardapp voor .docx.",
+  wordOutdated:
+    "Je concept is sinds het opslaan gewijzigd. Sla een nieuw document op om die wijzigingen mee te nemen.",
   cancel: "Annuleren",
   filterHere: "Snelle dubbele letters filteren",
   workspaceHelp:

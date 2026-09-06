@@ -2,7 +2,7 @@
 
 ## Status
 
-Locked scope, implementation pending. The maintainer chose Word, sentence correction, rewriting and dictation on 2026-09-06 and asked to build before physical feedback. This changes delivery priority, not the safety gates.
+The Word export slice is verified. The maintainer chose Word, sentence correction, rewriting and dictation on 2026-09-06 and asked to build before physical feedback. This changes delivery priority, not the safety gates. See [evidence](evidence/2026-09-06-word.md).
 
 ## Goal
 
@@ -26,12 +26,12 @@ This slice cannot intercept typing in Word or replace text in an existing Word d
 
 ## Tasks
 
-- [ ] Add `tests/word-export.test.ts` before `src/main/word-export.ts`. Cover text fidelity, invalid input, cancellation, exclusive creation and failed opening.
-- [ ] Add a pinned, MIT-licensed DOCX writer to `apps/desktop/package.json`; inspect its dependency audit and keep it out of the renderer.
-- [ ] Add named IPC and typed preload methods in `workspace-ipc.ts`, `preload.cts` and `global.d.ts`. Reject hidden-window calls and overlapping dialogs.
-- [ ] Add bilingual save/open feedback to `Workspace.tsx`, `useWriting.ts` and `words.ts`. Keep the draft intact on every outcome.
-- [ ] Add an isolated Electron fixture for click-to-export, cancellation, later typing, stale output and save failure. Verify an exported synthetic file with installed Word without reading or modifying user documents.
-- [ ] Run unit tests, lint, build, real Electron checks and document navigation checks. Review cleanup before committing and pushing the result.
+- [x] Add `tests/word-export.test.ts` before `src/main/word-export.ts`. Cover text fidelity, invalid input, cancellation, exclusive creation and failed opening.
+- [x] Add a pinned, MIT-licensed DOCX writer to `apps/desktop/package.json`; inspect its dependency audit and keep it out of the renderer.
+- [x] Add named IPC and typed preload methods in `workspace-ipc.ts`, `preload.cts` and `global.d.ts`. Reject hidden-window calls and overlapping dialogs.
+- [x] Add bilingual save/open feedback to `Workspace.tsx`, `useWriting.ts` and `words.ts`. Keep the draft intact on every outcome.
+- [x] Add an isolated Electron fixture for click-to-export, cancellation, later typing, stale output and save failure. Verify an exported synthetic file with installed Word without reading or modifying user documents.
+- [x] Run unit tests, lint, build, real Electron checks and document navigation checks. Review cleanup before committing and pushing the result.
 - [ ] Checkpoint a separate repair/dictation improvement only after this slice is verified. Record actual progress in phase files and `plans/README.md`.
 
 ## Acceptance criteria

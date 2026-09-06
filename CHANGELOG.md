@@ -20,6 +20,8 @@ All notable user-visible changes to FixMyType will be documented here. This proj
 
 ### Added
 
+- The writing workspace exports a new Word document with paragraphs, tabs and Unicode intact. Save and Open are separate actions, and existing files are never overwritten.
+
 - Settings offers Dutch and English key calibration with explicit pair labels, Rust proposals, accepted per-key levels, cancellation and removal. Raw intervals are not persisted.
 
 - Target leases keep delayed corrections from applying after the chosen text field changes. Protected and unsupported targets receive no write capability.

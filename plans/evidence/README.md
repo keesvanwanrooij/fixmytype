@@ -4,6 +4,8 @@ Use this directory for concise dated records of commands, source commit, synthet
 
 ## Records
 
+The [Word-first export](2026-09-06-word.md) records real Electron save/open behavior, exclusive file creation and an installed-Word text-fidelity check with synthetic content.
+
 The [visible calibration slice](2026-09-06-calibration.md) records labelled key pairs, real Rust proposals, explicit storage, the owned-editor filter and the remaining physical feedback list.
 
 The [phase-4 target and lifecycle verification](04-targets.md) covers owned-editor leases, real Win32 field metadata, strict process boundaries, crashes, restart and Electron quit. It does not claim direct browser or Office editing.

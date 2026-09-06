@@ -30,6 +30,7 @@ npm run test:smoke
 npm run test:phase2
 npm run test:targets
 npm run test:calibration
+npm run test:word
 ~~~
 
 The smoke check starts the real built app with an isolated synthetic profile. Optional integration checks require local Ollama, installed speech resources and ffmpeg. Download the public test fixture first:
@@ -45,6 +46,8 @@ npm run test:workflow
 The workflow check uses a fake microphone backed by the public JFK fixture, not your physical microphone. It verifies real repair, continued typing, caret retention, dictation, microphone release and Undo. Set `FIXMYTYPE_CAPTURE=1` to request screenshots too. Chromium capture intermittently reports `UnknownVizError` on this host; capture is separate from the behavioral assertions. Test profiles are isolated temporary directories and contain only synthetic content.
 
 ## Boundaries
+
+The Write page can save a new `.docx` snapshot and open that saved file through the Windows file association. It never overwrites an existing file or updates an already open Word document. The Word fixture uses a separate automation instance and a synthetic read-only document; it requires installed desktop Word. See [Word-first evidence](../../plans/evidence/2026-09-06-word.md).
 
 Settings now includes per-key calibration. You label measured pairs and explicitly accept a Rust-generated proposal. Accepted key settings override general sensitivity only inside the owned editor. A failed save leaves the old settings intact. Cancel discards the current exercise without removing accepted keys. Follow [the calibration guide](../../docs/18-chatter-protection.md) before testing a damaged key. The calibration integration check uses real Chromium input with a synthetic clock, not a physical keyboard.
 

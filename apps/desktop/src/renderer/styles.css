@@ -575,3 +575,13 @@ input[type="range"] {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
+.word-export {
+  margin-top: 24px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.word-export .toolbar {
+  margin-top: 16px;
+}

@@ -72,6 +72,8 @@ Never accept a localhost cloud proxy as local processing or apply output outside
 
 ## Implementation record
 
+2026-09-06: The maintainer selected Word social posts as the first target. The [Word-first slice](../word-first-delivery.md) now exports an explicit draft snapshot to a new `.docx` through a native Save dialog. Real Electron interaction and an isolated installed-Word read-only round-trip passed. This is deliberate transfer, not external range replacement. The full phase still needs the remaining cancellation and provider failure checks above. See [export evidence](../evidence/2026-09-06-word.md).
+
 2026-09-05: `src/main/local-repair.ts` validates the fixed Ollama endpoint, rejects cloud-backed aliases and guards numbers, vocabulary, code and formulas. Unit tests passed after initial missing-module failures. The first real English correction succeeded in 41.7 seconds including cold loading. This is not a latency target. The app-owned editor path is being prioritized at the maintainer's request; external selection capture still needs phase 4.
 
 See [provider evidence](../evidence/2026-09-05-local-repair.md). The core provider package is delivered separately from the cross-phase UI wiring.

@@ -13,7 +13,9 @@ try {
           import.meta.dirname,
           process.argv[2] === "calibration"
             ? "calibration-check.cjs"
-            : "target-check.cjs",
+            : process.argv[2] === "word"
+              ? "word-check.cjs"
+              : "target-check.cjs",
         ),
       ],
       {

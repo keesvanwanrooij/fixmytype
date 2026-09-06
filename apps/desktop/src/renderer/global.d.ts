@@ -7,6 +7,11 @@ declare global {
       status: () => Promise<{ ai: boolean; speech: boolean; worker: boolean }>;
       calibrate: (samples: Sample[]) => Promise<Proposal>;
       copy: (text: string) => Promise<void>;
+      saveWord: (
+        text: string,
+        language: "nl" | "en",
+      ) => Promise<"saved" | "cancelled" | "busy" | "invalid" | "failed">;
+      openWord: () => Promise<"opened" | "openFailed" | "missing" | "busy">;
       microphone: (enabled: boolean) => Promise<boolean>;
       cancel: () => Promise<void>;
       repair: (text: string, preferences: Preferences) => Promise<string>;

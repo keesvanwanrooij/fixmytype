@@ -12,6 +12,7 @@
     "test:phase2": "node scripts/phase2-check.mjs",
     "test:targets": "node scripts/target-check.mjs",
     "test:calibration": "node scripts/target-check.mjs calibration",
+    "test:word": "node scripts/target-check.mjs word",
     "test:workflow": "electron scripts/workflow-smoke.cjs",
     "test:runtime": "node scripts/runtime-check.mjs",
     "setup:speech": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/setup-speech.ps1",
@@ -23,6 +24,7 @@
     "build": "npm run build:worker && npm run typecheck && npm run build:renderer && npm run build:main"
   },
   "dependencies": {
+    "docx": "9.7.1",
     "electron": "^44.2.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
@@ -34,6 +36,7 @@
     "@types/react-dom": "^19.2.2",
     "@vitejs/plugin-react": "^5.1.1",
     "eslint": "^9.39.1",
+    "jszip": "3.10.1",
     "prettier": "3.9.6",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.2",

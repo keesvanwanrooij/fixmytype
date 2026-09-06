@@ -36,7 +36,7 @@ Finish one verified capability at a time, using its ordered packages. Independen
 
 ### Current execution focus
 
-The maintainer now prioritizes Word social posts, sentence repair and dictation. Follow the approved [Word-first delivery slice](word-first-delivery.md): explicit Word export first, then repair and speech improvements. It does not claim direct editing in Word. Physical feedback has not happened yet.
+The maintainer now prioritizes Word social posts, sentence repair and dictation. The [Word-first delivery slice](word-first-delivery.md) now saves a new `.docx` and offers a separate open action. Its 84 desktop tests and isolated installed-Word round-trip pass. See [Word evidence](evidence/2026-09-06-word.md). Direct editing in Word and physical feedback remain pending. Repair and speech improvements follow next.
 
 The app-owned portions of phases 6, 7 and 8 are delivered. Phase 2 has a tested 24px gap above its setup action. Phases 3 and 4 pass their contracts. Phase 5 now delivers visible calibration and per-key settings for the owned editor; native interception remains open. The [first physical feedback list](evidence/2026-09-06-calibration.md) covers calibration, intended repeats, dictation and phase 2's pending 200-percent Windows text-size check. Each slice has a pushed checkpoint before work and a verified result afterward. Keep unsupported native integration and physical acceptance explicit.
 

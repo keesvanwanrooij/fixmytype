@@ -1,6 +1,8 @@
 import {
   app,
   clipboard,
+  dialog,
+  shell,
   ipcMain,
   type BrowserWindow,
   type IpcMainInvokeEvent,
@@ -11,7 +13,25 @@ import { localModelReady, repairText } from "./local-repair.js";
 import { speechReady, transcribe } from "./speech-service.js";
 import { InputWorker } from "./input-worker.js";
 import { validSamples } from "../shared/calibration.js";
+import { WordExport } from "./word-export.js";
 export function registerWorkspace(window: BrowserWindow) {
+  const word = new WordExport(
+    async (language) => {
+      const result = await dialog.showSaveDialog(window, {
+        title:
+          language === "nl"
+            ? "Opslaan als Word-document"
+            : "Save a Word document",
+        defaultPath: path.join(app.getPath("documents"), "FixMyType.docx"),
+        filters: [{ name: "Word (.docx)", extensions: ["docx"] }],
+        properties: ["showOverwriteConfirmation"],
+      });
+      return !result.canceled && window.isVisible()
+        ? result.filePath
+        : undefined;
+    },
+    (file) => shell.openPath(file),
+  );
   const worker = new InputWorker(
     app.isPackaged
       ? path.join(process.resourcesPath, "fixmytype-input-worker.exe")
@@ -100,6 +120,22 @@ export function registerWorkspace(window: BrowserWindow) {
     if (typeof value !== "string" || value.length > 100000)
       throw Error("INVALID_TEXT");
     clipboard.writeText(value);
+  });
+  handle("workspace:save-word", (_event, value) => {
+    if (!window.isVisible() || !value || typeof value !== "object")
+      throw Error("INVALID_EXPORT");
+    const request = value as Record<string, unknown>;
+    if (
+      Object.keys(request).sort().join() !== "language,text" ||
+      (request.language !== "nl" && request.language !== "en")
+    )
+      throw Error("INVALID_EXPORT");
+    return word.save(request.text, request.language);
+  });
+  handle("workspace:open-word", (_event, value) => {
+    if (!window.isVisible() || value !== undefined)
+      throw Error("INVALID_EXPORT");
+    return word.open();
   });
   handle("workspace:calibrate", async (_event, value) => {
     if (!window.isVisible() || !validSamples(value))

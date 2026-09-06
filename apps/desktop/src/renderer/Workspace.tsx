@@ -169,6 +169,30 @@ export function Workspace({
           </span>
         </div>
       </section>
+      <section className="word-export" aria-label={w.wordHeading}>
+        <h2>{w.wordHeading}</h2>
+        <p className="help-text">{w.wordHelp}</p>
+        <div className="toolbar">
+          <button
+            type="button"
+            data-save-word
+            disabled={!text.trim() || writing.exporting}
+            onClick={() => void writing.saveWord()}
+          >
+            {writing.exporting ? w.wordSaving : w.saveWord}
+          </button>
+          {writing.wordSaved && (
+            <button
+              type="button"
+              data-open-word
+              onClick={() => void writing.openWord()}
+            >
+              {w.openWord}
+            </button>
+          )}
+        </div>
+        {writing.wordOutdated && <p role="status">{w.wordOutdated}</p>}
+      </section>
       <div className="status-grid">
         <article>
           <span className="status-dot" />

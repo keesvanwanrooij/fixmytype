@@ -78,6 +78,11 @@ export function useWriting(
   const [recording, setRecording] = useState(false);
   const [transcribing, setTranscribing] = useState(false);
   const [message, setMessage] = useState("");
+  const [exporting, setExporting] = useState(false);
+  const [exportedText, setExportedText] = useState<string | undefined>(
+    undefined,
+  );
+  const exportPending = useRef(false);
   const [status, setStatus] = useState({ ai: false, speech: false });
   const pending = useRef(false),
     epoch = useRef(0),
@@ -424,6 +429,40 @@ export function useWriting(
       .copy(value)
       .then(() => setMessage("copied"))
       .catch(() => setMessage("copyError"));
+  const saveWord = async () => {
+    if (exportPending.current) return;
+    exportPending.current = true;
+    setExporting(true);
+    setExportedText(undefined);
+    const snapshot = text;
+    try {
+      const result = await window.fixMyType.saveWord(
+        snapshot,
+        options.current.interfaceLanguage,
+      );
+      if (result === "saved") setExportedText(snapshot);
+      setMessage(
+        result === "saved"
+          ? "wordSaved"
+          : result === "cancelled"
+            ? "wordCancelled"
+            : "wordError",
+      );
+    } catch {
+      setMessage("wordError");
+    } finally {
+      exportPending.current = false;
+      setExporting(false);
+    }
+  };
+  const openWord = async () => {
+    try {
+      const result = await window.fixMyType.openWord();
+      setMessage(result === "opened" ? "wordOpened" : "wordOpenError");
+    } catch {
+      setMessage("wordOpenError");
+    }
+  };
   return {
     text,
     onText,
@@ -441,6 +480,11 @@ export function useWriting(
     ignore,
     undo,
     copy,
+    saveWord,
+    openWord,
+    exporting,
+    wordSaved: exportedText !== undefined,
+    wordOutdated: exportedText !== undefined && exportedText !== text,
     composing,
   };
 }

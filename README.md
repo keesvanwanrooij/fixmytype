@@ -43,7 +43,9 @@ For later starts on Windows, double-click `Start FixMyType.cmd` in the repositor
 2. Choose Suggest and type a sentence with a typo. Accept or ignore the result below the editor.
 3. Choose Automatic if you want completed sentences corrected as you continue typing. Undo remains available in history.
 4. Choose Dictate, allow your microphone, speak and choose Stop recording. Audio is processed locally. Each recording lasts at most 115 seconds.
-5. Choose Copy text and paste the result into the app where you need it.
+5. Choose Save Word document below the editor, select a new `.docx` filename and choose Open saved document. Windows uses your default `.docx` app. You can also choose Copy text to paste into another editor.
+
+Word export saves exactly the current draft, including paragraphs and emoji. Accept any suggestions you want before saving. Later changes are not synced, and existing files are never overwritten. The chosen folder controls retention and any file syncing. Direct correction inside an already open Word document remains planned.
 
 The default dictation shortcut is `Control+Alt+Shift+D`. Configure shortcuts in Settings. Closing the window hides it in the tray and cancels recording. Quit from the tray to exit. Drafts and the last 50 history entries are session-only, so copy text you want to keep before quitting.
 
