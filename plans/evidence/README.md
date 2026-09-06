@@ -4,6 +4,8 @@ Use this directory for concise dated records of commands, source commit, synthet
 
 ## Records
 
+The [spoken-formatting slice](2026-09-06-spoken-formatting.md) records explicit NL/EN commands, literal defaults, fake-microphone interaction, guarded Undo and translated Settings feedback.
+
 The [repair cancellation checks](2026-09-06-repair.md) cover bounded provider replies, late results, AI Off, Ignore, vocabulary changes and visible failures.
 
 The [Word-first export](2026-09-06-word.md) records real Electron save/open behavior, exclusive file creation and an installed-Word text-fidelity check with synthetic content.

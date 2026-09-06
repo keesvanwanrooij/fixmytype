@@ -582,6 +582,10 @@ input[type="range"] {
   border-radius: 10px;
 }
 
+.dictation-options {
+  margin-top: 16px;
+}
+
 .word-export .toolbar {
   margin-top: 16px;
 }

@@ -11,6 +11,7 @@ import {
   type Undo,
 } from "../shared/document-buffer.js";
 import type { Preferences } from "../shared/preferences.js";
+import { formatDictation } from "../shared/dictation.js";
 import { startRecording, type Recording } from "./recorder.js";
 import {
   TargetSession,
@@ -76,6 +77,12 @@ export function useWriting(
   const [history, setHistory] = useState<Entry[]>([]);
   const [busy, setBusy] = useState(false);
   const [recording, setRecording] = useState(false);
+  const [startingRecording, setStartingRecording] = useState(false);
+  const [spokenFormatting, setSpokenFormatting] = useState(false);
+  const micOptions = useRef({
+    formatting: false,
+    language: preferences.repairLanguage,
+  });
   const [transcribing, setTranscribing] = useState(false);
   const [message, setMessage] = useState("");
   const [exporting, setExporting] = useState(false);
@@ -357,15 +364,20 @@ export function useWriting(
         const audio = await mic.stop();
         await window.fixMyType.microphone(false);
         setMessage("transcribing");
-        const result = await window.fixMyType.transcribe(
+        const transcript = await window.fixMyType.transcribe(
           audio,
-          options.current.repairLanguage,
+          micOptions.current.language,
         );
-        if (version !== epoch.current || !result.trim()) {
+        if (version !== epoch.current || !transcript.trim()) {
           if (anchor) buffer.current.release(anchor);
           setMessage(version !== epoch.current ? "cancelled" : "noSpeech");
           return;
         }
+        const result = formatDictation(
+          transcript,
+          micOptions.current.formatting,
+          micOptions.current.language,
+        );
         const undo =
           anchor && micTarget.current
             ? apply(anchor, result, micTarget.current)
@@ -373,7 +385,7 @@ export function useWriting(
         append({
           id: ++sequence.current,
           kind: "speech",
-          original: "",
+          original: transcript === result ? "" : transcript,
           result,
           state: undo ? "applied" : "stale",
           undo,
@@ -398,8 +410,13 @@ export function useWriting(
       return;
     }
     starting.current = true;
+    setStartingRecording(true);
     const version = epoch.current;
     try {
+      micOptions.current = {
+        formatting: spokenFormatting,
+        language: options.current.repairLanguage,
+      };
       const el = editor(),
         d = buffer.current;
       micTarget.current = target.current.capture();
@@ -424,6 +441,7 @@ export function useWriting(
       void window.fixMyType.microphone(false);
     } finally {
       starting.current = false;
+      setStartingRecording(false);
     }
   };
   const copy = (value = text) =>
@@ -471,6 +489,9 @@ export function useWriting(
     history,
     busy,
     recording,
+    startingRecording,
+    spokenFormatting,
+    setSpokenFormatting,
     transcribing,
     message,
     status,

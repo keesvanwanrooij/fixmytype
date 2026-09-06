@@ -6,6 +6,8 @@ All notable user-visible changes to FixMyType will be documented here. This proj
 
 ### Fixed
 
+- Settings keeps its save confirmation visible and translated when you change the interface language.
+
 - Local AI replies have streaming size limits and strict replacement fields. Cancellation and vocabulary changes discard pending results; cancelling through AI Off also clears the waiting message.
 
 - The app-owned repeated-letter filter preserves Shift, untrusted events and missing physical-key metadata.
@@ -21,6 +23,8 @@ All notable user-visible changes to FixMyType will be documented here. This proj
 - The sandboxed Electron preload now uses CommonJS, so the Settings screen receives its safe desktop bridge.
 
 ### Added
+
+- Dictation offers opt-in Dutch and English paragraph, line and punctuation commands. Literal mode stays the default. Formatted transcripts retain recognized text in session history and use guarded Undo.
 
 - The writing workspace exports a new Word document with paragraphs, tabs and Unicode intact. Save and Open are separate actions, and existing files are never overwritten.
 

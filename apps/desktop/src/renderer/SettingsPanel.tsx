@@ -13,7 +13,7 @@ type Props = {
 export function SettingsPanel({ preferences, save, words: w }: Props) {
   const [draft, setDraft] = useState(preferences);
   const [terms, setTerms] = useState(preferences.vocabulary.join("\n"));
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState<keyof Words | undefined>(undefined);
   function submit() {
     const next = {
       ...draft,
@@ -23,11 +23,11 @@ export function SettingsPanel({ preferences, save, words: w }: Props) {
         .filter(Boolean),
     };
     if (!isPreferences(next)) {
-      setMessage(w.invalid);
+      setMessage("invalid");
       return;
     }
     const issue = save(next);
-    setMessage(issue ? w[issue] : w.saved);
+    setMessage(issue ?? "saved");
   }
   return (
     <>
@@ -159,7 +159,7 @@ export function SettingsPanel({ preferences, save, words: w }: Props) {
         <button type="button" className="primary-button" onClick={submit}>
           {w.save}
         </button>
-        <span role="status">{message}</span>
+        <span role="status">{message ? w[message] : ""}</span>
       </div>
     </>
   );

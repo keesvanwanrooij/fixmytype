@@ -23,6 +23,11 @@ const en = {
     "AI checks completed sentences after a short pause. Suggest waits for you. Automatic applies safe results while you keep typing. Review the history: AI can misread your meaning.",
   repairNow: "Repair text / selection",
   startRecording: "Dictate",
+  spokenFormatting: "Use spoken formatting for this session",
+  spokenFormattingHelp:
+    "Say command new paragraph, command new line, command comma, command full stop, command question mark or command exclamation mark. Dutch uses opdracht. The repair language chooses the command language; Detect accepts both. Other phrases stay literal. Review the transcript in history and use Undo if needed.",
+  literalDictationHelp:
+    "Dictation is literal. Enable spoken formatting before recording if you want to dictate paragraph breaks or punctuation commands.",
   stopRecording: "Stop recording",
   transcribing: "Transcribing…",
   repairing: "Repairing…",
@@ -161,6 +166,11 @@ const nl: Words = {
     "AI controleert afgeronde zinnen na een korte pauze. Voorstellen wacht op jou. Automatisch past veilige resultaten toe terwijl je verder typt. Controleer de geschiedenis: AI kan je bedoeling verkeerd begrijpen.",
   repairNow: "Tekst / selectie herstellen",
   startRecording: "Dicteren",
+  spokenFormatting: "Gesproken opmaak gebruiken in deze sessie",
+  spokenFormattingHelp:
+    "Zeg opdracht nieuwe alinea, opdracht nieuwe regel, opdracht komma, opdracht punt, opdracht vraagteken of opdracht uitroepteken. Engels gebruikt command. De taal voor herstel bepaalt de opdrachttaal; Taal herkennen accepteert beide. Andere zinnen blijven letterlijk. Controleer de transcriptie in de geschiedenis en maak wijzigingen zo nodig ongedaan.",
+  literalDictationHelp:
+    "Dictatie is letterlijk. Zet gesproken opmaak aan voordat je opneemt als je alinea's of leestekens wilt dicteren.",
   stopRecording: "Opname stoppen",
   transcribing: "Spraak omzetten…",
   repairing: "Tekst herstellen…",

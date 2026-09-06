@@ -17,7 +17,9 @@ try {
               ? "word-check.cjs"
               : process.argv[2] === "repair"
                 ? "repair-check.cjs"
-                : "target-check.cjs",
+                : process.argv[2] === "dictation"
+                  ? "dictation-check.cjs"
+                  : "target-check.cjs",
         ),
       ],
       {

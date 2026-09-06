@@ -2,7 +2,7 @@
 
 ## Status
 
-🔄 In progress. The app-owned dictation path passes real local transcription and fake-microphone Electron checks. Speech commands, physical Dutch microphone checks, crash recovery and external insertion remain open.
+🔄 In progress. The app-owned dictation path and opt-in spoken formatting pass local transcription and fake-microphone Electron checks. Physical Dutch microphone checks, private vocabulary hints, crash recovery and external insertion remain open.
 
 ## Outcome
 
@@ -44,7 +44,7 @@ Required prior capabilities: phases 4, 7. The maintainer's GO authorizes impleme
 ### Package 3: Commands and insertion
 
 - [ ] Feed approved vocabulary into the recognition path where supported.
-- [ ] Separate command mode from literal dictation and start with punctuation or formatting commands.
+- [x] Separate command mode from literal dictation and start with punctuation or formatting commands. Six prefixed commands per language are available through an explicit session toggle.
 - [x] Add the result to session history and insert only through the app-owned range transaction.
 - [x] Retain a draft if the captured range changes or safe insertion is unsupported.
 
@@ -76,11 +76,13 @@ Do not capture the user's live microphone merely to test setup. Physical audio c
 
 Starting at `6ab669d`, add the approved formatting subset for Word social-post drafting. This is a separate, initially unchecked session control beside Dictate, not a change to literal dictation. NL commands start with `opdracht`; EN commands start with `command`. The fixed list contains new paragraph, new line, comma, period, question mark and exclamation mark. Unknown commands remain literal. Nothing can send, delete existing text, save files or run an application.
 
-- [ ] Write `tests/dictation.test.ts` before `src/shared/dictation.ts`, covering literal mode, NL/EN/auto, word boundaries, command-only paragraphs and unknown or destructive phrases.
-- [ ] Add the visible opt-in control and bilingual examples to `Workspace.tsx` and `words.ts`. Snapshot the choice and language at recording start in `useWriting.ts`; disable changes during capture/transcription.
-- [ ] Keep formatting inside the existing captured-range and Undo transaction. Record the raw transcript alongside a formatted result in session history when they differ.
-- [ ] Add a fake-microphone Electron fixture with controlled transcript results. Verify literal default, explicit formatting, Undo, later text preservation and locked options during recording.
-- [ ] Review resource cleanup and run unit tests, lint, build, real AI/Whisper regression, Word round-trip and documentation checks before the outcome commit.
+- [x] Write `tests/dictation.test.ts` before `src/shared/dictation.ts`, covering literal mode, NL/EN/auto, word boundaries, command-only paragraphs and unknown or destructive phrases.
+- [x] Add the visible opt-in control and bilingual examples to `Workspace.tsx` and `words.ts`. Snapshot the choice and language at recording start in `useWriting.ts`; disable changes during capture/transcription.
+- [x] Keep formatting inside the existing captured-range and Undo transaction. Record the raw transcript alongside a formatted result in session history when they differ.
+- [x] Add a fake-microphone Electron fixture with controlled transcript results. Verify literal default, explicit formatting, Undo, later text preservation and locked options during recording.
+- [x] Review resource cleanup and run unit tests, lint, build, real AI/Whisper regression, Word round-trip and documentation checks before the outcome commit.
+
+✅ The slice passes 94 desktop tests. The NL check also caught a Settings remount that discarded save feedback during a language change. Settings now retains a translated status key without remounting on locale. See [evidence](../evidence/2026-09-06-spoken-formatting.md). The unchecked full-phase tasks remain follow-up work.
 
 Vocabulary hints remain pending: the installed Whisper CLI exposes prompt text only through a command-line argument, which is unsuitable for private vocabulary. Do not silently add such an argument. A future stdin or private-file interface requires its own provider change and tests. Physical Dutch recognition quality and direct Word insertion remain open.
 

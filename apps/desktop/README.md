@@ -32,6 +32,7 @@ npm run test:targets
 npm run test:calibration
 npm run test:word
 npm run test:repair
+npm run test:dictation
 ~~~
 
 The smoke check starts the real built app with an isolated synthetic profile. Optional integration checks require local Ollama, installed speech resources and ffmpeg. Download the public test fixture first:
@@ -52,7 +53,7 @@ The Write page can save a new `.docx` snapshot and open that saved file through 
 
 Settings now includes per-key calibration. You label measured pairs and explicitly accept a Rust-generated proposal. Accepted key settings override general sensitivity only inside the owned editor. A failed save leaves the old settings intact. Cancel discards the current exercise without removing accepted keys. Follow [the calibration guide](../../docs/18-chatter-protection.md) before testing a damaged key. The calibration integration check uses real Chromium input with a synthetic clock, not a physical keyboard.
 
-Only the app-owned editor is supported for insertion and correction. External typing hooks, direct selected-field insertion, TTS, spoken commands and companion capture remain planned. Code and spreadsheet profiles block AI prose repair. The simple chatter filter handles matching letter keys, not arbitrary keyboard damage. The editor is capped at 100,000 characters; a repair request is capped at 4,000 characters.
+Only the app-owned editor is supported for insertion and correction. Spoken formatting is an explicit session option; see [commands and limits](../../docs/26-dictation-and-commands.md). External typing hooks, direct selected-field insertion, TTS and companion capture remain planned. Code and spreadsheet profiles block AI prose repair. The simple chatter filter handles matching letter keys, not arbitrary keyboard damage. The editor is capped at 100,000 characters; a repair request is capped at 4,000 characters.
 
 Audio temporary files are removed on normal completion, cancellation and handled errors. A force-killed process can leave files in `.cache/runtime/sessions`; crash recovery remains open. Drafts are not saved on quit. Do not mistake this developer build for a signed installer or a completed external-application compatibility release.
 

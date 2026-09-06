@@ -14,7 +14,7 @@ Settings includes [key calibration](docs/18-chatter-protection.md). Measure a pr
 
 Keep typing while an earlier sentence is corrected in the FixMyType editor. If you edit that sentence before AI returns, the result becomes a draft instead of overwriting your changes. Dictation inserts at the original editor selection when that range is still valid. Both paths keep session history with Undo. AI can still misunderstand your meaning, so review changes before sharing them.
 
-Read-aloud, spoken commands, external application adapters and the visual companion remain planned. The non-AI filter only suppresses exceptionally fast repeated presses of the same letter inside this app. It does not guess which of two different letters you intended.
+Read-aloud, external application adapters and the visual companion remain planned. The non-AI filter only suppresses exceptionally fast repeated presses of the same letter inside this app. It does not guess which of two different letters you intended.
 
 The app preserves uncertain input. Unsupported external text fields receive a draft or suggestion. Passwords, elevated applications, secure desktop and formulas are excluded from automatic prose changes. You control recording, observation and retained history.
 
@@ -52,6 +52,8 @@ The default dictation shortcut is `Control+Alt+Shift+D`. Configure shortcuts in 
 If a service is unavailable, Local setup shows how to prepare it. The first AI request can be slow while weights load. A failed correction leaves the original intact; try a shorter selection or retry after loading. See the [desktop guide](apps/desktop/README.md) for checks and known limits.
 
 ## Find your way
+
+For social posts, enable spoken formatting before recording when you want commands such as `command new paragraph` or `opdracht nieuwe alinea`. The repair-language setting chooses the command language; Detect accepts both. Literal dictation remains the default. Review the raw transcript and formatted result in history before exporting to Word. See [speech commands](docs/26-dictation-and-commands.md).
 
 | You want to | Start here |
 |---|---|

@@ -4,7 +4,7 @@ The recording shortcut toggles capture, and all shortcuts are configurable. Capt
 
 ## Audio lifecycle
 
-The current build provides app-owned dictation through whisper.cpp. Recording is limited to 115 seconds and stops when the window hides. A banner remains visible across app pages. Spoken commands and external insertion are not implemented. See [workflow evidence](../plans/evidence/2026-09-05-dictation-workflow.md) and [desktop setup](../apps/desktop/README.md).
+The current build provides app-owned dictation through whisper.cpp. Recording is limited to 115 seconds and stops when the window hides. A banner remains visible across app pages. Opt-in spoken formatting is implemented; external insertion and commands that operate other apps are not. See [formatting evidence](../plans/evidence/2026-09-06-spoken-formatting.md) and [desktop setup](../apps/desktop/README.md).
 
 Bound recording duration and memory. Capture permission failure produces a clear message. Release every media track on stop. Convert to the exact local recognizer input format, and keep temporary audio in an app-owned location. Clean completed files and stale interrupted files without scanning unrelated folders.
 
@@ -23,6 +23,23 @@ Use the selected repair language or deliberate automatic language detection. Sha
 Start with punctuation and formatting commands. Any command that changes an existing passage must use the revision and Undo contract.
 
 ## Verification
+
+### Available spoken formatting
+
+The Write page has an unchecked session control, Use spoken formatting. Enable it before Dictate. Its choice and repair language are captured at recording start and cannot change during capture or transcription. Detect accepts both languages. Literal mode preserves the recognizer's text as received.
+
+| Result | Dutch phrase | English phrase |
+|---|---|---|
+| A blank line starts a paragraph. | `opdracht nieuwe alinea` | `command new paragraph` |
+| The next text starts on a new line. | `opdracht nieuwe regel` | `command new line` |
+| A comma is inserted. | `opdracht komma` | `command comma` |
+| A full stop is inserted. | `opdracht punt` | `command full stop` |
+| A question mark is inserted. | `opdracht vraagteken` | `command question mark` |
+| An exclamation mark is inserted. | `opdracht uitroepteken` | `command exclamation mark` |
+
+Unknown commands and phrases without the prefix remain literal. Recognition can misunderstand a phrase, so inspect history before using the result. When formatting changes a transcript, history shows both recognized text and the formatted result. Undo restores the replaced passage through the range guard and preserves later typing. A command-only paragraph is valid. The formatter cannot send, open, delete or execute anything.
+
+Vocabulary hints are not passed to the current CLI: it only accepts them as visible process arguments. A private provider interface is still needed. Formatting tests use controlled transcripts and fake audio; they do not establish physical Dutch recognition quality.
 
 Use a public synthetic or licensed sample in English and a deliberately recorded test sample in Dutch. Measure transcription duration and record expected words. Test microphone denial, empty audio, corruption, cancellation, overlapping requests and target changes.
 

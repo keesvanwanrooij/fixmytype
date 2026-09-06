@@ -157,7 +157,6 @@ export function App() {
         {page === "settings" && (
           <>
             <SettingsPanel
-              key={preferences.interfaceLanguage}
               preferences={preferences}
               save={update}
               words={w}

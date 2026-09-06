@@ -84,7 +84,7 @@ export function Workspace({
         <button
           type="button"
           className={writing.recording ? "recording-button" : ""}
-          disabled={writing.transcribing}
+          disabled={writing.transcribing || writing.startingRecording}
           onClick={() => void writing.dictate()}
         >
           {writing.recording
@@ -114,6 +114,29 @@ export function Workspace({
           />
           {w.filterHere}
         </label>
+      </div>
+      <div className="dictation-options">
+        <label className="inline-check">
+          <input
+            type="checkbox"
+            data-spoken-formatting
+            checked={writing.spokenFormatting}
+            disabled={
+              writing.startingRecording ||
+              writing.recording ||
+              writing.transcribing
+            }
+            onChange={(event) =>
+              writing.setSpokenFormatting(event.target.checked)
+            }
+          />
+          {w.spokenFormatting}
+        </label>
+        <p className="help-text">
+          {writing.spokenFormatting
+            ? w.spokenFormattingHelp
+            : w.literalDictationHelp}
+        </p>
       </div>
       <p className="operation-status" role="status" aria-live="polite">
         {writing.message

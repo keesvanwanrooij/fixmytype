@@ -32,7 +32,11 @@ This slice cannot intercept typing in Word or replace text in an existing Word d
 - [x] Add bilingual save/open feedback to `Workspace.tsx`, `useWriting.ts` and `words.ts`. Keep the draft intact on every outcome.
 - [x] Add an isolated Electron fixture for click-to-export, cancellation, later typing, stale output and save failure. Verify an exported synthetic file with installed Word without reading or modifying user documents.
 - [x] Run unit tests, lint, build, real Electron checks and document navigation checks. Review cleanup before committing and pushing the result.
-- [ ] Checkpoint a separate repair/dictation improvement only after this slice is verified. Record actual progress in phase files and `plans/README.md`.
+- [x] Checkpoint a separate repair/dictation improvement only after this slice is verified. Record actual progress in phase files and `plans/README.md`.
+
+## First-user test path
+
+Copy any unsaved draft before quitting the tray app. Restart from `Start FixMyType.cmd` to load the latest build. Choose prose and the intended repair language. Use Suggest for a social-post correction, then Accept or Ignore. Dictate a paragraph and test Undo. Enable spoken formatting only when you want prefixed commands such as `opdracht nieuwe alinea`. Save a new Word document, open it and confirm that it matches the reviewed draft. Direct correction inside Word remains unsupported. Report the first failing action and the expected result, without putting private text in a public issue.
 
 ## Acceptance criteria
 

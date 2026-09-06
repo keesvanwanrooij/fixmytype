@@ -8,7 +8,7 @@ This is the canonical delivery status for the approved typing, repair, dictation
 
 ✅ Verification now includes 78 desktop tests, 22 Rust tests, lint, a production build, real Electron interaction, local AI correction and a fake-microphone-to-Whisper workflow. Settings also supports explicitly accepted key calibration. See [calibration evidence and feedback](evidence/2026-09-06-calibration.md), [target evidence](evidence/04-targets.md) and [dictation evidence](evidence/2026-09-05-dictation-workflow.md).
 
-The expanded phases remain in progress where their original scope exceeds this usable slice. External input hooks, direct insertion, TTS, spoken commands, companion work, packaging and physical acceptance are not complete.
+The expanded phases remain in progress where their original scope exceeds this usable slice. External input hooks, direct insertion, TTS, companion work, packaging and physical acceptance are not complete. Six opt-in spoken-formatting commands per language and Word export are delivered.
 
 ## Phase status
 
@@ -35,6 +35,8 @@ Phase 2's code and keyboard/tray lifecycle checks are complete; its physical Win
 Finish one verified capability at a time, using its ordered packages. Independent preparation can proceed while a physical check is pending; record the dependency instead of silently skipping it. The final candidate must support the [first-user script](../docs/30-first-user-test.md).
 
 ### Current execution focus
+
+✅ The [spoken-formatting slice](evidence/2026-09-06-spoken-formatting.md) now passes 94 desktop tests and live NL/EN controls. Word export, repair cancellation and dictation each have separate checkpoints and verified outcome commits. Use [the Word-first test path](word-first-delivery.md) before treating this as physical acceptance.
 
 ✅ The follow-up [repair checks](evidence/2026-09-06-repair.md) now pass 89 desktop tests and real Electron cancellation tests. Local AI and fake-microphone Whisper still pass their combined workflow. The next slice adds explicit spoken formatting without changing literal dictation by default.
 
