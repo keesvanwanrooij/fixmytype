@@ -41,6 +41,7 @@ For later starts on Windows, double-click `Start FixMyType.cmd` in the repositor
 
 1. Open Settings to choose Nederlands or English. Set the repair language separately.
 2. Choose Suggest and type a sentence with a typo. Accept or ignore the result below the editor.
+   Use Rewrite text / selection when you want different phrasing in your own tone. A rewrite always waits for Accept, even in Automatic mode.
 3. Choose Automatic if you want completed sentences corrected as you continue typing. Undo remains available in history.
 4. Choose Dictate, allow your microphone, speak and choose Stop recording. Audio is processed locally. Each recording lasts at most 115 seconds.
 5. Choose Save Word document below the editor, select a new `.docx` filename and choose Open saved document. Windows uses your default `.docx` app. You can also choose Copy text to paste into another editor.

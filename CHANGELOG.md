@@ -24,6 +24,8 @@ All notable user-visible changes to FixMyType will be documented here. This proj
 
 ### Added
 
+- Rewrite text / selection offers different phrasing in your saved style. Its result always waits for approval, including in Automatic mode.
+
 - Dictation offers opt-in Dutch and English paragraph, line and punctuation commands. Literal mode stays the default. Formatted transcripts retain recognized text in session history and use guarded Undo.
 
 - The writing workspace exports a new Word document with paragraphs, tabs and Unicode intact. Save and Open are separate actions, and existing files are never overwritten.

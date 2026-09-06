@@ -19,24 +19,33 @@ app.on("browser-window-created", (_event, window) => {
       run(
         `Array.from(document.querySelectorAll('button')).find(b=>b.textContent.trim()===${JSON.stringify(label)} || (b.closest('nav') && b.textContent.endsWith(${JSON.stringify(label)}))).click()`,
       );
-    let finish, fail;
-    const begin = async () => {
+    let finish, fail, latestIntent;
+    const begin = async (label = "Repair text / selection") => {
       finish = undefined;
       await wait(
         "!document.querySelector('.toolbar .primary-button').disabled",
       );
-      await click("Repair text / selection");
+      await click(label);
       for (let i = 0; i < 200 && !finish; i++)
         await new Promise((r) => setTimeout(r, 20));
       assert.equal(typeof finish, "function");
     };
     try {
       await wait("Boolean(document.querySelector('#writing-editor'))");
+      window.hide();
+      assert.equal(
+        await run(
+          "window.fixMyType.repair('Synthetic hidden request',{}).then(()=>false,e=>String(e).includes('WINDOW_NOT_VISIBLE'))",
+        ),
+        true,
+      );
+      window.show();
       ipcMain.removeHandler("workspace:job");
       ipcMain.handle(
         "workspace:job",
-        () =>
+        (_event, job) =>
           new Promise((resolve, reject) => {
+            latestIntent = job.intent;
             finish = resolve;
             fail = reject;
           }),
@@ -105,7 +114,37 @@ app.on("browser-window-created", (_event, window) => {
         "Thiss is my post",
       );
       console.log(
-        "PASS repair UI: mode Off, Ignore, runtime failure and vocabulary cancellation preserve text",
+        "PASS repair UI: hidden-window denial, mode Off, Ignore, runtime failure and vocabulary cancellation preserve text",
+      );
+      await click("Automatic");
+      await begin("Rewrite text / selection");
+      assert.equal(latestIntent, "rewrite");
+      await run(
+        "(()=>{const e=document.querySelector('#writing-editor');e.focus();Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype,'value').set.call(e,e.value+' Later text.');e.dispatchEvent(new Event('input',{bubbles:true}));})()",
+      );
+      finish("Here is my post");
+      await wait(
+        "document.querySelector('.change-card .badge')?.textContent==='Suggestion'",
+      );
+      assert.equal(
+        await run("document.querySelector('#writing-editor').value"),
+        "Thiss is my post Later text.",
+      );
+      await click("Accept");
+      await wait(
+        "document.querySelector('#writing-editor').value==='Here is my post Later text.'",
+      );
+      await click("Undo");
+      await wait(
+        "document.querySelector('#writing-editor').value==='Thiss is my post Later text.'",
+      );
+      await click("Off");
+      assert.equal(
+        await run("document.querySelector('[data-rewrite]').disabled"),
+        true,
+      );
+      console.log(
+        "PASS rewrite UI: explicit intent, proposal in Automatic, Accept and Undo preserve later typing",
       );
       clearTimeout(deadline);
       app.quit();

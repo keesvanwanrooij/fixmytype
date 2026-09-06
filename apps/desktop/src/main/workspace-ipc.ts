@@ -154,6 +154,7 @@ export function registerWorkspace(window: BrowserWindow) {
     cancel();
   });
   handle("workspace:job", async (_event, value) => {
+    if (!window.isVisible()) throw Error("WINDOW_NOT_VISIBLE");
     if (typeof value !== "object" || value === null) throw Error("INVALID_JOB");
     const job = value as Record<string, unknown>;
     if (
@@ -170,9 +171,20 @@ export function registerWorkspace(window: BrowserWindow) {
     ]);
     try {
       if (kind === "repair") {
-        if (typeof job.text !== "string" || !isPreferences(job.preferences))
+        const intent = job.intent ?? "correct";
+        if (
+          typeof job.text !== "string" ||
+          !isPreferences(job.preferences) ||
+          (intent !== "correct" && intent !== "rewrite")
+        )
           throw Error("INVALID_REPAIR");
-        return await repairText(job.text, job.preferences, signal);
+        return await repairText(
+          job.text,
+          job.preferences,
+          signal,
+          undefined,
+          intent,
+        );
       }
       if (
         !(job.audio instanceof Uint8Array) ||

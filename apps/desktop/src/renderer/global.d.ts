@@ -15,6 +15,7 @@ declare global {
       microphone: (enabled: boolean) => Promise<boolean>;
       cancel: () => Promise<void>;
       repair: (text: string, preferences: Preferences) => Promise<string>;
+      rewrite: (text: string, preferences: Preferences) => Promise<string>;
       transcribe: (audio: Uint8Array, language: string) => Promise<string>;
       onCaptureStop: (listener: () => void) => () => void;
       onAction: (listener: (action: Action) => void) => () => void;

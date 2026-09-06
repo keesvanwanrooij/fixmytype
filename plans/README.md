@@ -36,6 +36,8 @@ Finish one verified capability at a time, using its ordered packages. Independen
 
 ### Current execution focus
 
+✅ [Deliberate rewriting](evidence/2026-09-06-rewriting.md) now passes 96 desktop tests and the real local workflow. Rewrite always waits for approval. Dutch phrasing remains a review item. The next usability slice is explicit, optional draft retention across restarts, not automatic retention of history or recordings.
+
 ✅ The [spoken-formatting slice](evidence/2026-09-06-spoken-formatting.md) now passes 94 desktop tests and live NL/EN controls. Word export, repair cancellation and dictation each have separate checkpoints and verified outcome commits. Use [the Word-first test path](word-first-delivery.md) before treating this as physical acceptance.
 
 ✅ The follow-up [repair checks](evidence/2026-09-06-repair.md) now pass 89 desktop tests and real Electron cancellation tests. Local AI and fake-microphone Whisper still pass their combined workflow. The next slice adds explicit spoken formatting without changing literal dictation by default.

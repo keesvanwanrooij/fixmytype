@@ -91,6 +91,12 @@ export function useWriting(
   );
   const exportPending = useRef(false);
   const [status, setStatus] = useState({ ai: false, speech: false });
+  const [visible, setVisible] = useState(!document.hidden);
+  useEffect(() => {
+    const update = () => setVisible(!document.hidden);
+    document.addEventListener("visibilitychange", update);
+    return () => document.removeEventListener("visibilitychange", update);
+  }, []);
   const pending = useRef(false),
     epoch = useRef(0),
     sequence = useRef(0),
@@ -209,7 +215,10 @@ export function useWriting(
     },
     [],
   );
-  const requestRepair = async (anchor: number) => {
+  const requestRepair = async (
+    anchor: number,
+    intent: "correct" | "rewrite" = "correct",
+  ) => {
     const range = buffer.current.range(anchor);
     if (!range || pending.current) return;
     const original = range.original,
@@ -220,7 +229,9 @@ export function useWriting(
     setBusy(true);
     setMessage("repairing");
     try {
-      const result = await window.fixMyType.repair(original, p);
+      const result = await (intent === "rewrite"
+        ? window.fixMyType.rewrite(original, p)
+        : window.fixMyType.repair(original, p));
       if (version !== epoch.current) {
         buffer.current.release(anchor);
         return;
@@ -230,16 +241,16 @@ export function useWriting(
         return;
       }
       let undo: Undo | undefined;
-      if (p.aiMode === "automatic" && !composing.current)
-        undo = apply(anchor, result, lease);
-      const state =
-        p.aiMode === "automatic" && !composing.current
-          ? undo
-            ? "applied"
-            : "stale"
-          : buffer.current.range(anchor)
-            ? "suggested"
-            : "stale";
+      const automatic =
+        intent === "correct" && p.aiMode === "automatic" && !composing.current;
+      if (automatic) undo = apply(anchor, result, lease);
+      const state = automatic
+        ? undo
+          ? "applied"
+          : "stale"
+        : buffer.current.range(anchor)
+          ? "suggested"
+          : "stale";
       if (undo) scanned.current.push(undo.anchor);
       append({
         id: ++sequence.current,
@@ -258,7 +269,7 @@ export function useWriting(
       setBusy(false);
     }
   };
-  const repair = () => {
+  const editSelection = (intent: "correct" | "rewrite") => {
     if (pending.current || options.current.aiMode === "off") return;
     const el = editor(),
       d = buffer.current;
@@ -270,13 +281,16 @@ export function useWriting(
       start === end ? d.text.length : end,
     );
     scanned.current.push(anchor);
-    void requestRepair(anchor);
+    void requestRepair(anchor, intent);
   };
+  const repair = () => editSelection("correct");
+  const rewrite = () => editSelection("rewrite");
   useEffect(() => {
     if (
       preferences.aiMode === "off" ||
       surface !== "workspace" ||
       !status.ai ||
+      !visible ||
       preferences.profile === "code" ||
       preferences.profile === "spreadsheet" ||
       busy ||
@@ -285,7 +299,7 @@ export function useWriting(
     )
       return;
     const timer = window.setTimeout(() => {
-      if (pending.current || composing.current) return;
+      if (pending.current || composing.current || document.hidden) return;
       const d = buffer.current;
       scanned.current = scanned.current.filter((id) => Boolean(d.range(id)));
       const seen = new Set(
@@ -314,6 +328,7 @@ export function useWriting(
     recording,
     transcribing,
     surface,
+    visible,
   ]);
   const accept = (entry: Entry) => {
     if (!entry.anchor) return;
@@ -497,6 +512,7 @@ export function useWriting(
     status,
     refresh,
     repair,
+    rewrite,
     dictate,
     cancel,
     accept,

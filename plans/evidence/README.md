@@ -4,6 +4,8 @@ Use this directory for concise dated records of commands, source commit, synthet
 
 ## Records
 
+The [deliberate rewriting slice](2026-09-06-rewriting.md) covers explicit proposals, hidden-window rejection, Accept/Undo and observed local Dutch wording limitations.
+
 The [spoken-formatting slice](2026-09-06-spoken-formatting.md) records explicit NL/EN commands, literal defaults, fake-microphone interaction, guarded Undo and translated Settings feedback.
 
 The [repair cancellation checks](2026-09-06-repair.md) cover bounded provider replies, late results, AI Off, Ignore, vocabulary changes and visible failures.

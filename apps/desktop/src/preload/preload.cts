@@ -16,6 +16,13 @@ contextBridge.exposeInMainWorld("fixMyType", {
   cancel: () => ipcRenderer.invoke("workspace:cancel"),
   repair: (text: string, preferences: Preferences) =>
     ipcRenderer.invoke("workspace:job", { kind: "repair", text, preferences }),
+  rewrite: (text: string, preferences: Preferences) =>
+    ipcRenderer.invoke("workspace:job", {
+      kind: "repair",
+      intent: "rewrite",
+      text,
+      preferences,
+    }),
   transcribe: (audio: Uint8Array, language: string) =>
     ipcRenderer.invoke("workspace:job", { kind: "speech", audio, language }),
   onCaptureStop: (listener: () => void) => {

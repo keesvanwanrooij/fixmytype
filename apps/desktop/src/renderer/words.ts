@@ -22,6 +22,9 @@ const en = {
   modeHelp:
     "AI checks completed sentences after a short pause. Suggest waits for you. Automatic applies safe results while you keep typing. Review the history: AI can misread your meaning.",
   repairNow: "Repair text / selection",
+  rewriteNow: "Rewrite text / selection",
+  rewriteHelp:
+    "Suggest new phrasing in your own tone. Rewrites always wait for your approval, even in Automatic mode.",
   startRecording: "Dictate",
   spokenFormatting: "Use spoken formatting for this session",
   spokenFormattingHelp:
@@ -165,6 +168,9 @@ const nl: Words = {
   modeHelp:
     "AI controleert afgeronde zinnen na een korte pauze. Voorstellen wacht op jou. Automatisch past veilige resultaten toe terwijl je verder typt. Controleer de geschiedenis: AI kan je bedoeling verkeerd begrijpen.",
   repairNow: "Tekst / selectie herstellen",
+  rewriteNow: "Tekst / selectie herschrijven",
+  rewriteHelp:
+    "Stel andere zinnen voor in jouw toon. Herschrijvingen wachten altijd op jouw akkoord, ook in Automatisch.",
   startRecording: "Dicteren",
   spokenFormatting: "Gesproken opmaak gebruiken in deze sessie",
   spokenFormattingHelp:

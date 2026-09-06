@@ -2,6 +2,41 @@ import { expect, it, vi } from "vitest";
 import { repairText } from "../src/main/local-repair.js";
 import { createPreferences } from "../src/shared/preferences.js";
 const preferences = { ...createPreferences(), aiMode: "suggest" as const };
+it("uses explicit rewriting guidance while preserving correction defaults", async () => {
+  for (const intent of ["correct", "rewrite"] as const) {
+    const f = vi
+      .fn()
+      .mockResolvedValueOnce(response({ details: { format: "gguf" } }))
+      .mockResolvedValueOnce(
+        response({ response: '{"text":"This is my post."}' }),
+      );
+    await repairText(
+      "Thiss is my post.",
+      preferences,
+      new AbortController().signal,
+      f,
+      intent,
+    );
+    const sent = JSON.parse(f.mock.calls[1][1].body);
+    expect(sent.system.includes("Rewrite for readability")).toBe(
+      intent === "rewrite",
+    );
+    expect(sent.system).toContain("Preserve meaning");
+  }
+});
+it("refuses unknown editing intents before contacting inference", async () => {
+  const f = vi.fn();
+  await expect(
+    repairText(
+      "Helo.",
+      preferences,
+      new AbortController().signal,
+      f,
+      "execute" as never,
+    ),
+  ).rejects.toThrow("REPAIR_NOT_ALLOWED");
+  expect(f).not.toHaveBeenCalled();
+});
 // A late, malformed or oversized local response never becomes a text edit.
 it("rejects extra fields, empty output, excessive expansion and non-object replies", async () => {
   for (const output of [

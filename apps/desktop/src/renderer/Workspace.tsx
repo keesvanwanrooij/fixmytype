@@ -83,6 +83,21 @@ export function Workspace({
         </button>
         <button
           type="button"
+          data-rewrite
+          disabled={
+            writing.busy ||
+            preferences.aiMode === "off" ||
+            !text.trim() ||
+            preferences.profile === "code" ||
+            preferences.profile === "spreadsheet"
+          }
+          onClick={writing.rewrite}
+          title={w.rewriteHelp}
+        >
+          {w.rewriteNow}
+        </button>
+        <button
+          type="button"
           className={writing.recording ? "recording-button" : ""}
           disabled={writing.transcribing || writing.startingRecording}
           onClick={() => void writing.dictate()}
