@@ -72,6 +72,20 @@ If the target cannot compare and replace atomically, expose Suggest only and doc
 
 ## Implementation record
 
+### Current checkpoint: optional draft retention
+
+Starting at `1843ec0`, add an explicit Settings control to remember only the current draft across restarts. It is off by default. Existing approval covers local retention with consent; it does not authorize retaining history, recordings or clipboard data. Storage uses a separate versioned local record, not a preference migration. State plainly that the record is not encrypted by FixMyType.
+
+- [ ] Write `tests/draft-storage.test.ts` before `src/shared/draft-storage.ts`. Cover default-off, exact schema, Unicode, 100,000-character limit, unreadable records and denied writes/deletion.
+- [ ] Add `useDraftRetention.ts` for debounced writes and a final flush on normal close/hide. No storage write occurs without explicit prior consent. A force-kill can lose the last pending edit.
+- [ ] Add `DraftRetentionPanel.tsx` to Settings and initialize `useWriting.ts` from a validated saved draft. Keep invalid bytes untouched until an explicit removal action.
+- [ ] Disabling stops new saves immediately and attempts deletion. If deletion fails, say that the older record still exists and may return on restart; provide Retry removal. Do not claim secure erasure or successful revocation persistence when storage denied it.
+- [ ] Show saving/error feedback beside the draft. Removing retained data keeps the open editor text. History and Undo remain session-only.
+- [ ] Add `scripts/draft-check.mjs` and its real Electron fixture for default-off, enable, separate-process restore, disable/removal and a clean next restart. Add controlled storage failures without weakening the expected result.
+- [ ] Run unit, lint, build, restart checks and existing workflow checks. Review cleanup, update docs and plans, then commit and push.
+
+This is draft retention, not completion of the full history-retention/export package. External adapters and physical acceptance remain open.
+
 2026-09-05: `src/shared/document-buffer.ts` passes tests for delayed correction with four later sentences, duplicate text ranges, stale results, Unicode boundaries and Undo after continued typing. `useWriting.ts` connects the editor, bounded session history and suggestions. External application adapters remain outside this verified path.
 
 The Electron workflow check also caught a starvation bug: later typing restarted the earlier sentence's timer. The revised scheduler keys its timer to completed text and passes continuous-typing verification. The history is session-only and capped at 50 entries. See [transaction evidence](../evidence/2026-09-05-transactions.md).
